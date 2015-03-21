@@ -263,10 +263,6 @@
     <Content Include="Views\Shared\_RedirectPage.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Words\flashCards.cshtml" />
-    <Content Include="Views\FlashCards\Create.cshtml" />
-    <Content Include="Views\FlashCards\Delete.cshtml" />
-    <Content Include="Views\FlashCards\Details.cshtml" />
-    <Content Include="Views\FlashCards\Edit.cshtml" />
     <Content Include="Views\FlashCards\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
