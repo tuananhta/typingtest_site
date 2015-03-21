@@ -8,7 +8,7 @@ var correctWords = 0;       // total of correct words
 var totalWords = 0;
 var sizeBox = 120;          // total characters of the box
 var crtIndex = 0;           // current index
-var fixedSeconds = 20;
+var fixedSeconds = 60;
 var seconds = 0;
 
 inpMsg = [];                // the input message
