@@ -7,6 +7,7 @@ $(function () {
 
 $(document).ready(function () {
     $('.color-opt').hide();
+    $('.card-grid').fadeIn('fast');
 })
 
 function showColorOption() {
