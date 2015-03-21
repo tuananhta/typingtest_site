@@ -1,0 +1,87 @@
+﻿@model IEnumerable<TA_Typing1.Models.Word>
+
+@{
+    ViewBag.Title = "Word List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Words List</h2>
+            <div data-url="@Url.Action("create", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create New</div>
+        </div>
+    </div>
+</div>
+<div><hr /><br /></div>
+<div class="container">
+    <div class="col-md-8 col-md-offset-2" style="background: linear-gradient(to bottom, #fff 60%, #f2f2f2 80%);">
+        <table class="table table-responsive">
+            <tr>
+                <th></th>
+                <th>
+                    Vocabulary
+                </th>
+                <th></th>
+                <th>Last Modified</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @{
+                var count = 0;
+
+                foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>
+                            <span class="text-info">@count.</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WContext)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("details", "words", new { id = item.Id })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-book"></span> definition</a>
+                        </td>
+                        <td>
+                            <span style="font-size:smaller">
+                                @Html.DisplayFor(modelItem => item.CreatedTime)
+                            </span>
+                        </td>
+                        <td>
+                            <div data-url="@Url.Action("edit", "words", new { id = item.Id })" class="btn btn-default btn-xs openModal background-gold"><span class="glyphicon glyphicon-edit"></span> edit</div>
+                        </td>
+                        <td>
+                            <div data-url="@Url.Action("delete", "words", new { id = item.Id })" class="btn btn-danger btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> delete</div>
+                        </td>
+                    </tr>
+                }
+
+            }
+
+        </table>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<!--    POPUP MODAL    -->
+<div class="modal fade modalFrame" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Opening model ...</h4>
+            </div>
+            <div id="bodyEditModal">
+                <div class="modal-body text-justify">
+                    <!-- Content is here -->
+                    <div class="container text-center">
+                        <h4 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

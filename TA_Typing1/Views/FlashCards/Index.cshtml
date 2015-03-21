@@ -1,0 +1,141 @@
+﻿@model IEnumerable<TA_Typing1.Models.Word>
+
+@{
+    ViewBag.Title = "flashCards";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container text-center">
+    <h2>Flash Cards</h2>
+</div>
+<hr />
+<div class="container" id="header2-flash-cards">
+    <div class="col-md-2 col-md-offset-3 text-center margin-top-bottom">
+        <span id="paint-card-btm" class="btn btn-default refresh-btn margin-btn" onclick="showColorOption()"><span class="glyphicon glyphicon-tint"></span> Paint your cards</span>
+        <span id="submit-color-option" hidden="hidden">
+            <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
+            <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
+        </span>
+    </div>
+    <div class="col-md-2 text-center margin-top-bottom">
+        <span id="rand-position-btn" onclick="randomPosition()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-random" style="padding-right:4px;"></span> Random position</span>
+    </div>
+    <div class="col-md-2 text-center margin-top-bottom">
+        <span id="show-search-card-btn" onclick="showSearchCardTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> List words by days, weeks</span>
+        <span id="hide-search-card-btn" onclick="hideSearchCard()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;" ><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
+    </div>
+</div>
+<div class="container center-block text-center">
+
+    <table id="search-card-tab" class="form-inline text-center col-xs-12 background1" hidden="hidden" style="margin-top:20px;">
+        <tr>
+            <td>
+                <div class="container" style="margin:10px;">
+                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By date</h3></div>
+                    <div class="col-sm-7 text-left margin-top-bottom">
+                        <form id="dateForm">
+                            <span class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input name="date_query" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date">
+                                <span class="btn input-group-addon refresh-btn" onclick="$('#dateForm').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="container" style="margin:10px;">
+                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By weeks</h3></div>
+                    <div class="col-sm-7 text-left margin-top-bottom">
+                        <form id="weekForm">
+                            <span class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input name="week_query" autocomplete="off" class="form-control" placeholder="Recent weeks" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="number">
+                                <span class="btn input-group-addon refresh-btn" onclick="$('#weekForm').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                            </span>
+                        </form>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<hr />
+<div id="grid-containter" class="center-block container text-center" style="border:10px groove #656565">
+    <h3>@ViewBag.boardInfo</h3>
+    <form id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
+        @Html.AntiForgeryToken()
+        @{
+            int modelCount = 0;
+            foreach (var item in Model)
+            {               
+                    <section id="grid-@modelCount" class="card-grid">
+                        <div id="front-@item.Id" class="front @item.fColor-front">
+                            <div class="container text-right" style="margin:5px;">
+                                <span class="color-opt">
+                                    <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.Id, 'default')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.Id, 'pink')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-green" onclick="updateColor(event, @item.Id, 'green')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-blue" onclick="updateColor(event, @item.Id, 'blue')">
+                                    </span>
+                                    <span class="inputGroup" hidden="hidden">
+                                        <input class="fColor-input" name="words[@modelCount].fColor" value="@item.fColor" />
+                                        <input name="words[@modelCount].Id" value="@item.Id" />
+                                    </span>
+                                </span>
+                                <span class="glyphicon glyphicon-pushpin" style="position:static"></span>
+                            </div>
+
+                            <h2 class="text-primary" style="margin-top:7px;">@item.WContext</h2>
+                            @{
+                string wordTypes = null;
+                foreach (var wType in item.WordDefs.GroupBy(m => m.wType))
+                {
+                    wordTypes += wType.First(m => m.wType != null).wType + " ,";
+                }
+
+
+                if (wordTypes != null)
+                {
+                    wordTypes = wordTypes.Remove(wordTypes.Length - 1);
+                    wordTypes = '(' + wordTypes + ')';
+                }
+                            }
+                            <h4 class="text-muted"><i>@wordTypes</i></h4>
+
+                            @if (item.WPronounce != null)
+                            {
+                                <h3 style="margin:0">/@item.WPronounce/</h3>
+                            }
+
+                        </div>
+                        <div id="back-@item.Id" class="back @item.fColor-back">
+                            <div class="left container">
+                                @{
+                            int count = 0;
+                            foreach (var def in item.WordDefs)
+                            {
+                                count++;
+                                <div class="small">
+                                    <span class="col-xs-1">@count.</span>
+                                    <span class="col-xs-2">(@def.wType)</span>
+                                    <span class="col-xs-9 text-danger"><b>@def.wDefinition</b></span>
+                                    <span class="col-xs-11 col-xs-offset-1 text-left"><i class="text-primary">Eg: @def.wExample</i></span>
+                                </div>
+
+                            }
+                                }
+                            </div>
+                        </div>
+                    </section>
+                            modelCount++;
+            }
+        }
+    </form>
+</div>
+<input id="total_grids" value="@modelCount" hidden="hidden"/>

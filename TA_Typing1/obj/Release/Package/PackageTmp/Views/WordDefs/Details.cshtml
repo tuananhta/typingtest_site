@@ -1,0 +1,51 @@
+﻿@model TA_Typing1.Models.WordDef
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WordDef</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.word.WContext)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.word.WContext)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wDefinition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wDefinition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wExample)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wExample)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

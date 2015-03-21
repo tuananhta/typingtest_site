@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="site1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Ta\ Tuan\ Anh\\Dropbox\\TA\\STUDY\\IT\\IT\ POLAND\\Summer\ Semester\\Software\ Engineering\\Project\\TA_Typing1\\TA_Typing1\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Ta\ Tuan\ Anh\\Dropbox\\TA\\STUDY\\IT\\IT\ POLAND\\Summer\ Semester\\Software\ Engineering\\Project\\TA_Typing1\\TA_Typing1\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-TA_Typing1-20150306024909.mdf;Initial Catalog=aspnet-TA_Typing1-20150306024909;Integrated Security=True" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Ta\ Tuan\ Anh\\Dropbox\\TA\\STUDY\\IT\\IT\ POLAND\\Summer\ Semester\\Software\ Engineering\\Project\\TA_Typing1\\TA_Typing1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

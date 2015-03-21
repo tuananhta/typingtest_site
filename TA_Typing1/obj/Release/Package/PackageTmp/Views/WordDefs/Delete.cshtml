@@ -1,0 +1,57 @@
+﻿@model TA_Typing1.Models.WordDef
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>WordDef</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.word.WContext)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.word.WContext)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wDefinition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wDefinition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.wExample)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.wExample)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

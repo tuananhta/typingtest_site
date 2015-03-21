@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "_LoginModal";
+    Layout = "";
+}
+
+@using TA_Typing1.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @role = "form", id = "LoginFormModal" }))
+{
+    <input name="loginModal" id="loginModal" hidden="hidden" value="yes" />
+    <input name="currentUrl" id="currentUrl" hidden="hidden"/>
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-left:auto; margin-right:auto; width:350px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center" id="myModalLabel">Login</h4>
+            </div>
+            <div id="bodyEditModal">
+                <div class="modal-body form-horizontal well" style="margin-bottom:0px;">
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control text-center", placeholder = "User Name", autocomplete = "off", style = "width:100%; max-width:100%; padding-left:8%; padding-right:8%" })
+                            </div>
+                           @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center", placeholder = "Password", autocomplete = "off", style = "width:100%; max-width:100% ; padding-left:8%; padding-right:8%" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>       
+                    <div class="form-group">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <div class="checkbox small">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <button type="button" id="sbm-login-btn" class="btn btn-default refresh-btn sbm-login-btn" onclick="submitLogin()" style="width:100%; max-width:100% ; padding-left:8%; padding-right:8%">Log in</button>                            
+                        </div>
+                    </div>  
+                                   
+                    @* Enable this once you have account confirmation enabled for password reset functionality
+            <p>
+                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+            </p>*@
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,75 @@
+﻿@model TA_Typing1.Models.Word
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "";
+}
+@using (Html.BeginForm())
+{
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Word</h4>
+            </div>
+            <div class="modal-body text-justify background3 container">
+                <!-- Content is here -->
+                @Html.AntiForgeryToken()
+                <div class="container center-block">
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-group container">
+                            <div class="col-xs-4 text-center"><h4>Current word</h4></div>
+                            <div class="col-xs-8 text-center">
+                                @Html.EditorFor(model => model.WContext, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-4 text-right">
+                                @Html.ValidationMessageFor(model => model.WContext, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group container">
+                        <div class="col-xs-4 text-center"><h4>Level</h4></div>
+                        <div class="col-xs-8 text-center">
+                            <select name="level" id="level" class="form-control text-box single-line">
+                                @if (Model.Level == 1)
+                                {
+                                    <option value="1" selected>200 common words</option>
+                                }
+                                else
+                                {
+                                    <option value="1">200 common words</option>
+                                }
+
+                                @if (Model.Level == 2)
+                                {
+                                    <option value="2" selected>500 common words</option>
+                                }
+                                else
+                                {
+                                    <option value="2">500 common words</option>
+                                }
+
+                                @if (Model.Level == 3)
+                                {
+                                    <option value="3" selected>1000 common words</option>
+                                }
+                                else
+                                {
+                                    <option value="3">1000 common words</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+}

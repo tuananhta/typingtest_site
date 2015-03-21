@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TA_Typing1.Models.Record>
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "";
+}
+
+<h3>Your last 10 performances</h3>
+<table class="table text-center">
+    <tr class="text-center">
+        <th></th>
+        <th class="text-center">
+            WPM
+        </th>
+        <th class="text-center">
+            My Words
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </th>
+    </tr>
+    @{
+        var count = 0;
+        foreach (var item in Model)
+        {
+            count++;
+            if(count>10)
+            {
+                break;
+            }
+            <tr>
+                <td>
+                    <h6><span class="text-info">@count.</span></h6>
+                </td>
+                <td>
+                    <h5>@Html.DisplayFor(modelItem => item.wpm)</h5>
+                </td>
+                <td>
+                    @if (item.pri_rec == true)
+                    {
+                        <h6><span class="glyphicon glyphicon-ok"></span></h6>
+                    }
+                    else
+                    {
+                        <h6><span class="glyphicon glyphicon-remove"></span></h6>
+                    }
+                </td>
+                <td>
+                    <h6 class="text-muted">@Html.DisplayFor(modelItem => item.CreatedTime)</h6>
+                </td>
+            </tr>
+        }
+    }
+    
+
+</table>

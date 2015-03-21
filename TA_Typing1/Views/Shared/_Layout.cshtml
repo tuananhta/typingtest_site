@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="~/Images/Icon/icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Type your words</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Flip.css" rel="stylesheet">
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div id="header_layout" class="navbar navbar-default navbar-fixed-top" style="background-color:#656565; padding-left: 20px; padding-right: 20px;">
+            <div class="container">
+                <div class="col-md-2 hidden-xs center-block text-center">
+                    <a href="@Url.Action("index", "home")" style="color:#ffffff; font-size:30px;"><span class="glyphicon glyphicon-education" style="top: 5px;"></span></a>
+                </div>
+                <div>
+                    <div class="navbar-header">
+                        <div class="row" style="display: -webkit-box;">
+                            <a href="@Url.Action("index", "home")" class="visible-xs-block" style="color:#ffffff; position:fixed; right:5%; top:5px;"><img src="~/Images/Logo/logo6_xs.png" style="height:60px;" /></a>
+
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="position: relative; right: 0;">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="navbar-collapse collapse">
+
+                        <ul class="nav navbar-nav">
+                            <li class="text-center"><span class="navbar-text">@Html.ActionLink("Home", "index", routeValues: new { controller = "home", skp_ad = "on" }) </span></li>
+                            <li class="text-center"><span class="navbar-text">@Html.ActionLink("About", "about", "home")</span></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="text-center"><span class="navbar-text"> @Html.ActionLink("Words", "index", "words")</span></li>
+                                <li class="text-center"><span class="navbar-text"> @Html.ActionLink("Flash Cards", "index", "flashcards")</span></li>
+                            }
+                        </ul>
+
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container hidden-md hidden-lg" style="margin:20px;"></div>
+        <div class="container">
+
+            @RenderBody()
+            <hr />
+            <footer class="text-center">
+                <h5>&copy; @DateTime.Now.Year - Type Your Words</h5>
+                <h6 class="text-muted">Centria team, Kokkola, Finland</h6>
+            </footer>
+        </div>
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+        <!--    POPUP MODAL LOGIN   -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="margin-left:auto; margin-right:auto; width:350px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Opening model ...</h4>
+                        </div>
+                        <div id="bodyEditModal">
+                            <div class="modal-body text-justify">
+                                <!-- Content is here -->
+                                <div class="container text-center">
+                                    <h4 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!--    POPUP MODAL REGISTER   -->
+            <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="margin-left:auto; margin-right:auto; width:350px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+                        </div>
+                        <div id="bodyEditModal">
+                            <div class="modal-body text-justify">
+                                <!-- Content is here -->
+                                <div class="container text-center">
+                                    <h4 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <!-- flip flash cards -->
+        <script src="http://nnattawat.github.io/flip/asset/js/prettify.js"></script>
+        <script src="http://nnattawat.github.io/flip/asset/js/jquery.flip.js"></script>
+        <script src="~/Scripts/_flashCards.js"></script>
+
+        <!-- home page -->
+        @RenderSection("script", required: false)
+        @RenderSection("script2", required: false)
+        @RenderSection("flash_adv", required: false)
+
+        <!-- index, words -->
+        @RenderSection("addWordScript", required: false)
+
+        <!-- login page -->
+        @RenderSection("loginPageScript", required: false)
+
+
+        <script src="~/Scripts/_modals.js" type="text/javascript"></script>
+        <!-- LOGIN; SIGN UP JS -->
+        <script>
+            //click login button
+            $('#login-btn1').click(function () {
+                $('#login-btn2').click();
+                getLoginData();
+            })
+
+            //click register button
+            $('#register-btn1').click(function () {
+                $('#register-btn2').click();
+                getRegisterData();
+            })
+
+            function getLoginData() {
+                $.ajax({
+                    // Get Login PartialView
+                    url: "@Url.Action("login", "account", new { loginModal = "yes" })",
+                    type: 'Get',
+                    success: function (data) {
+                        $("#loginModal").empty().append(data);
+                    },
+                    error: function () {
+                        var data = "We are sorry, something went wrong. Try to refresh the page!"
+                        $("#loginModal").empty().append(data);
+                    },
+                });
+            }
+
+            function getRegisterData() {
+                $.ajax({
+                    // Get Login PartialView
+                    url: "@Url.Action("register","account")",
+                    type: 'Get',
+                    success: function (data) {
+                        $("#registerModal").empty().append(data);
+                    },
+                    error: function () {
+                        var data = "We are sorry, something went wrong. Try to refresh the page!"
+                        $("#registerModal").empty().append(data);
+                    },
+                });
+            }
+        </script>
+    </div>
+</body>
+</html>

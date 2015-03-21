@@ -1,0 +1,77 @@
+﻿@using TA_Typing1.Models
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="margin:5%;">
+    <div class="col-sm-6 col-sm-offset-3 text-center">
+        <section class="container">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+            {
+            <div class="form-horizontal well" style="margin-bottom:0px;">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="margin-top:15px">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <div class="input-group">
+                            <span class="input-group-addon" style="margin-top:15px"><i class="glyphicon glyphicon-user"></i></span>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control text-center", placeholder = "User Name", autocomplete = "off", style = "width:100%; max-width:100%; padding-left:12%; padding-right:12%;" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-1" style="margin-top:15px">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control text-center", placeholder = "Password", autocomplete = "off", style = "width:100%; max-width:100% ; padding-left:12%; padding-right:12%;" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-10 col-xs-offset-2 text-left">
+                        <div class="checkbox small">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:15px">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <button type="submit" id="sbm-login-btn" class="btn btn-default refresh-btn sbm-login-btn" style="width:100%; max-width:100% ; padding-left:12%; padding-right:12%;">Log in</button>
+                    </div>
+                </div>
+
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
+
+            </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@section loginPageScript {
+    <script>
+        $(document).ready(function () {
+            $(document).keypress(function (event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    $("#loginForm").submit();
+                }
+            });
+        })
+        
+    </script>
+}

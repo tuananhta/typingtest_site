@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TA_Typing1.Models.WordDef>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.word.WContext)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.wType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.wDefinition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.wExample)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.word.WContext)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.wType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.wDefinition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.wExample)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

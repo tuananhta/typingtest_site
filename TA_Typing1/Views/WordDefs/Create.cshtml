@@ -1,0 +1,92 @@
+﻿@model TA_Typing1.Models.WordDef
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "";
+}
+
+@{
+    <form method="post" id="create_def_form">
+        <input name="wordId" value="@ViewBag.currentWord" hidden="hidden" />
+        @Html.AntiForgeryToken();
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Word</h4>
+                </div>
+                <div class="modal-body text-justify background3 container">
+                    <div class="form-horizontal container">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Word type</h4>
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <select name="wType" id="wType" class="form-control center-block">
+                                    <option value="n">noun</option>
+                                    <option value="v">verb</option>
+                                    <option value="adj">adjective</option>
+
+                                    <option value="adv">adverb</option>
+                                    <option value="pro">pronoun</option>
+                                    <option value="prep">preposition</option>
+                                    <option value="conj">conjunction</option>
+                                    <option value="det">determiner</option>
+                                    <option value="excl">exclamation</option>
+                                </select>                            
+                                @Html.ValidationMessageFor(model => model.wType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Definition</h4>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.wDefinition, new { htmlAttributes = new { @class = "form-control center-block" } })
+                                @Html.ValidationMessageFor(model => model.wDefinition, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Example</h4>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.wExample, new { htmlAttributes = new { @class = "form-control center-block" } })
+                                @Html.ValidationMessageFor(model => model.wExample, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#create_def_form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: '@Url.Action("create", "worddefs")',
+                type: "POST",
+                data: $('#create_def_form').serialize(),
+                success: function (data) {
+                    $(".modalFrame").empty().append(data);
+                },
+            });
+        });
+    })
+</script>
