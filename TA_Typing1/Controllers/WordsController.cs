@@ -131,10 +131,10 @@ namespace TA_Typing1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Word word)
         {
-            if (word.WContext != null)
+            /*if (word.WContext != null)
             {
                 word.WContext = word.WContext.Trim();
-            }
+            }*/
             
             if (ModelState.IsValid)
             {
