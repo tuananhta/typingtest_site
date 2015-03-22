@@ -51,10 +51,7 @@ textarea {
     border: 1.5px groove #808080;
 }
 
-.refresh-btn:hover {
-    color:#f6f6f6;
-}
-#refresh-btn, .refresh-btn {
+.refresh-btn, .refresh-btn {
     color: #FFF;
     border-top-color: #1992da;
     border-left-color: #0c75bb;
@@ -71,7 +68,7 @@ textarea {
     background-image: linear-gradient(to bottom,#37aaea 0,#117ed2 100%);
 }
 
-    #refresh-btn:hover {
+    .refresh-btn:hover {
         color: #FFF;
         border-top-color: #37aaea;
         border-left-color: #37aaea;
@@ -86,27 +83,6 @@ textarea {
         background: -moz-linear-gradient(top,#37aaea,#117ed2);
         background-image: -o-linear-gradient(top,#37aaea 0,#117ed2 100%);
         background-image: linear-gradient(to bottom,#37aaea 0,#117ed2 100%);
-    }
-
-#opt-btn {
-    padding-top: 10px;
-    background: #ebd5bf;
-    background-image: -webkit-linear-gradient(top, #ebd5bf, #f2dbc2);
-    background-image: -moz-linear-gradient(top, #ebd5bf, #f2dbc2);
-    background-image: -ms-linear-gradient(top, #ebd5bf, #f2dbc2);
-    background-image: -o-linear-gradient(top, #ebd5bf, #f2dbc2);
-    background-image: linear-gradient(to bottom, #ebd5bf, #f2dbc2);
-    -webkit-border-radius: 7;
-    -moz-border-radius: 7;
-}
-
-    #opt-btn:hover {
-        background: #e8d5c3;
-        background-image: -webkit-linear-gradient(top, #e8d5c3, #f1e5da);
-        background-image: -moz-linear-gradient(top, #e8d5c3, #f1e5da);
-        background-image: -ms-linear-gradient(top, #e8d5c3, #f1e5da);
-        background-image: -o-linear-gradient(top, #e8d5c3, #f1e5da);
-        background-image: linear-gradient(to bottom, #e8d5c3, #f1e5da);
     }
 
 .create-btn {

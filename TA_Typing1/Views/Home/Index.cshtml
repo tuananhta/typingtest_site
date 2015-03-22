@@ -41,14 +41,13 @@
         <div class="row">
             <!-- OPTION -->
             <div class="col-sm-3 text-center center-block">
-                <h3 class="hidden-xs">Typing option</h3>
+                <h3>Use your words?</h3>
                 <br />
                 <!--
                     Modal button
                 -->
-                <div class="btn btn-default btn-lg" data-toggle="modal" data-target="#optionPrg" id="opt-btn">
-                    <h5 style="margin-bottom:0px; padding-top:0px;">More options</h5><hr style="margin-bottom:10px; margin-top:0px; color:#000000; background-color:#000000; opacity:1; height:0.05em" />
-                    <div class="glyphicon glyphicon-hand-up" style="font-size:30px; font-weight:500"></div>
+                <div class="btn btn-primary refresh-btn" data-toggle="modal" data-target="#optionPrg" id="opt-btn">
+                    <span style="margin-bottom:0px; padding-top:0px; font-size:16px;">Try now <span class="glyphicon glyphicon-step-forward"></span></span>
                 </div>
                 <br />
                 <!-- Modal -->
@@ -142,7 +141,7 @@
                 <div class="text-center center-block">
                     <input type=text id="typed" name="typed" size=50 class="form-inline img-rounded table-bordered" autocomplete="off" autofocus />
                     <br /><br />
-                    <button type="button" class="btn btn-primary" aria-label="Left Align" onclick="window.location = '@Url.Action("index", "home", new { skp_ad = "on" })';" id="refresh-btn">
+                    <button type="button" class="btn btn-danger" aria-label="Left Align" onclick="window.location = '@Url.Action("index", "home", new { skp_ad = "on" })';" id="refresh-btn">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         Restart
                     </button>
