@@ -8,59 +8,187 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <h2>Words List</h2>
-            <div data-url="@Url.Action("create", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create New</div>
         </div>
     </div>
+</div>
+<hr />
+<div class="container" id="header2-flash-cards">
+    <div class="col-sm-2 col-sm-offset-2 text-center margin-top-bottom">
+        <div data-url="@Url.Action("createmultiple", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Multiple Words</div>
+    </div>
+    <div class="col-sm-2 text-center margin-top-bottom">
+        <div data-url="@Url.Action("createsingle", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Word</div>
+    </div>
+    <div class="col-sm-2 text-center margin-top-bottom">
+        <div data-url="@Url.Action("createphrase", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Phrase</div>
+    </div>
+    <div class="col-sm-2 text-center margin-top-bottom">
+        <span id="show-search-word-btn" onclick="showSearchWordsTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> Find words</span>
+        <span id="hide-search-word-btn" onclick="hideSearchWordsTab()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
+    </div>
+</div>
+
+<div class="container center-block text-center">
+
+    <table id="search-words-tab" class="form-inline text-center col-xs-12 background1" hidden="hidden" style="margin-top:20px;">
+        <tr>
+            <td>
+                <div class="container" style="margin:10px;">
+                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">Search Words</h3></div>
+                    <div class="col-sm-7 text-left margin-top-bottom">
+                        <form id="searchWord">
+                            <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+                                <input name="s_word" autocomplete="off" class="form-control" placeholder="Enter the word" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="text" maxlength="30">
+                                <span class="btn input-group-addon refresh-btn" onclick="$('#searchWord').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                            </span>
+                        </form>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="container" style="margin:10px;">
+                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">Search by date</h3></div>
+                    <div class="col-sm-7 text-left margin-top-bottom">
+                        <form id="searchDate">
+                            <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input name="s_date" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date">
+                                <span class="btn input-group-addon refresh-btn" onclick="$('#searchDate').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>      
+    </table>
 </div>
 <div><hr /><br /></div>
 <div class="container">
     <div class="col-md-8 col-md-offset-2" style="background: linear-gradient(to bottom, #fff 60%, #f2f2f2 80%);">
-        <table class="table table-responsive">
-            <tr>
-                <th></th>
-                <th>
-                    Vocabulary
-                </th>
-                <th></th>
-                <th>Last Modified</th>
-                <th></th>
-                <th></th>
-            </tr>
+        <!-- test -->
+        <div class="container" role="tabpanel">
             @{
-                var count = 0;
-
+                var wordsCount = 0;
+                var phraseCount = 0;
+                ICollection<TA_Typing1.Models.Word> phrase = new List<TA_Typing1.Models.Word>();
+                
                 foreach (var item in Model)
                 {
-                    count++;
-                    <tr>
-                        <td>
-                            <span class="text-info">@count.</span>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.WContext)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("details", "words", new { id = item.Id })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-book"></span> definition</a>
-                        </td>
-                        <td>
-                            <span style="font-size:smaller">
-                                @Html.DisplayFor(modelItem => item.CreatedTime)
-                            </span>
-                        </td>
-                        <td>
-                            <div data-url="@Url.Action("edit", "words", new { id = item.Id })" class="btn btn-default btn-xs openModal background-gold"><span class="glyphicon glyphicon-edit"></span> edit</div>
-                        </td>
-                        <td>
-                            <div data-url="@Url.Action("delete", "words", new { id = item.Id })" class="btn btn-danger btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> delete</div>
-                        </td>
-                    </tr>
+                    if (item.Level == -1)
+                    {
+                        phrase.Add(item);
+                        phraseCount++;
+                    }
+                    else
+                    {
+                        wordsCount++;
+                    }
                 }
-
             }
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#tab-words" aria-controls="tab-words" role="tab" data-toggle="tab">Words (@wordsCount)</a></li>
+                <li role="presentation"><a href="#tab-phrases" aria-controls="profile" role="tab" data-toggle="tab">Phrases (@phraseCount)</a></li>
+            </ul>
 
-        </table>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Tab 1 Words -->
+                <div role="tabpanel" class="tab-pane fade in active" id="tab-words">
+                    <table class="table table-responsive">
+                        <tr>
+                            <th></th>
+                            <th>
+                                Vocabulary
+                            </th>
+                            <th>Created</th>
+                            <th class="text-center">Edit word, add definitions</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        @{
+                            var count = 0;
+
+                            foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <td>
+                                        <span class="text-info">@count.</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WContext)
+                                    </td>
+                                    <td>
+                                        <span style="font-size:smaller">
+                                            @Html.DisplayFor(modelItem => item.CreatedTime)
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("details", "words", new { id = item.Id })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-book"></span> edit details</a>
+                                    </td>
+                                    <td>
+                                        <div data-url="@Url.Action("delete", "words", new { id = item.Id })" class="btn btn-danger btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> delete</div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+
+                    </table>
+                </div>
+                <!-- Tab 2 Phrase -->
+                <div role="tabpanel" class="tab-pane fade" id="tab-phrases">
+                    <table class="table table-responsive">
+                        <tr>
+                            <th></th>
+                            <th>
+                                Phrase
+                            </th>
+                            <th>Created</th>
+                            <th class="text-center">Edit phrase, add definitions</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        @{
+                            count = 0;
+
+                            foreach (var item in phrase)
+                            {
+                                count++;
+                                <tr>
+                                    <td>
+                                        <span class="text-info">@count.</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.WContext)
+                                    </td>
+                                    <td>
+                                        <span style="font-size:smaller">
+                                            @Html.DisplayFor(modelItem => item.CreatedTime)
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("details", "words", new { id = item.Id })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-book"></span> edit details</a>
+                                    </td>
+                                    <td>
+                                        <div data-url="@Url.Action("delete", "words", new { id = item.Id })" class="btn btn-danger btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> delete</div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-2"></div>
 </div>
 
 <!--    POPUP MODAL    -->

@@ -1,0 +1,73 @@
+﻿@model TA_Typing1.Models.Word
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "";
+}
+
+@using (Html.BeginForm("create", "words", FormMethod.Post, new { @id = "create-word-form" }))
+{
+    <div class="modal-dialog container">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create Single Word</h4>
+            </div>
+            <div class="modal-body text-justify background3 container">
+                <!-- Content is here -->
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group container center-block text-center">
+                    <div class="col-xs-4 text-center">
+                        <h4>Input new word</h4>
+                    </div>
+                    <div class="col-xs-8 text-left">
+                        @Html.EditorFor(model => model.WContext, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "margin-left: auto; margin-right: auto;" } })
+                        @Html.ValidationMessageFor(model => model.WContext, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group container center-block text-center">
+                    <div class="col-xs-4 text-center"><h4>Pronounciation</h4></div>
+                    <div class="col-xs-8 text-left">
+                        @Html.EditorFor(model => model.WPronounce, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @style = "margin-left: auto; margin-right: auto;" } })
+                        @Html.ValidationMessageFor(model => model.WPronounce, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @if (User.Identity.Name == "admin")
+                {
+                    <div class="form-group container center-block text-center">
+                        <div class="col-xs-4 text-center"><h4>Level</h4></div>
+                        <div class="col-xs-8">
+                            <select name="level" id="level" class="form-control text-box single-line" style="margin-left: auto; margin-right: auto;">
+                                <option value="1">200 common words</option>
+                                <option value="2">500 common words</option>
+                                <option value="3">1000 common words</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                <!--End of content-->
+            </div>
+            <div class="modal-footer">
+                <button type="submit" value="" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#create-word-form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "@Url.Action("createsingle","words")",
+                type: "POST",
+                data: $('#create-word-form').serialize(),
+                success: function (data) {
+                    $(".modalFrame").empty().append(data);
+                },
+            });
+        });
+    })
+</script>

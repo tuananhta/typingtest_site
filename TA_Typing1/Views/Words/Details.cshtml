@@ -15,9 +15,41 @@
 <br />
 <div class="container" style="background-color:#e9e9e9; border-top:0.02em solid #808080; border-bottom:0.02em solid #808080">
     <div class="col-md-8 col-md-offset-2 text-center">
-        <h3><span class="text-primary">@Html.DisplayFor(model => model.WContext)</span></h3>
+        <div class="row container">
+            <div class="col-xs-3 col-xs-offset-2 right">
+                <h3>
+                    @if (ViewBag.prevWord == null)
+                    {
+                        <a disabled class="btn btn-default btn-sm disabled" style="opacity:0.4;"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("details", "words", new { id = ViewBag.prevWord })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                    }
+                </h3>
+            </div>
+
+            <h3><span class="text-primary col-xs-2 left"> @Html.DisplayFor(model => model.WContext) </span></h3>
+            <div class="col-xs-3">
+                @if (ViewBag.nextWord == null)
+                {
+                    <a disabled class="btn btn-default btn-sm disabled" style="opacity:0.4;"><span class="glyphicon glyphicon-fast-forward"></span></a>
+                }
+                else
+                {
+                    <a href="@Url.Action("details", "words", new { id = ViewBag.nextWord })" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-fast-forward"></span></a>
+                }
+            </div>
+
+        </div>
+        <h4>
+            <span class="text-muted">
+                @{ if (Model.WPronounce != null)
+                 {<span>/@Html.DisplayFor(model => model.WPronounce)/</span> }}
+            </span>
+        </h4>
         <h6>
-            <i><span class="text-muted">Last modified : @Html.DisplayFor(model => model.CreatedTime)</span></i>
+            <i><span class="text-muted">Created : @Html.DisplayFor(model => model.CreatedTime)</span></i>
         </h6>
         <h6>
             <i><a href="@Url.Action("index")"><span class="glyphicon glyphicon-arrow-left"></span> Back to words list</a></i>
@@ -25,14 +57,21 @@
     </div>
     <br />
     <div class="container text-center center-block">
-        <div class="col-md-2 col-md-offset-4" style="margin-top:10px; margin-bottom:10px;">
-            <div data-url="@Url.Action("create", "worddefs", new { wId = Model.Id })" class="btn btn-default openModal"><span class="glyphicon glyphicon-plus-sign"></span> Add definitions</div>           
+        <div class="col-md-2 col-md-offset-3" style="margin-top:10px; margin-bottom:10px;">
+            <div data-url="@Url.Action("create", "worddefs", new { wId = Model.Id })" class="btn btn-default openModal"><span class="glyphicon glyphicon-plus-sign"></span> Add definitions</div>
         </div>
         <!--
             Edit word button modal
         -->
         <div class="col-md-2" style="margin-top:10px; margin-bottom:10px;">
             <div data-url="@Url.Action("edit", "words", new { id = Model.Id })" class="btn btn-default openModal"><span class="glyphicon glyphicon-edit"></span> Edit word</div>
+        </div>
+        <!--
+            Delete
+        -->
+        <div class="col-md-2" style="margin-top:10px; margin-bottom:10px;">
+
+            <div data-url="@Url.Action("delete", "words", new { id = Model.Id })" class="btn btn-default openModal"><span class="glyphicon glyphicon-trash"></span> Delete word</div>
         </div>
         <!--
             Edit modal

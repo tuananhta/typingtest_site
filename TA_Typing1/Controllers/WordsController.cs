@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
 using TA_Typing1.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,9 +25,31 @@ namespace TA_Typing1.Controllers
         }
 
         // GET: Words
-        public ActionResult Index()
+        public ActionResult Index(string s_word = null, string s_date = "")
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
+            IEnumerable<Word> Words;
+            if (s_word != null)
+            {
+                Words = db.Words.ToList().Where(w => w.WContext.ToLower().Contains(s_word.ToLower()));
+                return View(Words);
+            }
+            else if (s_date != "")
+            {
+                string[] formats = {"d/M/yyyy", "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d",
+                                       "d-M-yyyy", "dd-MM-yyyy", "d-MM-yyyy", "dd-M-yyyy","yyyy-MM-dd", "yyyy-M-dd", "yyyy-MM-d", "yyyy-M-d" };
+                DateTime date_query_real;
+                if (!DateTime.TryParseExact(s_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date_query_real))
+                {
+                    throw new KeyNotFoundException(); //no thing at all
+                }
+
+                date_query_real = Convert.ToDateTime(s_date);
+
+                Words = db.Words.ToList().Where(w => w.CreatedTime.Date == date_query_real);
+                return View(Words);
+            }
+
             return View(db.Words.ToList().Where(word => word.User.Id == currentUser.Id));
         }
 
@@ -38,36 +61,89 @@ namespace TA_Typing1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           
+
             Word word = db.Words.Find(id);
+
             if (word == null)
             {
                 return HttpNotFound();
             }
-            else if(word.User != currentUser)
+            else if (word.User != currentUser)
             {
                 // not authorized
                 return HttpNotFound();
             }
 
+            IEnumerable<Word> nextWords = db.Words.ToList().Where(w => w.Id > word.Id && w.User.Id == currentUser.Id).OrderByDescending( w=> w.Id);
+            IEnumerable<Word> prevWords = db.Words.ToList().Where(w => w.Id > 0 && w.Id < word.Id && w.User.Id == currentUser.Id).OrderByDescending(w=>w.Id);
+            if (nextWords.Count() == 0)
+            {
+                @ViewBag.nextWord = null;
+            }
+            else
+            {
+                @ViewBag.nextWord = nextWords.Last().Id;
+            }
+
+            if (prevWords.Count() == 0)
+            {
+                @ViewBag.prevWord = null;
+            }
+            else
+            {
+                @ViewBag.prevWord = prevWords.First().Id;
+            }
             // The list of word defs are added
-            word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == id);
+            word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == word.Id);
 
             return View(word);
         }
 
         // GET: Words/Create
-        public ActionResult Create()
+        public ActionResult CreateSingle()
         {
             return View();
         }
 
-        // POST: Words/Create
+        // POST: Words/CreateSingle
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="WContext, Level")] Word words)
+        public ActionResult CreateSingle(Word word)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            string defaultColor = "flash-default";
+
+            if (ModelState.IsValid)
+            {
+                word.WContext = word.WContext.Trim();
+                word.Level = 1; // phrase
+                word.User = currentUser;
+                word.fColor = defaultColor;
+                word.CreatedTime = DateTime.UtcNow;
+                db.Words.Add(word);
+                db.SaveChanges();
+                ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
+
+                return PartialView("_RedirectPage");
+            }
+
+            return View();
+        }
+
+        // GET: Words/CreateMultiple
+        public ActionResult CreateMultiple()
+        {
+            return View();
+        }
+
+        // POST: Words/CreateMultiple
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateMultiple([Bind(Include="WContext, Level")] Word words)
         {
             var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
             string defaultColor = "flash-default";
@@ -79,7 +155,6 @@ namespace TA_Typing1.Controllers
 
                     Word ipWord = words;
                     ipWord.Level = words.Level;
-                    ipWord.CreatedTime = DateTime.Now;
                     ipWord.User = currentUser;
 
                     for (int i = 0; i < word.Length; ++i)
@@ -91,12 +166,44 @@ namespace TA_Typing1.Controllers
 
                         ipWord.WContext = word[i];
                         ipWord.fColor = defaultColor;
+                        ipWord.CreatedTime = DateTime.UtcNow;
                         db.Words.Add(ipWord);
                         db.SaveChanges();
                     }
                     
                     return PartialView("_RedirectPage");
                 }
+
+            return View();
+        }
+
+        // GET: Words/CreatePhrase
+        public ActionResult CreatePhrase()
+        {
+            return View();
+        }
+
+        // POST: Words/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePhrase(Word word)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            string defaultColor = "flash-default";
+            if (ModelState.IsValid)
+            {
+                word.Level = -1; // phrase
+                word.User = currentUser;
+                word.fColor = defaultColor;
+                word.CreatedTime = DateTime.UtcNow;
+                db.Words.Add(word);
+                db.SaveChanges();
+                ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
+              
+                return PartialView("_RedirectPage");
+            }
 
             return View();
         }
@@ -138,10 +245,9 @@ namespace TA_Typing1.Controllers
             
             if (ModelState.IsValid)
             {
-                word.CreatedTime = DateTime.Now;
                 db.Entry(word).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.redirectUrl = Url.Action("index");
+                ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
                 return PartialView("_RedirectPage");
             }
 

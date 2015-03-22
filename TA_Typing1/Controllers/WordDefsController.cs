@@ -61,6 +61,7 @@ namespace TA_Typing1.Controllers
                 if (currentWord.User.Id == currentUser.Id)
                 {
                     ViewBag.currentWord = currentWord.Id;
+                    ViewBag.currentWordContent = currentWord.WContext;
                     return View();
                 }
                 else

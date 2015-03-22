@@ -45,7 +45,7 @@ namespace TA_Typing1.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    record.CreatedTime = DateTime.Now;
+                    record.CreatedTime = DateTime.Now.ToUniversalTime();
                     record.User = currentUser;
 
                     db.Records.Add(record);

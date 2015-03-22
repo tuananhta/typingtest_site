@@ -33,7 +33,6 @@
 
                         <ul class="nav navbar-nav">
                             <li class="text-center"><span class="navbar-text">@Html.ActionLink("Home", "index", routeValues: new { controller = "home", skp_ad = "on" }) </span></li>
-                            <li class="text-center"><span class="navbar-text">@Html.ActionLink("About", "about", "home")</span></li>
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <li class="text-center"><span class="navbar-text"> @Html.ActionLink("Words", "index", "words")</span></li>
@@ -51,9 +50,30 @@
 
             @RenderBody()
             <hr />
+            <!-- FOOTER -->
             <footer class="text-center">
-                <h5>&copy; @DateTime.Now.Year - Type Your Words</h5>
-                <h6 class="text-muted">Centria team, Kokkola, Finland</h6>
+                
+                <div class="col-md-6 col-md-push-6 text-center">
+                    <span>
+                        <span class="text-center" style="margin-right:15px;"><a style="color:#808080; font-size:14px;" href="@Url.Action("about","home")">About us</a></span>
+                        <span class="text-center" style="margin-right:15px;"><a style="color:#808080; font-size:14px;" href="@Url.Action("feedback", "home") ">How this works?</a></span>
+                        <span class="text-center" style="margin-right:15px;"><a style="color:#808080; font-size:14px;" href="@Url.Action("contact", "home") ">Contact</a></span>
+                        <span class="text-center" style="margin-right:25px;"><a style="color:#808080; font-size:14px;" href="@Url.Action("feedback", "home") ">Feedback</a></span>
+
+                        <span><a href=""><img src="~/Images/Socials/facebook500.png" class="icon_social" /></a></span>
+                        <span><a href=""><img src="~/Images/Socials/instagram.png" class="icon_social" /></a></span>
+                        <span><a href=""><img src="~/Images/Socials/skype.png" class="icon_social" /></a></span>
+                        <span><a href=""><img src="~/Images/Socials/email.png" class="icon_social" /></a></span>
+                        <span><a href=""><img src="~/Images/Socials/linkedin.png" class="icon_social" /></a></span>
+                        <span><a href=""><img src="~/Images/Socials/github.png" class="icon_social" /></a></span>
+                    </span>
+                </div>
+                <div class="col-md-4 col-md-pull-5 text-center container">
+                        <span style="color:#808080; font-size:14px;">&copy; @DateTime.Now.Year - Type Your Words</span>
+                        <span class="text-muted" style="font-size:13px; margin-left:20px">Centria team, Kokkola, Finland </span><br />
+                        <span> <img src="~/Images/Socials/finland.png" style="height:20px; margin-top:15px;" /></span>
+                        <span> <img src="~/Images/Socials/poland.png" style="height:20px; margin-left:10px; margin-top:15px;" /></span>
+                </div>
             </footer>
         </div>
 

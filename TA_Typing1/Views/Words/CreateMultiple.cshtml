@@ -1,0 +1,73 @@
+﻿@model TA_Typing1.Models.Word
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "";
+}
+
+@using (Html.BeginForm("createmultiple", "words", FormMethod.Post, new { @id = "create-word-multiple-form" }))
+{
+    <div class="modal-dialog container">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Create Words</h4>
+
+                <div class="container">
+
+                    <hr style="height:1px; background-color:black" />
+                    <label><span class="glyphicon glyphicon-info-sign text-danger"> </span></label><small> You can add more than 1 word at the same time. Every word has to be seperated by <strong>"space , . ? ! - _ &"</strong></small>
+
+                </div>
+            </div>
+            <div class="modal-body text-justify background3 container">
+                <!-- Content is here -->
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group container center-block text-center">
+                    <div class="col-lg-4 text-center">
+                        <h4>Input new sequence of words</h4>
+                    </div>
+                    <div class="col-lg-8">
+                        <textarea id="WContext" name="WContext" class="form-control text-box" rows="3" style="margin-left: auto; margin-right: auto;"></textarea>
+                        @Html.ValidationMessageFor(model => model.WContext, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @if (User.Identity.Name == "admin")
+                {
+                    <div class="form-group container center-block text-center">
+                        <div class="col-lg-4 text-center"><h4>Level</h4></div>
+                        <div class="col-lg-8">
+                            <select name="level" id="level" class="form-control text-box single-line" style="margin-left: auto; margin-right: auto;">
+                                <option value="1">200 common words</option>
+                                <option value="2">500 common words</option>
+                                <option value="3">1000 common words</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                <!--End of content-->
+            </div>
+            <div class="modal-footer">
+                <button type="submit" value="" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#create-word-multiple-form").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "@Url.Action("createmultiple","words")",
+                type: "POST",
+                data: $('#create-word-multiple-form').serialize(),
+            success: function (data) {
+                $(".modalFrame").empty().append(data);
+            },
+            });
+        });
+    })
+</script>

@@ -184,6 +184,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Icon\icon.png" />
+    <Content Include="Images\Icon\icon2.PNG" />
     <Content Include="Images\Logo\logo2.png" />
     <Content Include="Images\Logo\logo2_sm.png" />
     <Content Include="Images\Logo\logo4.png" />
@@ -195,6 +196,19 @@
     <Content Include="Images\Logo\logo6.PNG" />
     <Content Include="Images\Logo\logo6_lg.png" />
     <Content Include="Images\Logo\logo6_xs.png" />
+    <Content Include="Images\Socials\email.png" />
+    <Content Include="Images\Socials\facebook500.png" />
+    <Content Include="Images\Socials\finland.png" />
+    <Content Include="Images\Socials\flickr.png" />
+    <Content Include="Images\Socials\github.png" />
+    <Content Include="Images\Socials\googleplus.png" />
+    <Content Include="Images\Socials\hangouts.png" />
+    <Content Include="Images\Socials\instagram.png" />
+    <Content Include="Images\Socials\linkedin.png" />
+    <Content Include="Images\Socials\poland.png" />
+    <Content Include="Images\Socials\skype.png" />
+    <Content Include="Images\Socials\twitter.png" />
+    <Content Include="Images\Videos\ad1.mp4" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
@@ -233,7 +247,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -244,7 +260,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Words\Create.cshtml" />
+    <Content Include="Views\Words\CreateSingle.cshtml" />
     <Content Include="Views\Words\Delete.cshtml" />
     <Content Include="Views\Words\Details.cshtml" />
     <Content Include="Views\Words\Edit.cshtml" />
@@ -263,6 +279,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Words\flashCards.cshtml" />
     <Content Include="Views\FlashCards\Index.cshtml" />
+    <Content Include="Views\Words\CreatePhrase.cshtml" />
+    <Content Include="Views\Words\CreateMultiple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
