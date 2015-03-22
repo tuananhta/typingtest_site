@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Register";
 }
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id="register-modal-form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "register-modal-form" }))
 {
     <div class="modal-dialog">
         <div class="modal-content" style="margin-left:auto; margin-right:auto; width:350px;">
@@ -70,20 +70,3 @@
         </div>
     </div>
 }
-
-
-<script>
-    $(document).ready(function () {
-        $("#register-modal-form").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: "@Url.Action("register","account")",
-                type: "POST",
-            data: $('#register-modal-form').serialize(),
-            success: function (data) {
-                $("#registerModal").empty().append(data);
-            },
-            });
-        });
-    })
-</script>

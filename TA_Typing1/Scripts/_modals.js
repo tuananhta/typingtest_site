@@ -21,6 +21,6 @@ function hideSearchWordsTab() {
     $('#show-search-word-btn').fadeIn('fast');
 }
 
-  $(function () {
-      $('#myTab a:last').tab('show')
-  })
+$(function () {
+    $('#myTab a:last').tab('show')
+})

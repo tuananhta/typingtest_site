@@ -18,18 +18,18 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a id="register-btn1" style="cursor:pointer" ><span class="glyphicon glyphicon-user"></span> Register</a>
+            <a id="register-btn1" style="cursor:pointer" onclick="$('#register-btn2').click();"><span class="glyphicon glyphicon-user"></span> Register</a>
         </li>
         <li>
-            <a id="login-btn1" style="cursor:pointer"><span class="glyphicon glyphicon-log-in"></span> Log in</a>
+            <a id="login-btn1" style="cursor:pointer" onclick="$('#login-btn2').click();"><span class=" glyphicon glyphicon-log-in">
+                </span> Log in</a>
         </li>
     </ul>
     <div hidden>
         <button id="register-btn2" data-toggle="modal" data-target="#registerModal">register</button>
         <button id="login-btn2" data-toggle="modal" data-target="#loginModal">login</button>
     </div>
-    
+
 }
 
 
- 

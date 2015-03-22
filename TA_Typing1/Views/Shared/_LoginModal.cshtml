@@ -8,7 +8,7 @@
 @{
     ViewBag.Title = "Log in";
 }
-@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @role = "form", id = "LoginFormModal" }))
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @role = "form", id = "LoginFormModal", }))
 {
     <input name="loginModal" id="loginModal" hidden="hidden" value="yes" />
     <input name="currentUrl" id="currentUrl" hidden="hidden"/>
@@ -67,19 +67,3 @@
         </div>
     </div>
 }
-
-<script>
-    $(document).ready(function () {
-        $("#LoginFormModal").submit(function (event) {
-            event.preventDefault();
-            $.ajax({
-                url: '@Url.Action("login", "account")',
-                type: "POST",
-                data: $('#LoginFormModal').serialize(),
-                success: function (data) {
-                    $("#loginModal").empty().append(data);
-                },
-            });
-        });
-    })
-</script>

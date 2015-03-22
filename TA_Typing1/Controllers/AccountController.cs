@@ -28,21 +28,19 @@ namespace AspnetIdentitySample.Controllers
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
-        //
+        // GET: /Account/LoginModal
+        [AllowAnonymous]
+        [ChildActionOnly]
+        public ActionResult LoginModal(string returnUrl)
+        {
+            return PartialView("_LoginModal");
+        }
+
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, string loginModal = "no")
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            if(loginModal == "yes")
-            {
-                return PartialView("_LoginModal");
-            }
-            else
-            {
-                return View();
-            }
-            
+        public ActionResult Login(string returnUrl)
+        {  
+            return View();
         }
 
         //
@@ -50,54 +48,55 @@ namespace AspnetIdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl ,string currentUrl, string loginModal = "no")
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string currentUrl, string loginModal = "no")
         {
-            if(loginModal == "yes"){
-                if (ModelState.IsValid)
+            if (loginModal == "yes")
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    ViewBag.redirectUrl = currentUrl;
-                    await SignInAsync(user, model.RememberMe);
-                    return PartialView("_RedirectPage");
+                    var user = await UserManager.FindAsync(model.UserName, model.Password);
+                    if (user != null)
+                    {
+                        ViewBag.redirectUrl = currentUrl;
+                        await SignInAsync(user, model.RememberMe);
+                        return Json(new { success = true, url = currentUrl });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid username or password.");
+                        return PartialView("_LoginModal");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                    return PartialView("_LoginModal");
-                }
-            }
                 // If we got this far, something failed, redisplay form
                 return PartialView("_LoginModal");
             }
-                // not modal
-            else{
-                if (ModelState.IsValid)
+            // not modal
+            else
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
-                if (user != null)
-                {                   
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
-                }
-                else
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                    return PartialView("_LoginModal");
+                    var user = await UserManager.FindAsync(model.UserName, model.Password);
+                    if (user != null)
+                    {
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid username or password.");
+                        return PartialView("_LoginModal");
+                    }
                 }
-            }
                 // If we got this far, something failed, redisplay form
-            return View(model);
+                return View(model);
             }
-            
 
-            
         }
 
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [ChildActionOnly]
         public ActionResult Register()
         {
             return PartialView("_RegisterModal");
@@ -123,8 +122,8 @@ namespace AspnetIdentitySample.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    ViewBag.redirectUrl = Url.Action("index","home");
-                    return PartialView("_RedirectPage");
+                    ViewBag.redirectUrl = Url.Action("index", "home");
+                    return Json(new { success = true, url = "/home"});
                 }
                 else
                 {
