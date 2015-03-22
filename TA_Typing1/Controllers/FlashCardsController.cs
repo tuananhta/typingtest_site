@@ -43,7 +43,7 @@ namespace TA_Typing1.Controllers
                     DateTime currentDate = DateTime.Today;
                     DayOfWeek currentDay = DateTime.Now.DayOfWeek;
                     DayOfWeek monDay =  DayOfWeek.Monday;
-                    int diff = currentDay - monDay;
+                    int diff = (7 + (currentDay - monDay)) % 7;
                     int totalDays = diff;
                     @ViewBag.boardInfo = "This week: " + DateTime.Today.AddDays(-diff).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
 
@@ -54,7 +54,7 @@ namespace TA_Typing1.Controllers
                     DateTime currentDate = DateTime.Today;
                     DayOfWeek currentDay = DateTime.Now.DayOfWeek;
                     DayOfWeek monDay =  DayOfWeek.Monday;
-                    int diff = currentDay - monDay;
+                    int diff = (7+(currentDay - monDay))%7;
                     int totalDays = diff + (week_query-1)*7;
                     @ViewBag.boardInfo = week_query + " week(s): " + DateTime.Today.AddDays(-totalDays).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
 
