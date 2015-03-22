@@ -116,6 +116,9 @@
                             foreach (var item in Model)
                             {
                                 count++;
+                                if (item.Level == -1) {
+                                    continue;
+                                }
                                 <tr>
                                     <td>
                                         <span class="text-info">@count.</span>
