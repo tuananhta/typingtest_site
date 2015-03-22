@@ -208,6 +208,7 @@
     <Content Include="Images\Socials\poland.png" />
     <Content Include="Images\Socials\skype.png" />
     <Content Include="Images\Socials\twitter.png" />
+    <Content Include="Images\Socials\vietnam.png" />
     <Content Include="Images\Videos\ad1.mp4" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
