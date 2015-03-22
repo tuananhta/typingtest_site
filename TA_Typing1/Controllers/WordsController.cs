@@ -238,16 +238,11 @@ namespace TA_Typing1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Word word)
         {
-            /*if (word.WContext != null)
-            {
-                word.WContext = word.WContext.Trim();
-            }*/
-            
             if (ModelState.IsValid)
             {
                 db.Entry(word).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
+                ViewBag.redirectUrl = Url.Action("index");
                 return PartialView("_RedirectPage");
             }
 

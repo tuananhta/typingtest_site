@@ -130,35 +130,35 @@
         <script src="~/Scripts/_modals.js" type="text/javascript"></script>
         <!-- LOGIN; SIGN UP JS -->
         <script>
-            $("#LoginFormModal").submit(function (event) {
-                event.preventDefault();
-                $.ajax({
-                    url: 'account/login',
-                    type: "POST",
-                    data: $('#LoginFormModal').serialize(),
-                    success: function (data) {
-                        if (data.success == true) {
-                            window.location = data.url;
-                        }
-                        $("#loginModal").empty().append(data);
-                    },
-                });
-            });
+    $("#LoginFormModal").submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '@Url.Action("login","account")',
+            type: "POST",
+            data: $('#LoginFormModal').serialize(),
+            success: function (data) {
+                if (data.success == true) {
+                    window.location = data.url;
+                }
+                $("#loginModal").empty().append(data);
+            },
+        });
+    });
 
-            $("#register-modal-form").submit(function (event) {
-                event.preventDefault();
-                $.ajax({
-                    url: "@Url.Action("register","account")",
-                    type: "POST",
-                data: $('#register-modal-form').serialize(),
-                success: function (data) {
-                    if (data.success == true) {
-                        window.location = data.url;
-                    }
-                    $("#registerModal").empty().append(data);
-                },
-                });
-            });
+    $("#register-modal-form").submit(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: "@Url.Action("register","account")",
+            type: "POST",
+            data: $('#register-modal-form').serialize(),
+            success: function (data) {
+                if (data.success == true) {
+                    window.location = data.url;
+                }
+                $("#registerModal").empty().append(data);
+            },
+        });
+    });
         </script>
     </div>
 </body>

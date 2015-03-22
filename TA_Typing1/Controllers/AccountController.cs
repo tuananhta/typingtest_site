@@ -123,7 +123,7 @@ namespace AspnetIdentitySample.Controllers
                 {
                     await SignInAsync(user, isPersistent: false);
                     ViewBag.redirectUrl = Url.Action("index", "home");
-                    return Json(new { success = true, url = "/home"});
+                    return Json(new { success = true, url = "/home/index"});
                 }
                 else
                 {
