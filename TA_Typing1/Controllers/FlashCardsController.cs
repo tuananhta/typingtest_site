@@ -104,7 +104,6 @@ namespace TA_Typing1.Controllers
                 else
                 {
                     wordFounded.fColor = word.fColor;
-                    wordFounded.CreatedTime = DateTime.Now;
 
                     db.Entry(wordFounded).State = EntityState.Modified;
                     db.SaveChanges();
