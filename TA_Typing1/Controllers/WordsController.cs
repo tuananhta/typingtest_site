@@ -242,7 +242,7 @@ namespace TA_Typing1.Controllers
             {
                 db.Entry(word).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.redirectUrl = Url.Action("detail", "words", new { id = word.Id });
+                ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
                 return PartialView("_RedirectPage");
             }
 
