@@ -251,7 +251,7 @@ namespace TA_Typing1.Controllers
                 wDetail.WContext = word.WordDetail.WContext;
                 wDetail.WPronounce = word.WordDetail.WPronounce;
                 word.WordDetail = wDetail;
-                word.CreatedTime = word.CreatedTime.AddDays(-1);
+                //word.CreatedTime = word.CreatedTime.AddDays(-1);
 
                 db.Entry(word).State = EntityState.Modified;
                 db.SaveChanges();
