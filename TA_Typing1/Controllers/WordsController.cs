@@ -33,7 +33,7 @@ namespace TA_Typing1.Controllers
             IEnumerable<Word> Words;
             if (s_word != null)
             {
-                Words = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()));              
+                Words = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()) && w.User == currentUser);              
                 return View(Words);
             }
             else if (s_date != "")
@@ -48,11 +48,11 @@ namespace TA_Typing1.Controllers
 
                 date_query_real = Convert.ToDateTime(s_date);
 
-                Words = db.Words.ToList().Where(w => w.CreatedTime.Date == date_query_real);
+                Words = db.Words.ToList().Where(w => w.CreatedTime.Date == date_query_real && w.User == currentUser);
                 return View(Words);
             }
 
-            return View(db.Words.ToList().Where(word => word.User.Id == currentUser.Id));
+            return View(db.Words.ToList().Where(word => word.User == currentUser));
         }
 
         // GET: Words/Details/5
