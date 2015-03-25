@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using TA_Typing1.Models;
+using TA_Typing1.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace TA_Typing1.Controllers
     [Authorize]
     public class WordsController : Controller
     {
+        static string fColor = "flash-default";
         private MyDbContext db;
         private UserManager<ApplicationUser> manager;
         public WordsController()
@@ -31,7 +33,7 @@ namespace TA_Typing1.Controllers
             IEnumerable<Word> Words;
             if (s_word != null)
             {
-                Words = db.Words.ToList().Where(w => w.WContext.ToLower().Contains(s_word.ToLower()));
+                Words = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()));              
                 return View(Words);
             }
             else if (s_date != "")
@@ -112,19 +114,20 @@ namespace TA_Typing1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSingle(Word word)
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            string defaultColor = "flash-default";
+            var currentUser = manager.FindById(User.Identity.GetUserId());          
 
             if (ModelState.IsValid)
             {
-                word.WContext = word.WContext.Trim();
-                word.Level = 1; // phrase
+                word.WordDetail.WContext = word.WordDetail.WContext.Trim();
+                word.WordDetail.Level = 1; // phrase
                 word.User = currentUser;
-                word.fColor = defaultColor;
                 word.CreatedTime = DateTime.UtcNow;
+                word.WordDetail.CreatedTime = DateTime.UtcNow;
                 db.Words.Add(word);
+                db.WordDetail.Add(word.WordDetail);
                 db.SaveChanges();
                 ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
+                new FlashCardsController().CreateFlashCard(word, fColor);
 
                 return PartialView("_RedirectPage");
             }
@@ -143,18 +146,17 @@ namespace TA_Typing1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateMultiple([Bind(Include="WContext, Level")] Word words)
+        public ActionResult CreateMultiple(Word words)
         {
-            var currentUser = await manager.FindByIdAsync(User.Identity.GetUserId());
-            string defaultColor = "flash-default";
-                if (ModelState.IsValid)
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            if (ModelState.IsValid)
                 {
                     ViewBag.redirectUrl = Url.Action("index");
                     char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n' , '-', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-                    string[] word = words.WContext.Split(delimiterChars);
+                    string[] word = words.WordDetail.WContext.Split(delimiterChars);
 
                     Word ipWord = words;
-                    ipWord.Level = words.Level;
+                    ipWord.WordDetail.Level = words.WordDetail.Level;
                     ipWord.User = currentUser;
 
                     for (int i = 0; i < word.Length; ++i)
@@ -164,11 +166,14 @@ namespace TA_Typing1.Controllers
                         if(word[i] == "")
                             continue;                 
 
-                        ipWord.WContext = word[i];
-                        ipWord.fColor = defaultColor;
+                        ipWord.WordDetail.WContext = word[i];
                         ipWord.CreatedTime = DateTime.UtcNow;
+                        ipWord.WordDetail.WType = 1; // word
+                        ipWord.WordDetail.CreatedTime = ipWord.CreatedTime;
                         db.Words.Add(ipWord);
+                        db.WordDetail.Add(ipWord.WordDetail);
                         db.SaveChanges();
+                        new FlashCardsController().CreateFlashCard(ipWord, fColor);
                     }
                     
                     return PartialView("_RedirectPage");
@@ -191,17 +196,18 @@ namespace TA_Typing1.Controllers
         public ActionResult CreatePhrase(Word word)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            string defaultColor = "flash-default";
             if (ModelState.IsValid)
             {
-                word.Level = -1; // phrase
                 word.User = currentUser;
-                word.fColor = defaultColor;
                 word.CreatedTime = DateTime.UtcNow;
+                word.WordDetail.CreatedTime = word.CreatedTime;
+                word.WordDetail.WType = 2;
                 db.Words.Add(word);
+                db.WordDetail.Add(word.WordDetail);
                 db.SaveChanges();
                 ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
-              
+                new FlashCardsController().CreateFlashCard(word, fColor);
+                    
                 return PartialView("_RedirectPage");
             }
 
@@ -240,7 +246,12 @@ namespace TA_Typing1.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(word).State = EntityState.Modified;
+                WordDetail wDetail = db.WordDetail.First(wd => wd.Id == word.WordDetail.Id);
+                wDetail.CreatedTime = DateTime.Today;
+                wDetail.WContext = word.WordDetail.WContext;
+                wDetail.WPronounce = word.WordDetail.WPronounce;
+
+                db.Entry(wDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
                 return PartialView("_RedirectPage");
@@ -281,21 +292,6 @@ namespace TA_Typing1.Controllers
             db.Words.Remove(word);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        // flash Cards function
-        public ActionResult flashCards()
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());
-            IEnumerable<Word> Words = db.Words.ToList().Where(w => w.User.Id == currentUser.Id);
-
-            foreach(var word in Words)
-            {
-                // The list of word defs are added
-                word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == word.Id);
-            }
-
-            return View(Words);
         }
 
         protected override void Dispose(bool disposing)

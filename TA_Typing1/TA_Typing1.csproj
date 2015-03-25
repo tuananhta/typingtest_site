@@ -168,13 +168,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FlashCard.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Word.cs" />
     <Compile Include="Models\WordDef.cs" />
+    <Compile Include="Models\WordDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\FlashCardModelView.cs" />
+    <Compile Include="ViewModels\WordModelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -183,6 +187,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Icon\fav_false.png" />
+    <Content Include="Images\Icon\fav_true.png" />
     <Content Include="Images\Icon\icon.png" />
     <Content Include="Images\Icon\icon2.PNG" />
     <Content Include="Images\Logo\logo2.png" />
@@ -214,6 +220,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Properties\PublishProfiles\site1.pubxml" />
     <None Include="Properties\PublishProfiles\typing.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -278,14 +285,12 @@
     <Content Include="Views\Shared\_RegisterModal.cshtml" />
     <Content Include="Views\Shared\_RedirectPage.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Words\flashCards.cshtml" />
     <Content Include="Views\FlashCards\Index.cshtml" />
     <Content Include="Views\Words\CreatePhrase.cshtml" />
     <Content Include="Views\Words\CreateMultiple.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

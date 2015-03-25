@@ -78,7 +78,7 @@
                 
                 foreach (var item in Model)
                 {
-                    if (item.Level == -1)
+                    if (item.WordDetail.WType == 2)
                     {
                         phrase.Add(item);
                         phraseCount++;
@@ -116,7 +116,8 @@
                             foreach (var item in Model)
                             {
                                 count++;
-                                if (item.Level == -1) {
+                                if (item.WordDetail.WType == 2)
+                                {
                                     continue;
                                 }
                                 <tr>
@@ -124,7 +125,7 @@
                                         <span class="text-info">@count.</span>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.WContext)
+                                        @Html.DisplayFor(modelItem => item.WordDetail.WContext)
                                     </td>
                                     <td>
                                         <span style="font-size:smaller">
@@ -168,7 +169,7 @@
                                         <span class="text-info">@count.</span>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.WContext)
+                                        @Html.DisplayFor(modelItem => item.WordDetail.WContext)
                                     </td>
                                     <td>
                                         <span style="font-size:smaller">

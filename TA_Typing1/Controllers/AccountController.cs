@@ -59,6 +59,9 @@ namespace AspnetIdentitySample.Controllers
                     {
                         ViewBag.redirectUrl = currentUrl;
                         await SignInAsync(user, model.RememberMe);
+                        //Response.Redirect(currentUrl);
+                        //Server.Transfer(currentUrl);
+                        //Server.TransferRequest(currentUrl);
                         return Json(new { success = true, url = currentUrl });
                     }
                     else

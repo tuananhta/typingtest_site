@@ -29,6 +29,9 @@ namespace TA_Typing1.Models
         public DbSet<Word> Words { get; set; }
         public DbSet<Record> Records { get; set; }
         public DbSet<WordDef> WordDefs {get; set;}
+        public DbSet<WordDetail> WordDetail { get; set; }
+        public DbSet<FlashCard> FlashCard { get; set; }
+
 
     }
 }

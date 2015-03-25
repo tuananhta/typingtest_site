@@ -25,13 +25,13 @@ namespace TA_Typing1.Controllers
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        
+
         // GET: FlashCards
-        public ActionResult Index(string date_query = "", int week_query = 0)
+        public ActionResult Index(string date_query = "", int week_query = 0, bool fav_list = false)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
-            IEnumerable<Word> Words;
-            if (week_query < 0 )
+            IEnumerable<FlashCard> Cards;
+            if (week_query < 0)
             {
                 throw new FormatException();
             }
@@ -42,70 +42,122 @@ namespace TA_Typing1.Controllers
                 {
                     DateTime currentDate = DateTime.Today;
                     DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay =  DayOfWeek.Monday;
+                    DayOfWeek monDay = DayOfWeek.Monday;
                     int diff = (7 + (currentDay - monDay)) % 7;
                     int totalDays = diff;
                     @ViewBag.boardInfo = "This week: " + DateTime.Today.AddDays(-diff).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
 
-                    Words = db.Words.ToList().Where(w => w.User.Id == currentUser.Id).Where(w => w.CreatedTime >= (DateTime.Today.AddDays(-diff)));
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-diff)));
                 }
                 else
                 {
                     DateTime currentDate = DateTime.Today;
                     DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay =  DayOfWeek.Monday;
-                    int diff = (7+(currentDay - monDay))%7;
-                    int totalDays = diff + (week_query-1)*7;
+                    DayOfWeek monDay = DayOfWeek.Monday;
+                    int diff = (7 + (currentDay - monDay)) % 7;
+                    int totalDays = diff + (week_query - 1) * 7;
                     @ViewBag.boardInfo = week_query + " week(s): " + DateTime.Today.AddDays(-totalDays).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
 
-                    Words = db.Words.ToList().Where(w => w.User.Id == currentUser.Id).Where(w => w.CreatedTime >= (DateTime.Today.AddDays(-totalDays)));
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-totalDays)));
                 }
             }
-            else{
+            else
+            {
                 string[] formats = {"d/M/yyyy", "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d",
                                        "d-M-yyyy", "dd-MM-yyyy", "d-MM-yyyy", "dd-M-yyyy","yyyy-MM-dd", "yyyy-M-dd", "yyyy-MM-d", "yyyy-M-d" };
                 DateTime date_query_real;
                 if (!DateTime.TryParseExact(date_query, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date_query_real))
                 {
                     throw new KeyNotFoundException(); //no thing at all
-                } 
+                }
 
                 date_query_real = Convert.ToDateTime(date_query);
 
                 @ViewBag.boardInfo = "Date: " + date_query_real.Date.ToString("dd-MM-yyyy");
 
-                Words = db.Words.ToList().Where(w => w.User.Id == currentUser.Id).Where(w => w.CreatedTime.Date == date_query_real);
+                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real);
             }
-            
 
-            foreach (var word in Words)
+            @ViewBag.date_query = date_query;
+            @ViewBag.week_query = week_query;
+
+            if (fav_list == true)
+            {
+                Cards = Cards.ToList().Where(card => card.fFavourite == true);
+                @ViewBag.fav_title = "Favourite List";
+                @ViewBag.fav_list = true.ToString();
+            }
+
+            foreach (var card in Cards)
             {
                 // The list of word defs are added
-                word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == word.Id);
+                card.word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == card.word.Id);
             }
 
-            return View(Words);
+            return View(Cards);
         }
 
-        // POST: Words/Edit/5
+        public bool CreateFlashCard(Word word, string card_type){
+            FlashCard card = new FlashCard();
+
+            card.createdTime = DateTime.Today;
+            card.fColor = card_type;
+            card.fFavourite = false;
+            card.wordId = word.Id;
+
+            db.FlashCard.Add(card);
+            db.SaveChanges();
+            return true;
+        }
+
+        // POST: FlashCard/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ICollection<Word> words)
+        public ActionResult Edit(ICollection<FlashCard> cards)
         {
-            foreach (var word in words)
+            foreach (var card in cards)
             {
-                Word wordFounded = db.Words.First(w => w.Id == word.Id);
-                if (wordFounded == null)
+                FlashCard cardFounded = db.FlashCard.First(w => w.id == card.id);
+                
+                if (cardFounded == null)
                 {
                     return HttpNotFound();
                 }
                 else
                 {
-                    wordFounded.fColor = word.fColor;
+                    cardFounded.fFavourite = card.fFavourite;
+                    cardFounded.fColor = card.fColor;
+                    cardFounded.createdTime = DateTime.Today;
+                    db.Entry(cardFounded).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
 
-                    db.Entry(wordFounded).State = EntityState.Modified;
+            return RedirectToAction("index");
+        }
+
+        // POST: FlashCard/EditFavourite/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFavourite(ICollection<FlashCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                FlashCard cardFounded = db.FlashCard.First(w => w.id == card.id);
+
+                if (cardFounded == null)
+                {
+                    return HttpNotFound();
+                }
+                else
+                {
+                    cardFounded.fFavourite = card.fFavourite;
+                    cardFounded.createdTime = DateTime.Today;
+                    db.Entry(cardFounded).State = EntityState.Modified;
                     db.SaveChanges();
                 }
             }

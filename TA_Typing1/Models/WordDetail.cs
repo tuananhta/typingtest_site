@@ -9,12 +9,14 @@ using System.Web;
 
 namespace TA_Typing1.Models
 {
-    public class Word
+    public class WordDetail
     {
-        public int Id { get; set; }
+        public int Id {get;set;}
         public DateTime CreatedTime { get; set; }
-        public virtual WordDetail WordDetail { get; set; }
-        public virtual IEnumerable<WordDef> WordDefs { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        [Required]
+        public string WContext { get; set; }
+        public int WType { get; set; }
+        public int Level { get; set; }
+        public string WPronounce { get; set; }
     }
 }

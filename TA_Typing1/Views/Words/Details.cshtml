@@ -29,7 +29,7 @@
                 </h3>
             </div>
 
-            <h3><span class="text-primary col-xs-2 left"> @Html.DisplayFor(model => model.WContext) </span></h3>
+            <h3><span class="text-primary col-xs-2 left"> @Html.DisplayFor(model => model.WordDetail.WContext) </span></h3>
             <div class="col-xs-3">
                 @if (ViewBag.nextWord == null)
                 {
@@ -44,8 +44,8 @@
         </div>
         <h4>
             <span class="text-muted">
-                @{ if (Model.WPronounce != null)
-                 {<span>/@Html.DisplayFor(model => model.WPronounce)/</span> }}
+                @{ if (Model.WordDetail.WPronounce != null)
+                 {<span>/@Html.DisplayFor(model => model.WordDetail.WPronounce)/</span> }}
             </span>
         </h4>
         <h6>

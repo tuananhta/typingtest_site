@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TA_Typing1.Models.Word>
+﻿@model IEnumerable<TA_Typing1.Models.FlashCard>
 
 @{
     ViewBag.Title = "flashCards";
@@ -9,117 +9,158 @@
 </div>
 <hr />
 <div class="container" id="header2-flash-cards">
-    <div class="col-md-2 col-md-offset-3 text-center margin-top-bottom">
+    <div class="col-sm-3 text-center margin-top-bottom">
         <span id="paint-card-btm" class="btn btn-default refresh-btn margin-btn" onclick="showColorOption()"><span class="glyphicon glyphicon-tint"></span> Paint your cards</span>
         <span id="submit-color-option" hidden="hidden">
             <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
             <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
         </span>
     </div>
-    <div class="col-md-2 text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="randomPosition()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-random" style="padding-right:4px;"></span> Random position</span>
+    <div class="col-sm-3 text-center margin-top-bottom">
+        <span id="favourite-card-btm" class="btn btn-default refresh-btn margin-btn" onclick="showFavouriteOption()"><span class="glyphicon glyphicon-star"></span> Choose favourite words</span>
+        <span id="submit-favourite-option" hidden="hidden">
+            <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
+            <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
+        </span>
     </div>
-    <div class="col-md-2 text-center margin-top-bottom">
-        <span id="show-search-card-btn" onclick="showSearchCardTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> List words by days, weeks</span>
-        <span id="hide-search-card-btn" onclick="hideSearchCard()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;" ><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
+    <div class="col-sm-3 text-center margin-top-bottom">
+        <span id="show-search-card-btn" onclick="showSearchCardTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> List by days, weeks</span>
+        <span id="hide-search-card-btn" onclick="hideSearchCard()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
     </div>
+    <div class="col-sm-3 text-center margin-top-bottom">
+        <span id="show-option-card-btn" onclick="showOptionsTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-menu-hamburger"></span> More options</span>
+        <span id="hide-option-card-btn" onclick="hideOptionsTab()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide options</span>
+    </div>
+</div>
+<div id="advance_option_card" class="container" style="display:none;">
+    <div class="row col-md-12">
+        <hr />
+    </div>
+    <div class="col-sm-2 col-sm-offset-2 text-center margin-top-bottom">
+        <span id="rand-position-btn" onclick="{ $('#fav_list').val('true'); $('#searchForm').submit(); }" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-star" style="padding-right:4px;"></span> Favourite list</span>
+    </div>
+    <div class="col-sm-2  text-center margin-top-bottom">
+        <span id="rand-position-btn" onclick="{ searchForm.submit(); }" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-backward" style="padding-right:4px;"></span> Original position</span>
+    </div>
+    <div class="col-sm-2 text-center margin-top-bottom">
+        <span id="rand-position-btn" onclick="randomPosition()" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-random" style="padding-right:4px;"></span> Random position</span>
+    </div>
+    <div class="col-sm-2 text-center margin-top-bottom">
+        <span id="rand-position-btn" onclick="rotateAll()" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-refresh" style="padding-right:4px;"></span> Rotate all cards</span>
+    </div>
+    
 </div>
 <div class="container center-block text-center">
+    <form id="searchForm">
+        <table id="search-card-tab" class="form-inline text-center col-xs-12 background1" hidden="hidden" style="margin-top:20px;">
+            <tr>
+                <td>
+                    <div class="container" style="margin:10px;">
+                        <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By date</h3></div>
+                        <div class="col-sm-7 text-left margin-top-bottom">
 
-    <table id="search-card-tab" class="form-inline text-center col-xs-12 background1" hidden="hidden" style="margin-top:20px;">
-        <tr>
-            <td>
-                <div class="container" style="margin:10px;">
-                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By date</h3></div>
-                    <div class="col-sm-7 text-left margin-top-bottom">
-                        <form id="dateForm">
                             <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input name="date_query" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date">
-                                <span class="btn input-group-addon refresh-btn" onclick="$('#dateForm').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                                <input id="date_query" name="date_query" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date" value="@ViewBag.date_query">
+                                <span class=" btn input-group-addon refresh-btn" onclick="{ $('#week_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
                             </span>
-                        </form>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="container" style="margin:10px;">
-                    <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By weeks</h3></div>
-                    <div class="col-sm-7 text-left margin-top-bottom">
-                        <form id="weekForm">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="container" style="margin:10px;">
+                        <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By weeks</h3></div>
+                        <div class="col-sm-7 text-left margin-top-bottom">
                             <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input name="week_query" autocomplete="off" class="form-control" placeholder="Recent weeks" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="number">
-                                <span class="btn input-group-addon refresh-btn" onclick="$('#weekForm').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
+                                <input id="week_query" name="week_query" autocomplete="off" class="form-control" placeholder="Recent weeks" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="number" value="@ViewBag.week_query">
+                                <span class=" btn input-group-addon refresh-btn" onclick="{ $('#date_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
                             </span>
-                        </form>
-                    </div>
+                        </div>
 
-                </div>
-            </td>
-        </tr>
-    </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <input id="fav_list" name="fav_list" hidden value="@ViewBag.fav_list" />
+    </form>
 </div>
 <hr />
-<div id="grid-containter" class="center-block container text-center" style="border:10px groove #656565">
-    <h3>@ViewBag.boardInfo</h3>
-    <form id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
-        @Html.AntiForgeryToken()
-        @{
-            int modelCount = 0;
-            foreach (var item in Model)
-            {               
+<div role="tabpanel" class="tab-pane fade in active" id="tab-words">
+    <div id="grid-containter" class="center-block container text-center" style="border:10px groove #656565">
+        <h2 class="text-danger">@ViewBag.fav_title</h2>
+        <h3>@ViewBag.boardInfo</h3>
+        <form id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
+            @Html.AntiForgeryToken()
+            @{
+                int modelCount = 0;
+                foreach (var item in Model)
+                {
                     <section id="grid-@modelCount" class="card-grid" style="display:none;">
-                        <div id="front-@item.Id" class="front @item.fColor-front">
+                        <div id="front-@item.id" class="front @item.fColor-front">
                             <div class="container text-right" style="margin:5px;">
                                 <span class="color-opt">
-                                    <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.Id, 'default')">
+                                    <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.id, 'default')">
                                     </span>
-                                    <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.Id, 'pink')">
+                                    <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.id, 'pink')">
                                     </span>
-                                    <span class="btn btn-flash btn-flash-green" onclick="updateColor(event, @item.Id, 'green')">
+                                    <span class="btn btn-flash btn-flash-green" onclick="updateColor(event, @item.id, 'green')">
                                     </span>
-                                    <span class="btn btn-flash btn-flash-blue" onclick="updateColor(event, @item.Id, 'blue')">
+                                    <span class="btn btn-flash btn-flash-blue" onclick="updateColor(event, @item.id, 'blue')">
                                     </span>
                                     <span class="inputGroup" hidden="hidden">
-                                        <input class="fColor-input" name="words[@modelCount].fColor" value="@item.fColor" />
-                                        <input name="words[@modelCount].CreatedTime" value="@item.CreatedTime" />
-                                        <input name="words[@modelCount].Id" value="@item.Id" />
+                                        <input class="fColor-input" name="cards[@modelCount].fColor" value="@item.fColor" />
+                                        <input class="fFavourite-input" name="cards[@modelCount].fFavourite" value="@item.fFavourite.ToString()" />
+                                        <input name="cards[@modelCount].CreatedTime" value="@item.createdTime" />
+                                        <input name="cards[@modelCount].id" value="@item.id" />
                                     </span>
+                                </span>
+                                <span class="favourite-opt" style="display:none;">
+                                    @if (item.fFavourite == false)
+                                    {
+                                        <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><img style="height:30px;" src="~/Images/Icon/fav_false.png" /></span>
+                                        <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><img style="height:30px;" src="~/Images/Icon/fav_false.png" /></span>
+                                        <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                    }
                                 </span>
                                 <span class="glyphicon glyphicon-pushpin" style="position:static"></span>
                             </div>
 
-                            <h2 class="text-primary" style="margin-top:7px;">@item.WContext</h2>
+                            <h2 class="text-primary" style="margin-top:7px;">@item.word.WordDetail.WContext</h2>
                             @{
-                string wordTypes = null;
-                foreach (var wType in item.WordDefs.GroupBy(m => m.wType))
-                {
-                    wordTypes += wType.First(m => m.wType != null).wType + " ,";
-                }
+                                    string wordTypes = null;
+
+                                    foreach (var wType in item.word.WordDefs.GroupBy(m => m.wType))
+                                    {
+                                        wordTypes += wType.First(m => m.wType != null).wType + " ,";
+                                    }
 
 
-                if (wordTypes != null)
-                {
-                    wordTypes = wordTypes.Remove(wordTypes.Length - 1);
-                    wordTypes = '(' + wordTypes + ')';
-                }
+                                    if (wordTypes != null)
+                                    {
+                                        wordTypes = wordTypes.Remove(wordTypes.Length - 1);
+                                        wordTypes = '(' + wordTypes + ')';
+                                    }
                             }
                             <h4 class="text-muted"><i>@wordTypes</i></h4>
 
-                            @if (item.WPronounce != null)
+                            @if (item.word.WordDetail.WPronounce != null)
                             {
-                                <h3 style="margin:0">/@item.WPronounce/</h3>
+                                <h3 style="margin:0">/@item.word.WordDetail.WPronounce/</h3>
                             }
 
                         </div>
-                        <div id="back-@item.Id" class="back @item.fColor-back">
+                        <div id="back-@item.id" class="back @item.fColor-back">
                             <div class="left container">
                                 @{
                             int count = 0;
-                            foreach (var def in item.WordDefs)
+                            foreach (var def in item.word.WordDefs)
                             {
                                 count++;
                                 <div class="small">
@@ -135,8 +176,12 @@
                         </div>
                     </section>
                             modelCount++;
+                }
             }
-        }
-    </form>
+        </form>
+    </div>
 </div>
-<input id="total_grids" value="@modelCount" hidden="hidden"/>
+
+
+
+<input id="total_grids" value="@modelCount" hidden="hidden" />

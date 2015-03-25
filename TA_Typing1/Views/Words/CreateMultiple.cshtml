@@ -25,20 +25,20 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group container center-block text-center">
-                    <div class="col-lg-4 text-center">
+                    <div class="col-xs-4 text-center">
                         <h4>Input new sequence of words</h4>
                     </div>
-                    <div class="col-lg-8">
-                        <textarea id="WContext" name="WContext" class="form-control text-box" rows="3" style="margin-left: auto; margin-right: auto;"></textarea>
-                        @Html.ValidationMessageFor(model => model.WContext, "", new { @class = "text-danger" })
+                    <div class="col-xs-8 text-left">
+                        <textarea id="WordDetail_WContext" name="WordDetail.WContext" class="form-control text-box" rows="3" style="margin-left: auto; margin-right: auto;"></textarea>
+                        @Html.ValidationMessageFor(model => model.WordDetail.WContext, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 @if (User.Identity.Name == "admin")
                 {
                     <div class="form-group container center-block text-center">
-                        <div class="col-lg-4 text-center"><h4>Level</h4></div>
-                        <div class="col-lg-8">
-                            <select name="level" id="level" class="form-control text-box single-line" style="margin-left: auto; margin-right: auto;">
+                        <div class="col-xs-4 text-center"><h4>Level</h4></div>
+                        <div class="col-xs-8">
+                            <select name="WordDetail.level" id="level" class="form-control text-box single-line" style="margin-left: auto; margin-right: auto;">
                                 <option value="1">200 common words</option>
                                 <option value="2">500 common words</option>
                                 <option value="3">1000 common words</option>
@@ -55,7 +55,6 @@
         </div>
     </div>
 }
-
 <script>
     $(document).ready(function () {
         $("#create-word-multiple-form").submit(function (event) {

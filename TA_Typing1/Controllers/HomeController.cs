@@ -42,17 +42,17 @@ namespace TA_Typing1.Controllers
                 }
                 ViewBag.count = count;
             }
-    
+                
             switch (optPrg)
             {
                 case "1_pb":
-                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && word.Level == 1);
+                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && word.WordDetail.Level == 1);                    
                     return View();
                 case "2_pb":
-                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && (word.Level == 1 || word.Level == 2));
+                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && (word.WordDetail.Level == 1 || word.WordDetail.Level == 2));
                     return View();
                 case "3_pb":
-                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && (word.Level == 1 || word.Level == 2 || word.Level == 3));
+                    ViewBag.wordList = db.Words.ToList().Where(word => word.User.Id == adminID.Id && (word.WordDetail.Level == 1 || word.WordDetail.Level == 2 || word.WordDetail.Level == 3));
                     return View();
                 case "1_pr":
                     if (User.Identity.IsAuthenticated)
