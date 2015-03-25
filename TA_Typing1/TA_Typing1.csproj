@@ -187,6 +187,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Avatar\profile_TA.jpg" />
+    <Content Include="Images\Background\background1.jpg" />
     <Content Include="Images\Icon\fav_false.png" />
     <Content Include="Images\Icon\fav_true.png" />
     <Content Include="Images\Icon\icon.png" />
