@@ -250,8 +250,10 @@ namespace TA_Typing1.Controllers
                 wDetail.CreatedTime = DateTime.Today;
                 wDetail.WContext = word.WordDetail.WContext;
                 wDetail.WPronounce = word.WordDetail.WPronounce;
+                word.WordDetail = wDetail;
+                word.CreatedTime = word.CreatedTime.AddDays(-1);
 
-                db.Entry(wDetail).State = EntityState.Modified;
+                db.Entry(word).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
                 return PartialView("_RedirectPage");
