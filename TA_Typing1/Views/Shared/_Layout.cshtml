@@ -70,7 +70,7 @@
                             <span><a href=""><img src="~/Images/Socials/linkedin.png" class="icon_social" /></a></span>
                             <span><a href=""><img src="~/Images/Socials/github.png" class="icon_social" /></a></span>
                         </div>
-                        
+
                     </div>
                 </div>
                 <div class="col-md-4 col-md-pull-5 text-center container">
@@ -82,7 +82,7 @@
                         <span> <img src="~/Images/Socials/finland.png" style="height:20px; margin-left:10px; margin-top:15px;" /></span>
                         <span> <img src="~/Images/Socials/poland.png" style="height:20px; margin-left:10px; margin-top:15px;" /></span>
                     </div>
-                    
+
                 </div>
             </footer>
         </div>
@@ -100,7 +100,7 @@
 
         <!--    POPUP MODAL REGISTER   -->
             <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                @{          
+                @{
             Html.RenderAction("register", "account");
                 }
             </div>
@@ -130,35 +130,35 @@
         <script src="~/Scripts/_modals.js" type="text/javascript"></script>
         <!-- LOGIN; SIGN UP JS -->
         <script>
-    $("#LoginFormModal").submit(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: '@Url.Action("login","account")',
-            type: "POST",
-            data: $('#LoginFormModal').serialize(),
-            success: function (data) {
-                if (data.success == true) {
-                    window.location = data.url;
-                }
-                $("#loginModal").empty().append(data);
-            },
-        });
-    });
+            $("#LoginFormModal").submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("login","account")',
+                    type: "POST",
+                    data: $('#LoginFormModal').serialize(),
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location = data.url;
+                        }
+                        $("#loginModal").empty().append(data);
+                    },
+                });
+            });
 
-    $("#register-modal-form").submit(function (event) {
-        event.preventDefault();
-        $.ajax({
-            url: "@Url.Action("register","account")",
-            type: "POST",
-            data: $('#register-modal-form').serialize(),
-            success: function (data) {
-                if (data.success == true) {
-                    window.location = data.url;
-                }
-                $("#registerModal").empty().append(data);
-            },
-        });
-    });
+            $("#register-modal-form").submit(function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "@Url.Action("register","account")",
+                    type: "POST",
+                    data: $('#register-modal-form').serialize(),
+                    success: function (data) {
+                        if (data.success == true) {
+                            window.location = data.url;
+                        }
+                        $("#registerModal").empty().append(data);
+                    },
+                });
+            });
         </script>
     </div>
 </body>

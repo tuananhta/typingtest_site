@@ -142,3 +142,18 @@
         </table>
     </div>
 </div>
+<div class="container center-block text-center">
+    <hr />
+    <span id="shown_ref_btn" class="btn btn-default refresh-btn" onclick="{ $('#shown_ref_btn').hide(); $('#hide_ref_btn').fadeIn('fast'); $('#external_dict').fadeIn('fast') }"><span class="glyphicon glyphicon-book"></span> More references</span>
+    <span id="hide_ref_btn" class="btn btn-danger" onclick="{ $('#hide_ref_btn').hide(); $('#shown_ref_btn').fadeIn('fast'); $('#external_dict').fadeOut('fast') }" style="display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide references</span>
+    <hr />
+</div>
+<div id="external_dict" class="container background-gold" style="padding:60px; display:none">
+    <div class="col-md-5 container">
+            <iframe class="img-thumbnail" src="http://dictionary.reference.com/browse/@Model.WordDetail.WContext" scrolling="auto" frameborder="0" style="height:500px; width:100%;"></iframe>
+    </div>
+    <div class="col-md-2" style="padding:0;margin:0;"></div>
+    <div class="col-md-5 container">
+            <iframe class="img-thumbnail" src="http://tratu.soha.vn/dict/en_vn/@Model.WordDetail.WContext" scrolling="auto" frameborder="0" style="height:500px; width:100%;"></iframe>
+    </div>
+</div>
