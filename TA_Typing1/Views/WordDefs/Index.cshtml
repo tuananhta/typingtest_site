@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.word.WContext)
+            Wcontext
         </th>
         <th>
             @Html.DisplayNameFor(model => model.wType)
@@ -30,7 +30,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.word.WContext)
+            @Html.DisplayFor(modelItem => item.word.WordDetail.WContext)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.wType)
