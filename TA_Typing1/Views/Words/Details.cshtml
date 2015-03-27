@@ -101,9 +101,18 @@
 </div>
 <div class="container center-block text-center">
     <br />
-    <span id="shown_ref_btn" class="btn btn-default refresh-btn" onclick="{ $('#shown_ref_btn').hide(); $('#hide_ref_btn').fadeIn('fast'); $('#external_dict').fadeIn('fast'); $('#external_dict').focus(); }"><span class="glyphicon glyphicon-book"></span> More references</span>
+    <span id="shown_ref_btn" class="btn btn-default refresh-btn" onclick="{ $('#shown_ref_btn').hide(); $('#hide_ref_btn').fadeIn('fast'); $('#external_dict').fadeIn('fast'); }"><span class="glyphicon glyphicon-book"></span> More references</span>
     <span id="hide_ref_btn" class="btn btn-danger" onclick="{ $('#hide_ref_btn').hide(); $('#shown_ref_btn').fadeIn('fast'); $('#external_dict').fadeOut('fast') }" style="display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide references</span>
     <hr />
+</div>
+<div id="external_dict" tabindex='1' class="container background-gold" style="padding:60px; display:none">
+    <div class="col-md-5 container">
+        <iframe class="img-thumbnail" src="http://dictionary.reference.com/browse/@Model.WordDetail.WContext" scrolling="auto" frameborder="0" style="height:500px; width:100%; overflow-x:hidden;"></iframe>
+    </div>
+    <div class="col-md-2" style="padding:0;margin:0;"></div>
+    <div class="col-md-5 container">
+        <iframe class="img-thumbnail" src="http://m.tratu.soha.vn/?title=@Model.WordDetail.WContext&dict=en_vn" scrolling="auto" frameborder="0" style="height:500px; width:100%; overflow-x:hidden;"></iframe>
+    </div>
 </div>
 <div class="container" style="margin-top:15px;">
     <div class="col-md-8 col-md-offset-2">
@@ -114,16 +123,14 @@
                 foreach (var item in Model.WordDefs)
                 {
                     count++;
-                    <tr>
+                    <tr id="word_def_@item.id">
                         <td>
                             <h6 class="text-muted">@count.</h6>
                         </td>
-                        <td>
-                            <h6>(@item.wType)</h6>
-                        </td>
-                        <td>
-                            <h5 style="font-weight:600">@item.wDefinition</h5>
-                            <h6>eg.<i> @item.wExample</i></h6>
+                        @{ Html.RenderAction("details","worddefs",item); }
+                        <td class="right text-right">
+                            <span class="btn btn-default btn-xs" style="margin-right:20px;" onclick="alert('Hello, see you later!')"><span class="glyphicon glyphicon-edit"></span> Edit</span>
+                            <span data-url="@Url.Action("delete", "worddefs", new { id = item.id })" class="btn btn-default btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> Delete</span>
                         </td>
                     </tr>
                 }
@@ -139,14 +146,5 @@
             }
 
         </table>
-    </div>
-</div>
-<div id="external_dict" tabindex='1' class="container background-gold" style="padding:60px; display:none">
-    <div class="col-md-5 container">
-        <iframe class="img-thumbnail" src="http://dictionary.reference.com/browse/@Model.WordDetail.WContext" scrolling="auto" frameborder="0" style="height:500px; width:100%; overflow-x:hidden;"></iframe>
-    </div>
-    <div class="col-md-2" style="padding:0;margin:0;"></div>
-    <div class="col-md-5 container">
-        <iframe class="img-thumbnail" src="http://m.tratu.soha.vn/?title=@Model.WordDetail.WContext&dict=en_vn" scrolling="auto" frameborder="0" style="height:500px; width:100%; overflow-x:hidden;"></iframe>
     </div>
 </div>

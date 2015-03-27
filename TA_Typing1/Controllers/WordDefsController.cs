@@ -31,6 +31,7 @@ namespace TA_Typing1.Controllers
         }
 
         // GET: WordDefs/Details/5
+        [ChildActionOnly]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -138,8 +139,11 @@ namespace TA_Typing1.Controllers
         }
 
         // GET: WordDefs/Delete/5
+        //[ChildActionOnly]
         public ActionResult Delete(int? id)
         {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -149,6 +153,13 @@ namespace TA_Typing1.Controllers
             {
                 return HttpNotFound();
             }
+
+            if(wordDef.word.User != currentUser){
+                return HttpNotFound();
+            }
+
+            ViewBag.wContext = wordDef.word.WordDetail.WContext;
+
             return View(wordDef);
         }
 
@@ -160,7 +171,8 @@ namespace TA_Typing1.Controllers
             WordDef wordDef = db.WordDefs.Find(id);
             db.WordDefs.Remove(wordDef);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { success = true });
         }
 
         protected override void Dispose(bool disposing)

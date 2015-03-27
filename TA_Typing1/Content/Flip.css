@@ -1,7 +1,7 @@
 ﻿.card-grid {
-    width: 360px;
+    width: 320px;
     height: 180px;
-    margin: 20px;
+    margin: 12px;
 }
 
 #grid-containter .flip {
@@ -13,8 +13,8 @@
 }
 
 .margin-btn {
-    margin-left: 20px;
-    margin-right: 20px;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
 .margin-top-bottom {
@@ -24,17 +24,20 @@
 
 /* FLASH COLORS
     1. FLASH DEFAULT YELLOW
+
+    
+    box-shadow: 6px 18px 23px -9px rgba(184,178,123,1);
+    
+    box-shadow: -12px 17px 32px -4px rgba(184,178,123,1);
 */
 .flash-default-front {
     cursor: pointer;
     background-color:#fffd8b;
-    box-shadow: 6px 18px 23px -9px rgba(184,178,123,1);
 }
 
 .flash-default-back {
     cursor: pointer;
     background: #efee8a;
-    box-shadow: -12px 17px 32px -4px rgba(184,178,123,1);
 }
 
 /* FLASH GREEN */
@@ -42,13 +45,11 @@
 .flash-green-front {
     cursor: pointer;
     background: #90ea89;
-    box-shadow: 6px 18px 23px -9px rgba(184,178,123,1);
 }
 
 .flash-green-back {
     cursor: pointer;
     background: #a8f1a2;
-    box-shadow: -12px 17px 32px -4px rgba(184,178,123,1);
 }
 
 /* PINK FLASH */
@@ -56,13 +57,11 @@
 .flash-pink-front {
     cursor: pointer;
     background: #f8adf8;
-    box-shadow: 6px 18px 23px -9px rgba(184,178,123,1);
 }
 
 .flash-pink-back {
     cursor: pointer;
     background: #fab3fa;
-    box-shadow: -12px 17px 32px -4px rgba(184,178,123,1);
 }
 
 /* BLUE FLASH */
@@ -70,13 +69,11 @@
 .flash-blue-front {
     cursor: pointer;
     background: #7ed2ef;
-   box-shadow: 6px 18px 23px -9px rgba(184,178,123,1);
 }
 
 .flash-blue-back {
     cursor: pointer;
     background: #9bd0f3;
-    box-shadow: -12px 17px 32px -4px rgba(184,178,123,1);
 }
 
 /*

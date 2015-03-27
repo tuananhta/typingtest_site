@@ -11,23 +11,12 @@ $(document).ready(function () {
 })
 
 function showColorOption() {
+    $('.favourite-opt').hide();
     $('.color-opt').fadeIn('fast');
-    $('#submit-color-option').fadeIn('fast');
-    $('#paint-card-btm').removeClass('refresh-btn');
-    $('#paint-card-btm').parent().removeClass('col-sm-3 margin-top-bottom');
-
-    $('#hide-search-card-btn').parent().removeClass('margin-top-bottom');
-    $('#rand-position-btn').parent().removeClass('margin-top-bottom');
-    $('#favourite-card-btm').parent().removeClass('margin-top-bottom');
-    $('#show-option-card-btn').parent().removeClass('margin-top-bottom');
-
-    $('#hide-search-card-btn').parent().html("");
-    $('#rand-position-btn').parent().html("");
-    $('#favourite-card-btm').parent().html("");
-    $('#show-option-card-btn').parent().html("");
 
     $('#header_layout').hide();
-    $('#header2-flash-cards').addClass('navbar navbar-default navbar-fixed-top header-fixed');
+    $('#header2-flash-cards').hide();
+    $('#header1-flash-cards').show();
 }
 
 // submit forms flash cards
@@ -37,25 +26,12 @@ function submitColorOptions() {
 
 // show favourite button
 function showFavouriteOption() {
+    $('.color-opt').hide();
     $('.favourite-opt').fadeIn('fast');
-    $('#submit-favourite-option').fadeIn('fast');
-    $('#favourite-card-btm').removeClass('refresh-btn');
-    $('#favourite-card-btm').parent().removeClass('col-sm-3 margin-top-bottom');
-
-    $('#hide-search-card-btn').parent().removeClass('margin-top-bottom');
-    $('#rand-position-btn').parent().removeClass('margin-top-bottom');
-    $('#paint-card-btm').parent().removeClass('margin-top-bottom');
-    $('#show-option-card-btn').parent().removeClass('margin-top-bottom');
-
     
-
-    $('#hide-search-card-btn').parent().hide();
-    $('#rand-position-btn').parent().hide();
-    $('#paint-card-btm').parent().hide();
-    $('#show-option-card-btn').parent().hide();
-
     $('#header_layout').hide();
-    $('#header2-flash-cards').addClass('navbar navbar-default navbar-fixed-top header-fixed');
+    $('#header1-flash-cards').hide();
+    $('#header2-flash-cards').show();
 }
 
 // add, remomve favourite
@@ -110,7 +86,7 @@ function randomPosition() {
     var totalGrid = $('#total_grids').val();
     var gridData;
     var pivotPoint;
-    var mixTime = 5;
+    var mixTime = 1;
 
     for (var j = mixTime; j >= 0 ; --j) {
         for (var i = 0; i <= totalGrid; ++i) {
@@ -142,3 +118,4 @@ function rotateAll() {
         $('#grid-' + i).click();
     }
 }
+

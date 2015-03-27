@@ -13,16 +13,16 @@
 </div>
 <hr />
 <div class="container" id="header2-flash-cards">
-    <div class="col-sm-2 col-sm-offset-2 text-center margin-top-bottom">
+    <div class="col-sm-3 text-center margin-top-bottom">
         <div data-url="@Url.Action("createmultiple", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Multiple Words</div>
     </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
+    <div class="col-sm-3 text-center margin-top-bottom">
         <div data-url="@Url.Action("createsingle", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Word</div>
     </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
+    <div class="col-sm-3 text-center margin-top-bottom">
         <div data-url="@Url.Action("createphrase", "words")" class="btn btn-primary create-btn openModal"><span class="glyphicon glyphicon-plus"></span> Create Phrase</div>
     </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
+    <div class="col-sm-3 text-center margin-top-bottom">
         <span id="show-search-word-btn" onclick="showSearchWordsTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> Find words</span>
         <span id="hide-search-word-btn" onclick="hideSearchWordsTab()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
     </div>
@@ -54,9 +54,9 @@
                     <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">Search by date</h3></div>
                     <div class="col-sm-7 text-left margin-top-bottom">
                         <form id="searchDate">
-                            <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
+                            <span class="input-group date_picker" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input name="s_date" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date">
+                                <input name="s_date" autocomplete="off" class="form-control date_picker" placeholder="dd/mm/yyyy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="text">
                                 <span class="btn input-group-addon refresh-btn" onclick="$('#searchDate').submit()"><span class="glyphicon glyphicon-search"></span> Search</span>
                             </span>
                         </form>

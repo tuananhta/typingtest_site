@@ -262,6 +262,20 @@ namespace TA_Typing1.Controllers
             return View(word);
         }
 
+        // POST: Words/Find
+        public ActionResult Find(string s_word = "")
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+
+            IEnumerable<Word> wordsFound = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()) && w.User == currentUser);
+            if (wordsFound.Count() == 1)
+            {
+                return RedirectToAction("details", "words", new { id = wordsFound.First().Id });
+            }
+            else
+                return RedirectToAction("index", "words", new { s_word = s_word });
+        }
+
         // GET: Words/Delete/5
         public ActionResult Delete(int? id)
         {

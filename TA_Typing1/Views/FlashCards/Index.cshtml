@@ -7,95 +7,110 @@
 <div class="container text-center">
     <h2>Flash Cards</h2>
 </div>
-<hr />
-<div class="container" id="header2-flash-cards">
-    <div class="col-sm-3 text-center margin-top-bottom">
-        <span id="paint-card-btm" class="btn btn-default refresh-btn margin-btn" onclick="showColorOption()"><span class="glyphicon glyphicon-tint"></span> Paint your cards</span>
-        <span id="submit-color-option" hidden="hidden">
+<div class="container navbar navbar-default navbar-fixed-top header-fixed" id="header1-flash-cards" style="display:none;">
+    <div class="col-xs-12 text-center">
+        <span id="paint-card-btm" class="btn btn-default disabled" style="font-size:20px;margin-right:70px; padding-right:40px; padding-left:40px;">Paint cards</span>
+        <span id="submit-color-option">
             <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
             <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
         </span>
     </div>
-    <div class="col-sm-3 text-center margin-top-bottom">
-        <span id="favourite-card-btm" class="btn btn-default refresh-btn margin-btn" onclick="showFavouriteOption()"><span class="glyphicon glyphicon-star"></span> Edit favourite words</span>
-        <span id="submit-favourite-option" hidden="hidden">
+</div>
+<div class="container navbar navbar-default navbar-fixed-top header-fixed" id="header2-flash-cards" style="display:none;">
+    <div class="col-xs-12 text-center">
+        <span id="favourite-card-btm" class="btn btn-default disabled" style="font-size:20px;margin-right:70px; padding-right:40px; padding-left:40px;">Choose favourite cards</span>
+        <span id="submit-favourite-option">
             <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
             <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
         </span>
     </div>
-    <div class="col-sm-3 text-center margin-top-bottom">
-        <span id="show-search-card-btn" onclick="showSearchCardTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-search"></span> List by days, weeks</span>
-        <span id="hide-search-card-btn" onclick="hideSearchCard()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide search window</span>
-    </div>
-    <div class="col-sm-3 text-center margin-top-bottom">
-        <span id="show-option-card-btn" onclick="showOptionsTab()" class="btn btn-default refresh-btn margin-btn"><span class="glyphicon glyphicon-menu-hamburger"></span> More options</span>
-        <span id="hide-option-card-btn" onclick="hideOptionsTab()" class="btn btn-danger margin-btn" style="opacity:0.8;display:none;"><span class="glyphicon glyphicon-menu-hamburger"></span> Hide options</span>
-    </div>
 </div>
-<div id="advance_option_card" class="container" style="display:none;">
-    <div class="row col-md-12">
-        <hr />
-    </div>
-    <div class="col-sm-2 col-sm-offset-1 text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="{ $('#fav_list').val('true'); $('#searchForm').submit(); }" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-star" style="padding-right:4px;"></span> Favourite list</span>
-    </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="{ $('#fav_list').val('false'); $('#searchForm').submit(); }" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-share-alt" style="padding-right:4px;"></span> Show all</span>
-    </div>
-    <div class="col-sm-2  text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="{ searchForm.submit(); }" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-backward" style="padding-right:4px;"></span> Original position</span>
-    </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="randomPosition()" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-random" style="padding-right:4px;"></span> Random position</span>
-    </div>
-    <div class="col-sm-2 text-center margin-top-bottom">
-        <span id="rand-position-btn" onclick="rotateAll()" class="btn btn-default btn-sm margin-btn"><span class="glyphicon glyphicon-refresh" style="padding-right:4px;"></span> Rotate all cards</span>
-    </div>
-    
-</div>
-<div class="container center-block text-center">
-    <form id="searchForm">
-        <table id="search-card-tab" class="form-inline text-center col-xs-12 background1" hidden="hidden" style="margin-top:20px;">
-            <tr>
-                <td>
-                    <div class="container" style="margin:10px;">
-                        <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By date</h3></div>
-                        <div class="col-sm-7 text-left margin-top-bottom">
+<br />
+<hr style="margin:0; padding:0;" />
+<div class="container background1">
+    <div class="col-md-7 col-md-push-3">
+        <form id="searchForm">
+            <table id="search-card-tab" class="form-inline text-center col-xs-12" style="margin-top:20px;">
+                <tr>
+                    <td>
+                        <div class="container" style="margin:10px;">
+                            <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By date</h3></div>
+                            <div class="col-sm-7 text-left margin-top-bottom">
 
-                            <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input id="date_query" name="date_query" autocomplete="off" class="form-control" placeholder="dd/mm/yy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="date" value="@ViewBag.date_query">
-                                <span class=" btn input-group-addon refresh-btn" onclick="{ $('#week_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
-                            </span>
+                                <span class="input-group date_picker" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input id="date_query" name="date_query" autocomplete="off" class="form-control date_picker" placeholder="dd/mm/yyyy" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="text" value="@ViewBag.date_query">
+                                    <span class=" btn input-group-addon refresh-btn" onclick="{ $('#week_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="container" style="margin:10px;">
-                        <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By weeks</h3></div>
-                        <div class="col-sm-7 text-left margin-top-bottom">
-                            <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input id="week_query" name="week_query" autocomplete="off" class="form-control" placeholder="Recent weeks" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="number" value="@ViewBag.week_query">
-                                <span class=" btn input-group-addon refresh-btn" onclick="{ $('#date_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
-                            </span>
-                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="container" style="margin:10px;">
+                            <div class="col-sm-5 margin-top-bottom"><h3 style="margin:0;">By weeks</h3></div>
+                            <div class="col-sm-7 text-left margin-top-bottom">
+                                <span class="input-group" style="max-width: 400px;margin: 0;margin-left: auto; margin-right: auto;">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input id="week_query" name="week_query" autocomplete="off" class="form-control" placeholder="Recent weeks" style="min-width:300px; max-width:95%; padding-left:8%; padding-right:8%" type="number" value="@ViewBag.week_query">
+                                    <span class=" btn input-group-addon refresh-btn" onclick="{ $('#date_query').val(''); $('#searchForm').submit() }"><span class="glyphicon glyphicon-search"></span> Search</span>
+                                </span>
+                            </div>
 
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <input id="fav_list" name="fav_list" hidden value="@ViewBag.fav_list" />
-    </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input id="fav_list" name="fav_list" hidden value="@ViewBag.fav_list" />
+        </form>
+    </div>
+
+    <div class="col-md-3 col-md-pull-7">
+        <div class="col-xs-12" aria-label="...">
+            <div style="margin-left:0px; border-radius:0;" id="paint-card-btm" class="col-xs-12 btn btn-default margin-btn container" onclick="showColorOption()">
+                <span class="glyphicon glyphicon-tint col-xs-1"></span>
+                <span class="col-xs-7 text-left">Paint your cards</span>
+            </div>
+            <div style="margin-left:0px; border-radius:0; border-top:none;" id="favourite-card-btm" class="col-xs-12 btn btn-default margin-btn container" onclick="showFavouriteOption()">
+                <span class="glyphicon glyphicon-heart col-xs-1"></span>
+                <span class="col-xs-7 text-left">Choose favourite cards</span>
+            </div>
+            <div class="col-xs-12 btn btn-default container" style="margin-left:0px; border-radius:0; border-top:none;" onclick="{ $('#fav_list').val('false'); $('#searchForm').submit(); }">
+                <span class="glyphicon glyphicon-share-alt col-xs-1"></span>
+                <span class="col-xs-7 text-left">Show all cards</span>
+            </div>
+            <div class="col-xs-12 btn btn-default container" style="margin-left:0px; border-radius:0; border-top:none;" onclick="{ $('#fav_list').val('true'); $('#searchForm').submit(); }">
+                <span class="glyphicon glyphicon-star-empty col-xs-1"></span>
+                <span class="col-xs-7 text-left">Show favourite cards</span>
+            </div>
+
+            <div style="margin-left: 0px; border-radius: 0; border-top: none;" class="col-xs-12 btn btn-default dropdown-toggle container" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-menu-down col-xs-1"></span>
+                <span class="col-xs-7 text-left">More options</span>
+            </div>
+            <ul class="col-xs-12 dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a style="padding-bottom:10px; padding-top:10px" role="menuitem" tabindex="-1" id="rand-position-btn" onclick="{ searchForm.submit(); }"><span class="glyphicon glyphicon-backward" style="padding-right:4px;"></span> Original position</a></li>
+                <li role="presentation"><a style="padding-bottom:10px; padding-top:10px" role="menuitem" tabindex="-1" id="rand-position-btn" onclick="randomPosition()"><span class="glyphicon glyphicon-random" style="padding-right:4px;"></span> Shuffle cards</a></li>
+                <li role="presentation"><a style="padding-bottom:10px; padding-top:10px" role="menuitem" tabindex="-1" id="rand-position-btn" onclick="rotateAll()"><span class="glyphicon glyphicon-refresh" style="padding-right:4px;"></span> Rotate cards</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
-<hr />
-<div role="tabpanel" class="tab-pane fade in active" id="tab-words">
-    <div id="grid-containter" class="center-block container text-center" style="border:10px groove #656565">
-        <h2 class="text-danger">@ViewBag.fav_title</h2>
-        <h3>@ViewBag.boardInfo</h3>
-        <form id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
+<hr style="padding:0;margin:0;" />
+<br />
+<br />
+<div role="tabpanel" class="tab-pane fade in active" id="tab-words" style="background-color:#3a7147">
+    <div id="grid-containter" class="center-block container text-center" style="border-radius:5px;border:15px ridge #808080">
+        <h2 style="color:#ffffff; text-decoration:underline">@ViewBag.fav_title</h2>
+        <h3 style="color:whitesmoke">@ViewBag.boardInfo</h3>
+        <hr style="background-image:url(../../Images/Background/chalkboard_top.png); height:10px;" />
+        <div id="loading_tab" class="text-center">
+            <div class="container text-center">
+                <h2 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h2>
+            </div>
+        </div>
+        <form style="display:none;" id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
             @Html.AntiForgeryToken()
             @{
                 int modelCount = 0;
@@ -123,16 +138,16 @@
                                 <span class="favourite-opt" style="display:none;">
                                     @if (item.fFavourite == false)
                                     {
-                                        <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><img style="height:30px;" src="~/Images/Icon/fav_false.png" /></span>
-                                        <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                        <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><span class="btn btn-xs refresh-btn"><span style="position:static;" class="glyphicon glyphicon-plus-sign"></span> Add to favourite</span></span>
+                                        <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><span class="btn btn-default btn-xs"><span style="position:static;" class="glyphicon glyphicon-remove"></span> Remove favourite</span> <img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
                                     }
                                     else
                                     {
-                                        <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><img style="height:30px;" src="~/Images/Icon/fav_false.png" /></span>
-                                        <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                        <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><span class="btn btn-xs refresh-btn"><span style="position:static;" class="glyphicon glyphicon-plus-sign"></span> Add to favourite</span></span>
+                                        <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span class="btn btn-default btn-xs"><span style="position:static;" class="glyphicon glyphicon-remove"></span> Remove favourite</span> <img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
                                     }
                                 </span>
-                                <span class="glyphicon glyphicon-pushpin" style="position:static"></span>
+                                <span style="position:static"><img style="height:20px;" src="~/Images/Icon/pin.png" /></span>
                             </div>
 
                             <h2 class="text-primary" style="margin-top:7px;">@item.word.WordDetail.WContext</h2>
@@ -159,7 +174,7 @@
                             }
 
                         </div>
-                        <div id="back-@item.id" class="back @item.fColor-back">
+                        <div id="back-@item.id" class="back @item.fColor-back" style="overflow:scroll; overflow-x:hidden; overflow-y:auto;">
                             <div class="left container">
                                 @{
                             int count = 0;
@@ -188,3 +203,11 @@
 
 
 <input id="total_grids" value="@modelCount" hidden="hidden" />
+@section flashcardScript {
+    <script>
+        $(window).load(function () {
+            $('#loading_tab').fadeOut('fast');
+            $('#grid-container-form').delay(200).fadeIn('slow');
+        });
+    </script>
+}
