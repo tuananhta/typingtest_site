@@ -121,3 +121,17 @@
     padding-top: 6px;
     padding-bottom: 6px;
 }
+
+/* Graph */
+rect{
+    cursor:pointer;
+} 
+
+.change_slide:hover {
+    background: #e8ebed;
+  background-image: -webkit-linear-gradient(top, #e8ebed, #d8e1e6);
+  background-image: -moz-linear-gradient(top, #e8ebed, #d8e1e6);
+  background-image: -ms-linear-gradient(top, #e8ebed, #d8e1e6);
+  background-image: -o-linear-gradient(top, #e8ebed, #d8e1e6);
+  background-image: linear-gradient(to bottom, #e8ebed, #d8e1e6);
+}

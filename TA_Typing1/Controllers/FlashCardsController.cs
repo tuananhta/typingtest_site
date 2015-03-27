@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using TA_Typing1.Models;
+using TA_Typing1.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
@@ -97,6 +98,7 @@ namespace TA_Typing1.Controllers
             return View(Cards);
         }
 
+        // function called from the function create word in Word controller
         public bool CreateFlashCard(Word word, string card_type){
             FlashCard card = new FlashCard();
 
@@ -163,6 +165,30 @@ namespace TA_Typing1.Controllers
             }
 
             return RedirectToAction("index");
+        }
+
+
+        // Statistic
+        public ActionResult Statistic(DateTime dateOfWeek)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            int days_in_week = 7;
+            DayOfWeek monDay = DayOfWeek.Monday;
+            int diff = (7 + (dateOfWeek.DayOfWeek - monDay)) % 7;
+            DateTime monDayOfWeek = dateOfWeek.AddDays(-diff);
+
+            List<InputWordsStatistic> inputWords = new List<InputWordsStatistic>();
+
+            for (int i = 0; i < days_in_week; ++i)
+            {
+                InputWordsStatistic wordsInDay = new InputWordsStatistic();
+                wordsInDay.countWords = db.Words.ToList().Where(w => w.CreatedTime.Date == monDayOfWeek.AddDays(i).Date).Count();
+                wordsInDay.createdDate = monDayOfWeek.AddDays(i);
+                wordsInDay.id = i;
+                inputWords.Add(wordsInDay);
+            }
+
+            return View(inputWords);
         }
 
         protected override void Dispose(bool disposing)

@@ -33,7 +33,7 @@ namespace TA_Typing1.Controllers
             IEnumerable<Word> Words;
             if (s_word != null)
             {
-                Words = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()) && w.User == currentUser);              
+                Words = db.Words.ToList().Where(w => w.WordDetail.WContext.ToLower().Contains(s_word.ToLower()) && w.User == currentUser);
                 return View(Words);
             }
             else if (s_date != "")
@@ -76,8 +76,8 @@ namespace TA_Typing1.Controllers
                 return HttpNotFound();
             }
 
-            IEnumerable<Word> nextWords = db.Words.ToList().Where(w => w.Id > word.Id && w.User.Id == currentUser.Id).OrderByDescending( w=> w.Id);
-            IEnumerable<Word> prevWords = db.Words.ToList().Where(w => w.Id > 0 && w.Id < word.Id && w.User.Id == currentUser.Id).OrderByDescending(w=>w.Id);
+            IEnumerable<Word> nextWords = db.Words.ToList().Where(w => w.Id > word.Id && w.User.Id == currentUser.Id).OrderByDescending(w => w.Id);
+            IEnumerable<Word> prevWords = db.Words.ToList().Where(w => w.Id > 0 && w.Id < word.Id && w.User.Id == currentUser.Id).OrderByDescending(w => w.Id);
             if (nextWords.Count() == 0)
             {
                 @ViewBag.nextWord = null;
@@ -114,7 +114,7 @@ namespace TA_Typing1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateSingle(Word word)
         {
-            var currentUser = manager.FindById(User.Identity.GetUserId());          
+            var currentUser = manager.FindById(User.Identity.GetUserId());
 
             if (ModelState.IsValid)
             {
@@ -150,34 +150,34 @@ namespace TA_Typing1.Controllers
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             if (ModelState.IsValid)
+            {
+                ViewBag.redirectUrl = Url.Action("index");
+                char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', '-', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+                string[] word = words.WordDetail.WContext.Split(delimiterChars);
+
+                Word ipWord = words;
+                ipWord.WordDetail.Level = words.WordDetail.Level;
+                ipWord.User = currentUser;
+
+                for (int i = 0; i < word.Length; ++i)
                 {
-                    ViewBag.redirectUrl = Url.Action("index");
-                    char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n' , '-', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-                    string[] word = words.WordDetail.WContext.Split(delimiterChars);
+                    word[i] = word[i].Trim();
 
-                    Word ipWord = words;
-                    ipWord.WordDetail.Level = words.WordDetail.Level;
-                    ipWord.User = currentUser;
+                    if (word[i] == "")
+                        continue;
 
-                    for (int i = 0; i < word.Length; ++i)
-                    {
-                        word[i] = word[i].Trim();
-
-                        if(word[i] == "")
-                            continue;                 
-
-                        ipWord.WordDetail.WContext = word[i];
-                        ipWord.CreatedTime = DateTime.UtcNow;
-                        ipWord.WordDetail.WType = 1; // word
-                        ipWord.WordDetail.CreatedTime = ipWord.CreatedTime;
-                        db.Words.Add(ipWord);
-                        db.WordDetail.Add(ipWord.WordDetail);
-                        db.SaveChanges();
-                        new FlashCardsController().CreateFlashCard(ipWord, fColor);
-                    }
-                    
-                    return PartialView("_RedirectPage");
+                    ipWord.WordDetail.WContext = word[i];
+                    ipWord.CreatedTime = DateTime.UtcNow;
+                    ipWord.WordDetail.WType = 1; // word
+                    ipWord.WordDetail.CreatedTime = ipWord.CreatedTime;
+                    db.Words.Add(ipWord);
+                    db.WordDetail.Add(ipWord.WordDetail);
+                    db.SaveChanges();
+                    new FlashCardsController().CreateFlashCard(ipWord, fColor);
                 }
+
+                return PartialView("_RedirectPage");
+            }
 
             return View();
         }
@@ -207,7 +207,7 @@ namespace TA_Typing1.Controllers
                 db.SaveChanges();
                 ViewBag.redirectUrl = Url.Action("details", "words", new { id = word.Id });
                 new FlashCardsController().CreateFlashCard(word, fColor);
-                    
+
                 return PartialView("_RedirectPage");
             }
 

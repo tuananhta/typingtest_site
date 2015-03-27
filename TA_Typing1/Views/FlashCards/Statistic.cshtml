@@ -1,0 +1,69 @@
+﻿@model List<TA_Typing1.ViewModels.InputWordsStatistic>
+@{
+    Layout = "";
+}
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<div class="bs-example bs-example-type">
+
+    <div class="panel panel-default bootcards-chart">
+        <div class="panel-heading text-center">
+            <h3 class="panel-title">Input words statistic</h3>
+        </div>
+        <div class="container">
+            <div class="col-xs-1 text-center change_slide" style="cursor:pointer;" onclick="{ $('#stats_form').find('input').val('@Model[0].createdDate.AddDays(-7).ToString("MM-dd-yyyy")'); $('#stats_form_btn').click();}">
+                <span class="glyphicon glyphicon-chevron-left" style="padding-top:90px; padding-bottom:90px; font-size:20px;"></span>
+            </div>
+            <div class="bootcards-chart-canvas col-xs-10" id="barChart" style="height:200px; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                <svg version="1.1" width="556" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.75px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="43.5" y="161" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#aaaaaa" d="M56,161H531" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="43.5" y="127" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M56,127H531" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="43.5" y="93" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M56,93H531" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="43.5" y="58.999999999999986" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="3.999999999999986" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M56,58.999999999999986H531" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="43.5" y="25" text-anchor="end" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4,000</tspan></text><path fill="none" stroke="#aaaaaa" d="M56,25H531" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="471.625" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sheila Hutchins</tspan></text><text x="234.125" y="173.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: sans-serif;" font-size="12px" font-family="sans-serif" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Adam Callahan</tspan></text><rect x="70.84375" y="142.3" width="89.0625" height="18.69999999999999" r="0" rx="0" ry="0" fill="#0b62a4" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="189.59375" y="110" width="89.0625" height="51" r="0" rx="0" ry="0" fill="#0b62a4" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="308.34375" y="33.499999999999986" width="89.0625" height="127.50000000000001" r="0" rx="0" ry="0" fill="#0b62a4" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect><rect x="427.09375" y="41.999999999999986" width="89.0625" height="119.00000000000001" r="0" rx="0" ry="0" fill="#0b62a4" stroke="none" fill-opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;"></rect></svg><div class="morris-hover morris-default-style" style="left: 419.125px; top: 71px; display: none;">
+                    <div class="morris-hover-row-label">Sheila Hutchins</div><div class="morris-hover-point" style="color: #0b62a4">
+                        Sales:
+                        3,500
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-1 text-center change_slide" style="cursor:pointer;" onclick="{ $('#stats_form').find('input').val('@Model[0].createdDate.AddDays(7).ToString("MM-dd-yyyy")'); $('#stats_form_btn').click();}">
+                <span class="glyphicon glyphicon-chevron-right" style="padding-top:90px; padding-bottom:90px; font-size:20px;"></span>
+            </div>
+        </div>
+        <div class="panel-footer text-right">
+            <!-- hidden form -->
+            <form id="stat_form_sbm" onsubmit="handle_stat_form(event)" style="display:none">
+                <input name="dateOfWeek" type="text" />
+                <button id="stats_form_btn" type="submit">ok</button>
+            </form>
+            <small class="text-danger">Statistic</small><small class="text-danger" style="font-style:italic;"> @Model[0].createdDate.ToString("dd-MM-yyyy") - @Model[6].createdDate.ToString("dd-MM-yyyy")</small>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var drawCharts = function() {
+            $("#barChart").empty();
+            Morris.Bar({
+                element: 'barChart',
+                data: [
+                    {date: '@Model[0].createdDate.ToString("dd-MM")', words: @Model[0].countWords},
+                        {date: '@Model[1].createdDate.ToString("dd-MM")', words: @Model[1].countWords},
+                        {date: '@Model[2].createdDate.ToString("dd-MM")', words: @Model[2].countWords},
+                        {date: '@Model[3].createdDate.ToString("dd-MM")', words: @Model[3].countWords},
+                        {date: '@Model[4].createdDate.ToString("dd-MM")', words: @Model[4].countWords},
+                        {date: '@Model[5].createdDate.ToString("dd-MM")', words: @Model[5].countWords},
+                        {date: '@Model[6].createdDate.ToString("dd-MM")', words: @Model[6].countWords},
+                ],
+                xkey: 'date',
+                ykeys: ['words'],
+                labels: ['words'],
+                hideHover: 'auto',
+            });
+        }
+        $(document).ready( function() {
+            drawCharts();
+        });
+        $(window).on('resize', function() {
+            drawCharts();
+        });
+    </script>
+
+</div>

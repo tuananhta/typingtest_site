@@ -178,9 +178,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\FlashCardModelView.cs" />
+    <Compile Include="ViewModels\InputWordsStatistic.cs" />
     <Compile Include="ViewModels\WordModelView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootcard.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap_datetimepicker.css" />
     <Content Include="Content\Flip.css" />
@@ -348,6 +350,7 @@
     <Content Include="Views\FlashCards\Index.cshtml" />
     <Content Include="Views\Words\CreatePhrase.cshtml" />
     <Content Include="Views\Words\CreateMultiple.cshtml" />
+    <Content Include="Views\FlashCards\Statistic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

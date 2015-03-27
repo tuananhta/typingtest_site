@@ -1,0 +1,108 @@
+﻿@model IEnumerable<TA_Typing1.Models.FlashCard>
+
+@{
+    Layout = null;
+}
+<div role="tabpanel" class="tab-pane fade in active" id="tab-words" style="background-color:#3a7147">
+    <div id="grid-containter" class="center-block container text-center" style="border-radius:5px;border:15px ridge #808080">
+        <h2 style="color:#ffffff; text-decoration:underline">@ViewBag.fav_title</h2>
+        <h3 style="color:whitesmoke">@ViewBag.boardInfo</h3>
+        <hr style="background-image:url(../../Images/Background/chalkboard_top.png); height:10px;" />
+        <div id="loading_tab" class="text-center">
+            <div class="container text-center">
+                <h2 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h2>
+            </div>
+        </div>
+        <form style="display:none;" id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
+            @Html.AntiForgeryToken()
+            @{
+                int modelCount = 0;
+                foreach (var item in Model)
+                {
+                    <section id="grid-@modelCount" class="card-grid" style="display:none;">
+                        <div id="front-@item.id" class="front @item.fColor-front">
+                            <div class="container text-right" style="margin:5px;">
+                                <span class="color-opt">
+                                    <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.id, 'default')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.id, 'pink')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-green" onclick="updateColor(event, @item.id, 'green')">
+                                    </span>
+                                    <span class="btn btn-flash btn-flash-blue" onclick="updateColor(event, @item.id, 'blue')">
+                                    </span>
+                                    <span class="inputGroup" hidden="hidden">
+                                        <input class="fColor-input" name="cards[@modelCount].fColor" value="@item.fColor" />
+                                        <input class="fFavourite-input" name="cards[@modelCount].fFavourite" value="@item.fFavourite.ToString()" />
+                                        <input name="cards[@modelCount].CreatedTime" value="@item.createdTime" />
+                                        <input name="cards[@modelCount].id" value="@item.id" />
+                                    </span>
+                                </span>
+                                <span class="favourite-opt" style="display:none;">
+                                    @if (item.fFavourite == false)
+                                    {
+                                        <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><span class="btn btn-xs refresh-btn"><span style="position:static;" class="glyphicon glyphicon-plus-sign"></span> Add to favourite</span></span>
+                                        <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><span class="btn btn-default btn-xs"><span style="position:static;" class="glyphicon glyphicon-remove"></span> Remove favourite</span> <img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><span class="btn btn-xs refresh-btn"><span style="position:static;" class="glyphicon glyphicon-plus-sign"></span> Add to favourite</span></span>
+                                        <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span class="btn btn-default btn-xs"><span style="position:static;" class="glyphicon glyphicon-remove"></span> Remove favourite</span> <img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
+                                    }
+                                </span>
+                                <span style="position:static"><img style="height:20px;" src="~/Images/Icon/pin.png" /></span>
+                            </div>
+
+                            <h2 class="text-primary" style="margin-top:7px;">@item.word.WordDetail.WContext</h2>
+                            @{
+                                    string wordTypes = null;
+
+                                    foreach (var wType in item.word.WordDefs.GroupBy(m => m.wType))
+                                    {
+                                        wordTypes += wType.First(m => m.wType != null).wType + " ,";
+                                    }
+
+
+                                    if (wordTypes != null)
+                                    {
+                                        wordTypes = wordTypes.Remove(wordTypes.Length - 1);
+                                        wordTypes = '(' + wordTypes + ')';
+                                    }
+                            }
+                            <h4 class="text-danger"><i>@wordTypes</i></h4>
+
+                            @if (item.word.WordDetail.WPronounce != null)
+                            {
+                                <h3 style="margin:0">/@item.word.WordDetail.WPronounce/</h3>
+                            }
+
+                        </div>
+                        <div id="back-@item.id" class="back @item.fColor-back" style="overflow:scroll; overflow-x:hidden; overflow-y:auto;">
+                            <div class="left container">
+                                @{
+                            int count = 0;
+                            foreach (var def in item.word.WordDefs)
+                            {
+                                count++;
+                                <div class="small">
+                                    <span class="col-xs-1">@count.</span>
+                                    <span class="col-xs-2">(@def.wType)</span>
+                                    <span class="col-xs-9 text-danger"><b>@def.wDefinition</b></span>
+                                    <span class="col-xs-11 col-xs-offset-1 text-left"><i class="text-primary">Eg: @def.wExample</i></span>
+                                </div>
+
+                            }
+                                }
+                            </div>
+                        </div>
+                    </section>
+                            modelCount++;
+                }
+            }
+        </form>
+    </div>
+</div>
+
+
+
+<input id="total_grids" value="@modelCount" hidden="hidden" />
