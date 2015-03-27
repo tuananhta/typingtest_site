@@ -38,8 +38,7 @@ namespace TA_Typing1.Controllers
             }
             else if (s_date != "")
             {
-                string[] formats = {"d/M/yyyy", "dd/MM/yyyy", "d/MM/yyyy", "dd/M/yyyy", "yyyy/MM/dd", "yyyy/M/dd", "yyyy/MM/d", "yyyy/M/d",
-                                       "d-M-yyyy", "dd-MM-yyyy", "d-MM-yyyy", "dd-M-yyyy","yyyy-MM-dd", "yyyy-M-dd", "yyyy-MM-d", "yyyy-M-d" };
+                string[] formats = {"MM/dd/yyyy", "MM-dd-yyyy"};
                 DateTime date_query_real;
                 if (!DateTime.TryParseExact(s_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date_query_real))
                 {

@@ -226,7 +226,7 @@
             $('#grid-container-form').delay(200).fadeIn('slow');
         });
 
-        function handle_stat_form() {
+        function handle_stat_form(event) {
             event.preventDefault();
             var data_loading = '<div class="container text-center"><br><h4 class="text-danger"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading data ...</h4><div>'
             $.ajax({
