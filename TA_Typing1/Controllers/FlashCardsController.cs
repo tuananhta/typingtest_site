@@ -99,7 +99,8 @@ namespace TA_Typing1.Controllers
         }
 
         // function called from the function create word in Word controller
-        public bool CreateFlashCard(Word word, string card_type){
+        public bool CreateFlashCard(Word word, string card_type)
+        {
             FlashCard card = new FlashCard();
 
             card.createdTime = DateTime.Today;
@@ -122,7 +123,7 @@ namespace TA_Typing1.Controllers
             foreach (var card in cards)
             {
                 FlashCard cardFounded = db.FlashCard.First(w => w.id == card.id);
-                
+
                 if (cardFounded == null)
                 {
                     return HttpNotFound();
