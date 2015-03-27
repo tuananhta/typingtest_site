@@ -182,7 +182,7 @@ namespace TA_Typing1.Controllers
             for (int i = 0; i < days_in_week; ++i)
             {
                 InputWordsStatistic wordsInDay = new InputWordsStatistic();
-                wordsInDay.countWords = db.Words.ToList().Where(w => w.CreatedTime.Date == monDayOfWeek.AddDays(i).Date).Count();
+                wordsInDay.countWords = db.Words.ToList().Where(w => w.CreatedTime.Date == monDayOfWeek.AddDays(i).Date && w.User == currentUser).Count();
                 wordsInDay.createdDate = monDayOfWeek.AddDays(i);
                 wordsInDay.id = i;
                 inputWords.Add(wordsInDay);
