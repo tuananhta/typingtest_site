@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TA_Typing1.Models.Word>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Text</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container text-center">
+        <h2 class="text-danger">List of words</h2>
+        <h5 class="text-muted">Created: @DateTime.Today.ToString("dd-MM-yyyy")</h5>
+    </div>
+    <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
+        <tr>
+            <th class="text-center" style="width:30%">Word</th>
+            <th class="text-center" style="width:60%">Details</th>
+        </tr>
+    </table>
+    <br />
+    @{
+        foreach (var word in Model)
+        {
+            <br />
+            <hr style="border:3px solid #808080; width:90%;" class="text-danger text-center" />
+            <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
+                <tr style="border-top:2px solid #808080; padding:30px;">
+                    <td class="text-center" style="width:30%"><div style="font-size:13px;">@word.WordDetail.WContext</div><div style="font-size:9px;" class="text-muted">@word.CreatedTime.ToString("dd-MM-yyyy")</div></td>
+                    <td class="text-center" style="width:60%">
+                        @if (word.WordDefs.Count() > 0)
+                        {
+                            foreach (var def in word.WordDefs)
+                            {
+                                <div class="text-danger" style="font-size:12px;">@def.wDefinition</div>
+                                <div style="font-size:10px; font-style:italic" class="text-primary">Eg: @def.wExample</div>
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+        }
+    }
+
+</body>
+</html>
