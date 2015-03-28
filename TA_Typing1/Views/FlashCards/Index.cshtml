@@ -118,6 +118,7 @@
 <br />
 <div role="tabpanel" class="tab-pane fade in active" id="tab-words" style="background-color:#3a7147">
     <div id="grid-containter" class="center-block container text-center" style="border-radius:5px;border:15px ridge #808080">
+        <h2 style="color:whitesmoke">@ViewBag.fav_title</h2>
         <h3 style="color:whitesmoke">@ViewBag.boardInfo</h3>
         <form method="post" action="@Url.Action("pdf","flashcards")" target="_blank">
             @Html.AntiForgeryToken();
