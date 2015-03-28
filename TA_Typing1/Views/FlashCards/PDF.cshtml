@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" href="~/Images/Logo/logo6.PNG" />
     <title>Show Text</title>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
@@ -34,11 +35,16 @@
                     <td class="text-center" style="width:60%">
                         @if (card.word.WordDefs.Count() > 0)
                         {
+                            int count_def = 0;
                             foreach (var def in card.word.WordDefs)
                             {
+                                count_def++;
                                 <div class="text-danger" style="font-size:12px; padding-bottom:5px;">@def.wDefinition</div>
                                 <div style="font-size:10px; font-style:italic" class="text-primary">Eg: @def.wExample</div>
-                                <hr class="text-danger" style="opacity:0.5;"/>
+                                if (count_def < card.word.WordDefs.Count())
+                                {
+                                    <hr class="text-danger" style="opacity:0.5; height:1px;" />
+                                }
                             }
                         }
                     </td>
