@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TA_Typing1.Models.Word>
+﻿@model IEnumerable<TA_Typing1.Models.FlashCard>
 @{
     Layout = null;
 }
@@ -9,10 +9,13 @@
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <img src="~/Images/Logo/logo6_lg.png" style="height:50px;" />
     <div class="container text-center">
-        <h2 class="text-danger">List of words</h2>
-        <h5 class="text-muted">Created: @DateTime.Today.ToString("dd-MM-yyyy")</h5>
+        <div class="text-danger" style="font-size:18px;">List of words</div>
+        <div style="font-size:13px;" class="text-primary">@ViewBag.boardInfo</div>
+        <div class="text-muted" style="font-size:12px;">Created: @DateTime.Today.ToString("dd-MM-yyyy")</div>
     </div>
+    <br />
     <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
         <tr>
             <th class="text-center" style="width:30%">Word</th>
@@ -21,20 +24,21 @@
     </table>
     <br />
     @{
-        foreach (var word in Model)
+        foreach (var card in Model)
         {
             <br />
-            <hr style="border:3px solid #808080; width:90%;" class="text-danger text-center" />
+            <hr style="border:2px solid #808080; width:100%; opacity:0.9;" />
             <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
                 <tr style="border-top:2px solid #808080; padding:30px;">
-                    <td class="text-center" style="width:30%"><div style="font-size:13px;">@word.WordDetail.WContext</div><div style="font-size:9px;" class="text-muted">@word.CreatedTime.ToString("dd-MM-yyyy")</div></td>
+                    <td class="text-center" style="width:30%"><div style="font-size:13px;">@card.word.WordDetail.WContext</div><div style="font-size:9px;" class="text-muted">@if(card.word.WordDetail.WPronounce != null){<span>/@card.word.WordDetail.WPronounce/</span>}</div></td>
                     <td class="text-center" style="width:60%">
-                        @if (word.WordDefs.Count() > 0)
+                        @if (card.word.WordDefs.Count() > 0)
                         {
-                            foreach (var def in word.WordDefs)
+                            foreach (var def in card.word.WordDefs)
                             {
-                                <div class="text-danger" style="font-size:12px;">@def.wDefinition</div>
+                                <div class="text-danger" style="font-size:12px; padding-bottom:5px;">@def.wDefinition</div>
                                 <div style="font-size:10px; font-style:italic" class="text-primary">Eg: @def.wExample</div>
+                                <hr class="text-danger" style="opacity:0.5;"/>
                             }
                         }
                     </td>

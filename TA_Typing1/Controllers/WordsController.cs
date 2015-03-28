@@ -12,9 +12,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 
-using iTextSharp.text;
-using MvcRazorToPdf;
-
 namespace TA_Typing1.Controllers
 {
     [Authorize]
@@ -310,21 +307,6 @@ namespace TA_Typing1.Controllers
             db.Words.Remove(word);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        public ActionResult PDF()
-        {
-            var currentUser = manager.FindById(User.Identity.GetUserId());            
-            IEnumerable<Word> model = db.Words.ToList().Where(w => w.User == currentUser);
-            foreach (var word in model)
-            {
-                word.WordDefs = db.WordDefs.ToList().Where(def => def.word == word);
-            }
-            return new PdfActionResult(model, (writer, document) =>
-            {
-                document.SetPageSize(new Rectangle(500f, 500f, 90));
-                document.NewPage();
-            });
         }
 
         protected override void Dispose(bool disposing)

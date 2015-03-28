@@ -11,6 +11,8 @@ using TA_Typing1.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using iTextSharp.text;
+using MvcRazorToPdf;
  
 
 namespace TA_Typing1.Controllers
@@ -190,6 +192,81 @@ namespace TA_Typing1.Controllers
             }
 
             return View(inputWords);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PDF(string date_query = "", int week_query = 0, bool fav_list = false)
+        {
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            IEnumerable<FlashCard> Cards;
+            if (week_query < 0)
+            {
+                throw new FormatException();
+            }
+
+            if (date_query == "")
+            {
+                if (week_query == 0)
+                {
+                    DateTime currentDate = DateTime.Today;
+                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
+                    DayOfWeek monDay = DayOfWeek.Monday;
+                    int diff = (7 + (currentDay - monDay)) % 7;
+                    int totalDays = diff;
+                    @ViewBag.boardInfo = DateTime.Today.AddDays(-diff).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-diff)));
+                }
+                else
+                {
+                    DateTime currentDate = DateTime.Today;
+                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
+                    DayOfWeek monDay = DayOfWeek.Monday;
+                    int diff = (7 + (currentDay - monDay)) % 7;
+                    int totalDays = diff + (week_query - 1) * 7;
+                    @ViewBag.boardInfo = DateTime.Today.AddDays(-totalDays).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-totalDays)));
+                }
+            }
+            else
+            {
+                string[] formats = { "MM/dd/yyyy", "MM-dd-yyyy" };
+                DateTime date_query_real;
+                if (!DateTime.TryParseExact(date_query, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date_query_real))
+                {
+                    throw new KeyNotFoundException(); //no thing at all
+                }
+
+                date_query_real = Convert.ToDateTime(date_query);
+
+                @ViewBag.boardInfo = date_query_real.Date.ToString("dd-MM-yyyy");
+
+                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real);
+            }
+
+            @ViewBag.date_query = date_query;
+            @ViewBag.week_query = week_query;
+
+            if (fav_list == true)
+            {
+                Cards = Cards.ToList().Where(card => card.fFavourite == true);
+                @ViewBag.fav_title = "Favourite List";
+                @ViewBag.fav_list = true.ToString();
+            }
+
+            foreach (var card in Cards)
+            {
+                // The list of word defs are added
+                card.word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == card.word.Id);
+            }
+
+            return new PdfActionResult(Cards, (writer, document) =>
+            {
+                document.SetPageSize(new Rectangle(500f, 500f, 90));
+                document.NewPage();
+            });
         }
 
         protected override void Dispose(bool disposing)

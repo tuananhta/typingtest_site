@@ -361,7 +361,7 @@
     <Content Include="Views\Words\CreatePhrase.cshtml" />
     <Content Include="Views\Words\CreateMultiple.cshtml" />
     <Content Include="Views\FlashCards\Statistic.cshtml" />
-    <Content Include="Views\Words\PDF.cshtml" />
+    <Content Include="Views\FlashCards\PDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
