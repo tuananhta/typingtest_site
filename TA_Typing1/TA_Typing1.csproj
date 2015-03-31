@@ -187,6 +187,7 @@
     <Compile Include="Models\WordDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\InputFavouriteCardModelView.cs" />
     <Compile Include="ViewModels\FlashCardModelView.cs" />
     <Compile Include="ViewModels\InputWordsStatistic.cs" />
     <Compile Include="ViewModels\WordModelView.cs" />
@@ -216,11 +217,16 @@
     <Content Include="Images\Background\board\b9.jpg" />
     <Content Include="Images\Background\board\bh1.jpg" />
     <Content Include="Images\Background\chalkboard_top.png" />
+    <Content Include="Images\Icon\add_fav.png" />
+    <Content Include="Images\Icon\Favourite-icon.png" />
     <Content Include="Images\Icon\fav_false.png" />
     <Content Include="Images\Icon\fav_true.png" />
+    <Content Include="Images\Icon\hashtag.png" />
     <Content Include="Images\Icon\icon.png" />
     <Content Include="Images\Icon\icon2.PNG" />
+    <Content Include="Images\Icon\paint.png" />
     <Content Include="Images\Icon\pin.png" />
+    <Content Include="Images\Icon\rem_fav.png" />
     <Content Include="Images\Logo\logo2.png" />
     <Content Include="Images\Logo\logo2_sm.png" />
     <Content Include="Images\Logo\logo4.png" />
@@ -374,6 +380,7 @@
     <Content Include="Views\FlashCards\Statistic.cshtml" />
     <Content Include="Views\FlashCards\PDF.cshtml" />
     <Content Include="Views\FlashCards\_backgroundOption.cshtml" />
+    <Content Include="Views\FlashCards\Index_old.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -146,26 +146,17 @@ namespace TA_Typing1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditFavourite(ICollection<FlashCard> cards)
+        public bool EditFavourite(InputFavouriteCardModelView cards)
         {
-            foreach (var card in cards)
+            FlashCard fcard = db.FlashCard.Find(cards.id);
+            if (fcard != null)
             {
-                FlashCard cardFounded = db.FlashCard.First(w => w.id == card.id);
-
-                if (cardFounded == null)
-                {
-                    return HttpNotFound();
-                }
-                else
-                {
-                    cardFounded.fFavourite = card.fFavourite;
-                    cardFounded.createdTime = DateTime.Today;
-                    db.Entry(cardFounded).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                fcard.fFavourite = cards.fFavourite;
+                db.SaveChanges();
+                return true;
             }
 
-            return RedirectToAction("index");
+            return false;
         }
 
 
@@ -271,6 +262,16 @@ namespace TA_Typing1.Controllers
         {
             HttpCookie aCookie = new HttpCookie("userInfo");
             aCookie.Values["backgroundUrl"] = bg_option;
+            aCookie.Expires = DateTime.Now.AddDays(365);
+            Response.Cookies.Add(aCookie);
+
+            return true;
+        }
+
+        public bool save_grid_size(int grid_size)
+        {
+            HttpCookie aCookie = new HttpCookie("grid_size");
+            aCookie.Value= grid_size.ToString();
             aCookie.Expires = DateTime.Now.AddDays(365);
             Response.Cookies.Add(aCookie);
 

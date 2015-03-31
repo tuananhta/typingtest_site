@@ -218,65 +218,18 @@
                     <h2 style="margin-top:30px; margin-bottom:30px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading</h2>
                 </div>
             </div>
-            <div style="display:none;" id="grid-container-form" class="form-color-option">
+            <form style="display:none;" id="grid-container-form" class="form-color-option" method="post" action="@Url.Action("edit", "flashcards")">
                 @Html.AntiForgeryToken()
                 @{
                     int modelCount = 0;
                     foreach (var item in Model)
                     {
                         <section id="grid-@modelCount" class="card-grid" style="display:none; width: 320px; height: 180px;margin: 15px;">
-                            <div id="front-@item.id" class="front @item.fColor-front" style="overflow:auto; overflow-x:hidden">
+                            <div id="front-@item.id" class="front @item.fColor-front" style="overflow:auto;">
                                 <!-- Current face -->
                                 <input style="display:none;" id="current_face_@item.id" class="current_face" value="front" />
-                                <div class="inputGroup" hidden="hidden">
-                                    <form class="change_color_form">
-                                        <input class="fColor-input" name="cards[@modelCount].fColor" value="@item.fColor" />
-                                        <input name="CreatedTime" value="@item.createdTime" />
-                                        <input name="id" value="@item.id" />
-                                    </form>
-                                    <form class="change_favourite_form">
-                                        @Html.AntiForgeryToken()
-                                        <input class="fFavourite-input" name="fFavourite" value="@item.fFavourite.ToString()" />
-                                        <input name="CreatedTime" value="@item.createdTime" />
-                                        <input name="id" value="@item.id" />
-                                    </form>
-                                </div>
-                                <!-- header card -->
-                                <div class="col-xs-12 container text-right card_header" style="padding: 0; font-size: 0; margin: 0; position:static">
-                                    <div class="col-xs-10 text-left">
-                                        <div class="btn-group btn-group-xs" role="group">
-                                            <button type="button" class="btn btn-default">
-                                                <!-- Favourite -->
-                                                @if (item.fFavourite == false)
-                                                {
-                                                    <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/add_fav.png" /></span></span>
-                                                    <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/rem_fav.png" /></span></span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/add_fav.png" /></span></span>
-                                                    <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/rem_fav.png" /></span></span>
-                                                }
-                                            </button>
-                                            <button type="button" class="btn btn-default" onclick="{ alert($(this).parent().parent().parent().parent().parent().find('.color-opt').html()); $(this).parent().parent().parent().parent().parent().find('.color-opt').fadeIn().delay(3000).fadeOut('slow'); }">
-                                                <!-- paint button -->
-                                                <span class="paint_color" style="position:static;"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/paint.png" /></span></span>
-                                            </button>
-                                            <button type="button" class="btn btn-default">
-                                                <!-- add hash tag -->
-                                                <span class="paint_color" style="position:static;"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/hashtag.png" /></span></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-2 text-center">
-                                        <span class="favourite-opt" style="position:static; right:10px;">
-                                            <span class="saving_status disabled" style="position:static; display:none; font-size:25px;"><span style="position:static;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></span></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <!-- second header -->
-                                <div class="container">
-                                    <span class="color-opt" style="left:10px;">
+                                <div class="container text-right card_header" style="padding: 0; font-size: 0; margin: 0; position:static">
+                                    <span class="color-opt text-left">
                                         <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.id, 'default')">
                                         </span>
                                         <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.id, 'pink')">
@@ -285,24 +238,42 @@
                                         </span>
                                         <span class="btn btn-flash btn-flash-blue" onclick="updateColor(event, @item.id, 'blue')">
                                         </span>
+                                        <span class="inputGroup" hidden="hidden">
+                                            <input class="fColor-input" name="cards[@modelCount].fColor" value="@item.fColor" />
+                                            <input class="fFavourite-input" name="cards[@modelCount].fFavourite" value="@item.fFavourite.ToString()" />
+                                            <input name="cards[@modelCount].CreatedTime" value="@item.createdTime" />
+                                            <input name="cards[@modelCount].id" value="@item.id" />
+                                        </span>
+                                    </span>
+                                    <span class="favourite-opt" style="position:static; right:10px;">
+
+                                        @if (item.fFavourite == false)
+                                        {
+                                            <span class="false_favourite" style="position:static;" onclick="addFavourite(event,@item.id)"><span style="position:static;"><img style="height:40px;" src="~/Images/Icon/add_fav.png" /></span></span>
+                                            <span class="true_favourite" style="position:static; display:none" onclick="removeFavourite(event, @item.id)"><span style="position:static;"><img style="height:40px;" src="~/Images/Icon/rem_fav.png" /></span></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="false_favourite" style="position:static; display:none;" onclick="addFavourite(event,@item.id)"><span style="position:static;"><img style="height:40px;" src="~/Images/Icon/add_fav.png" /></span></span>
+                                            <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span style="position:static;"><img style="height:40px;" src="~/Images/Icon/rem_fav.png" /></span></span>
+                                        }
                                     </span>
                                 </div>
-                                <!-- End of header card -->
                                 <h2 class="text-primary" style="margin-top:7px;">@item.word.WordDetail.WContext</h2>
                                 @{
-                                                string wordTypes = null;
+                                        string wordTypes = null;
 
-                                                foreach (var wType in item.word.WordDefs.GroupBy(m => m.wType))
-                                                {
-                                                    wordTypes += wType.First(m => m.wType != null).wType + " ,";
-                                                }
+                                        foreach (var wType in item.word.WordDefs.GroupBy(m => m.wType))
+                                        {
+                                            wordTypes += wType.First(m => m.wType != null).wType + " ,";
+                                        }
 
 
-                                                if (wordTypes != null)
-                                                {
-                                                    wordTypes = wordTypes.Remove(wordTypes.Length - 1);
-                                                    wordTypes = '(' + wordTypes + ')';
-                                                }
+                                        if (wordTypes != null)
+                                        {
+                                            wordTypes = wordTypes.Remove(wordTypes.Length - 1);
+                                            wordTypes = '(' + wordTypes + ')';
+                                        }
                                 }
                                 <h4 class="text-danger"><i>@wordTypes</i></h4>
 
@@ -345,7 +316,7 @@
                                 modelCount++;
                     }
                 }
-            </div>
+            </form>
             @if (modelCount < 1)
             {
                 <h3 class="alert alert-danger">Unfortunately, no words matched your request</h3>
@@ -377,17 +348,6 @@
             else {
                 $('#show_all_radio').attr('checked', 'checked');
             }
-            // test color header 2
-            $('.color-opt').mouseover(function (event) {
-                if ($(this).is(':animated')) {
-                    $(this).stop().animate({ opacity: '100' });
-                }
-            })
-            // test color header 2
-            $('.color-opt').mouseleave(function (event) {
-                $(this).delay(3000).fadeOut('slow');
-                clearTimeout(countdown);
-            })
         });
 
         function handle_stat_form(event) {
@@ -550,4 +510,3 @@
         });
     </script>
 }
-
