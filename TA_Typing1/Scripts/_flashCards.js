@@ -8,6 +8,24 @@ $(function () {
 $(document).ready(function () {
     $('.color-opt').hide();
     $('.card-grid').fadeIn('fast');
+
+    // check current face of flash cards
+    $('.card-grid').click(function () {
+        var face = $(this).find(".current_face").val();
+        if (face == "front") {
+            $(this).find(".current_face").val("back");
+        }
+        else {
+            $(this).find(".current_face").val("front");
+        }
+    })
+
+    // double click
+    $('.card-grid').dblclick(function () {
+        event.stopPropagation();
+        alert("hehee");
+    })
+        
 })
 
 function showColorOption() {
@@ -81,7 +99,7 @@ function hideOptionsTab() {
 
 // function random position
 function randomPosition() {
-    $('#grid-containter').fadeOut(0);
+    $('#grid-container-form').fadeOut("slow");
 
     var totalGrid = $('#total_grids').val();
     var gridData;
@@ -98,7 +116,7 @@ function randomPosition() {
         }
     }
 
-    $('#grid-containter').delay(100).fadeIn("300");
+    $('#grid-container-form').delay(100).fadeIn();
 }
 
 function updateColor(event, id, fColor) {
@@ -112,10 +130,24 @@ function updateColor(event, id, fColor) {
     $('#back-' + id).addClass("back flash-"+fColor+"-back");
 }
 
+var rotateTime = 1;
+
 function rotateAll() {
+    rotateTime = (rotateTime + 1) % 2;
     var totalGrid = $('#total_grids').val();
-    for (var i = 0; i <= totalGrid; ++i) {
-        $('#grid-' + i).click();
+    if (rotateTime == 0) {
+        for (var i = 0; i <= totalGrid; ++i) {
+            if ($('#grid-' + i).find(".current_face").val() == "front") {
+                $('#grid-' + i).click();
+            }
+        }
     }
+    else {
+        for (var i = 0; i <= totalGrid; ++i) {
+            if ($('#grid-' + i).find(".current_face").val() == "back") {
+                $('#grid-' + i).click();
+            }
+        }
+    }   
 }
 

@@ -135,3 +135,15 @@ rect{
   background-image: -o-linear-gradient(top, #e8ebed, #d8e1e6);
   background-image: linear-gradient(to bottom, #e8ebed, #d8e1e6);
 }
+
+#grid-containter {
+    border:15px ridge #808080;
+}
+
+#grid-body {
+    background-repeat:no-repeat; 
+    background-size:100% 100%; 
+    overflow:scroll; 
+    overflow-x:hidden; 
+    width:100%;
+}

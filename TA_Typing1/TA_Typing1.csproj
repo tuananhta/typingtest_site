@@ -197,6 +197,7 @@
     <Content Include="Content\bootstrap_datetimepicker.css" />
     <Content Include="Content\Flip.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\jquery_dateTime_picker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -204,6 +205,16 @@
     <Content Include="Images\Avatar\profile_TA.jpg" />
     <Content Include="Images\Background\background1.jpg" />
     <Content Include="Images\Background\board.jpg" />
+    <Content Include="Images\Background\board\b1.jpg" />
+    <Content Include="Images\Background\board\b2.jpg" />
+    <Content Include="Images\Background\board\b3.jpg" />
+    <Content Include="Images\Background\board\b4.jpg" />
+    <Content Include="Images\Background\board\b5.jpg" />
+    <Content Include="Images\Background\board\b6.jpg" />
+    <Content Include="Images\Background\board\b7.jpg" />
+    <Content Include="Images\Background\board\b8.jpg" />
+    <Content Include="Images\Background\board\b9.jpg" />
+    <Content Include="Images\Background\board\bh1.jpg" />
     <Content Include="Images\Background\chalkboard_top.png" />
     <Content Include="Images\Icon\fav_false.png" />
     <Content Include="Images\Icon\fav_true.png" />
@@ -362,6 +373,7 @@
     <Content Include="Views\Words\CreateMultiple.cshtml" />
     <Content Include="Views\FlashCards\Statistic.cshtml" />
     <Content Include="Views\FlashCards\PDF.cshtml" />
+    <Content Include="Views\FlashCards\_backgroundOption.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

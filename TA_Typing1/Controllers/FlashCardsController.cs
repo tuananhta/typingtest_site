@@ -31,43 +31,40 @@ namespace TA_Typing1.Controllers
 
 
         // GET: FlashCards
-        public ActionResult Index(string date_query = "", int week_query = 0, bool fav_list = false)
+        public ActionResult Index(string date_query = "", string start_date = "", string end_date = "", bool fav_list = false)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             IEnumerable<FlashCard> Cards;
-            if (week_query < 0)
-            {
-                throw new FormatException();
-            }
-
             if (date_query == "")
             {
-                if (week_query == 0)
+                if (start_date != "" || end_date != "")
                 {
-                    DateTime currentDate = DateTime.Today;
-                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay = DayOfWeek.Monday;
-                    int diff = (7 + (currentDay - monDay)) % 7;
-                    int totalDays = diff;
-                    @ViewBag.boardInfo = "This week: " + DateTime.Today.AddDays(-diff).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+                    string[] formats = { "MM/dd/yyyy", "MM-dd-yyyy" };
+                    DateTime start_query_real;
+                    DateTime end_query_real;
+                    if (!DateTime.TryParseExact(start_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out start_query_real) || !DateTime.TryParseExact(end_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out end_query_real))
+                    {
+                        throw new KeyNotFoundException(); //no thing at all
+                    }
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-diff)));
+                    start_query_real = Convert.ToDateTime(start_date);
+                    end_query_real = Convert.ToDateTime(end_date);
+
+                    @ViewBag.boardInfo = start_query_real.Date.ToString("dd-MM-yyyy") + " - " + end_query_real.Date.ToString("dd-MM-yyyy");
+
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= start_query_real.Date && w.word.CreatedTime <= end_query_real.Date);
                 }
                 else
                 {
                     DateTime currentDate = DateTime.Today;
-                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay = DayOfWeek.Monday;
-                    int diff = (7 + (currentDay - monDay)) % 7;
-                    int totalDays = diff + (week_query - 1) * 7;
-                    @ViewBag.boardInfo = week_query + " week(s): " + DateTime.Today.AddDays(-totalDays).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+                    @ViewBag.boardInfo = "Today: " + currentDate.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-totalDays)));
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime == currentDate.Date);
                 }
             }
             else
             {
-                string[] formats = { "MM/dd/yyyy", "MM-dd-yyyy" }; 
+                string[] formats = { "MM/dd/yyyy", "MM-dd-yyyy" };
                 DateTime date_query_real;
                 if (!DateTime.TryParseExact(date_query, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date_query_real))
                 {
@@ -76,13 +73,14 @@ namespace TA_Typing1.Controllers
 
                 date_query_real = Convert.ToDateTime(date_query);
 
-                @ViewBag.boardInfo = "Date: " + date_query_real.Date.ToString("dd-MM-yyyy");
+                @ViewBag.boardInfo = date_query_real.Date.ToString("dd-MM-yyyy");
 
                 Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real);
             }
 
             @ViewBag.date_query = date_query;
-            @ViewBag.week_query = week_query;
+            @ViewBag.start_date = start_date;
+            @ViewBag.end_date = end_date;
 
             if (fav_list == true)
             {
@@ -196,38 +194,36 @@ namespace TA_Typing1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PDF(string date_query = "", int week_query = 0, bool fav_list = false)
+        public ActionResult PDF(string date_query = "", string start_date = "", string end_date = "", bool fav_list = false)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());
             IEnumerable<FlashCard> Cards;
-            if (week_query < 0)
-            {
-                throw new FormatException();
-            }
 
             if (date_query == "")
             {
-                if (week_query == 0)
+                if (start_date != "" || end_date != "")
                 {
-                    DateTime currentDate = DateTime.Today;
-                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay = DayOfWeek.Monday;
-                    int diff = (7 + (currentDay - monDay)) % 7;
-                    int totalDays = diff;
-                    @ViewBag.boardInfo = DateTime.Today.AddDays(-diff).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+                    string[] formats = { "MM/dd/yyyy", "MM-dd-yyyy" };
+                    DateTime start_query_real;
+                    DateTime end_query_real;
+                    if (!DateTime.TryParseExact(start_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out start_query_real) || !DateTime.TryParseExact(end_date, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out end_query_real))
+                    {
+                        throw new KeyNotFoundException(); //no thing at all
+                    }
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-diff)));
+                    start_query_real = Convert.ToDateTime(start_date);
+                    end_query_real = Convert.ToDateTime(end_date);
+
+                    @ViewBag.boardInfo = start_query_real.Date.ToString("dd-MM-yyyy") + " - " + end_query_real.Date.ToString("dd-MM-yyyy");
+
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= start_query_real.Date && w.word.CreatedTime <= end_query_real.Date);
                 }
                 else
                 {
                     DateTime currentDate = DateTime.Today;
-                    DayOfWeek currentDay = DateTime.Now.DayOfWeek;
-                    DayOfWeek monDay = DayOfWeek.Monday;
-                    int diff = (7 + (currentDay - monDay)) % 7;
-                    int totalDays = diff + (week_query - 1) * 7;
-                    @ViewBag.boardInfo = DateTime.Today.AddDays(-totalDays).Date.ToString("dd-MM-yyyy") + " - " + DateTime.Today.Date.ToString("dd-MM-yyyy");
+                    @ViewBag.boardInfo = "Today: " + currentDate.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= (DateTime.Today.AddDays(-totalDays)));
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime == currentDate.Date);
                 }
             }
             else
@@ -247,7 +243,8 @@ namespace TA_Typing1.Controllers
             }
 
             @ViewBag.date_query = date_query;
-            @ViewBag.week_query = week_query;
+            @ViewBag.start_date = start_date;
+            @ViewBag.end_date = end_date;
 
             if (fav_list == true)
             {
@@ -269,6 +266,16 @@ namespace TA_Typing1.Controllers
             });
         }
 
+        [HttpPost]
+        public bool save_background(string bg_option)
+        {
+            HttpCookie aCookie = new HttpCookie("userInfo");
+            aCookie.Values["backgroundUrl"] = bg_option;
+            aCookie.Expires = DateTime.Now.AddDays(365);
+            Response.Cookies.Add(aCookie);
+
+            return true;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

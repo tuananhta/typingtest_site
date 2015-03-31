@@ -1,0 +1,48 @@
+﻿<div id="backgroundModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog center-block" style="width:70%; min-width:500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Change background</h4>
+            </div>
+            <div id="bodyEditModal">
+                <div class="modal-body text-justify" style="max-height:400px; overflow-y: auto">
+                    <!-- Content is here -->
+                    <div class="container">
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(1)" class="img-thumbnail change_background" src="~/Images/Background/board/b1.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(2)" class="img-thumbnail change_background" src="~/Images/Background/board/b2.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(3)" class="img-thumbnail change_background" src="~/Images/Background/board/b3.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(4)" class="img-thumbnail change_background" src="~/Images/Background/board/b4.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(5)" class="img-thumbnail change_background" src="~/Images/Background/board/b5.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(6)" class="img-thumbnail change_background" src="~/Images/Background/board/b6.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(7)" class="img-thumbnail change_background" src="~/Images/Background/board/b7.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(8)" class="img-thumbnail change_background" src="~/Images/Background/board/b8.jpg" />
+                        </div>
+                        <div class="col-xs-6" style="padding:3px; cursor:pointer">
+                            <img onclick="change_background(9)" class="img-thumbnail change_background" src="~/Images/Background/board/b9.jpg" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="saveBackground()">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="cancelBackground()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
