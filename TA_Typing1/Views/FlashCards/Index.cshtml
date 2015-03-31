@@ -159,6 +159,7 @@
                     </div>
                     <ul class="col-xs-12 dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#backgroundModal" data-toggle="modal"><span class="glyphicon glyphicon-picture"></span> Change background</a></li>
+                        <li role="presentation" onclick="{ $('#card_resize').fadeIn('slow'); }"><a role="menuitem" tabindex="-1"><span class="glyphicon glyphicon-resize-full"></span> Resize cards</a></li>
                         <li role="presentation"><a role="menuitem" tabindex="-1" id="paint-card-btm" onclick="showColorOption()"><span class="glyphicon glyphicon-tint col-xs-1"></span><span> Paint your cards</span></a></li>
                         <li role="presentation">
                             <a role="menuitem" tabindex="-1" onclick="{ $(this).siblings().find('button').click(); }"><span class="glyphicon glyphicon-open-file"></span> Create PDF</a>
@@ -181,10 +182,35 @@
                 </div>
             </div>
             <br />
+            <!-- Success info -->
             <div class="container">
                 <div class="col-xs-8 col-xs-offset-2 text-center" id="success_info"></div>
             </div>
-            <!-- Success info -->
+            <div id="card_resize" class="row center-block" style="width:80%; display:none;">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title" id="panel-title">Choose cards per row<a class="anchorjs-link" href="#panel-title"><span class="anchorjs-icon"></span></a></h3>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="btn-group">
+                                <select class="btn btn-default text-center" style="width:200px">
+                                    <option disabled selected></option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+
+                            </div>
+                            <span class="btn btn-default" onclick="changeCardSize($(this).siblings().find('select').val())">Preview</span>
+                            <span class="btn btn-default refresh-btn" onclick="changeCardSize($(this).siblings().find('select').val())">Save</span>
+                            <span class="btn btn-danger" onclick="changeCardSize($(this).siblings().find('select').val())">Cancel</span>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <hr style="background-image:url(../../Images/Background/chalkboard_top.png); height:10px; margin-top:0; margin-bottom:0;" />
         <div id="grid-body" class="container" style="padding-top:18px;">
@@ -199,11 +225,13 @@
                     int modelCount = 0;
                     foreach (var item in Model)
                     {
-                        <section id="grid-@modelCount" class="card-grid" style="display:none;">
-                            <div id="front-@item.id" class="front @item.fColor-front">
+                        <section id="grid-@modelCount" class="card-grid" style="display:none; width: 320px;
+    height: 180px;
+    margin: 15px;">
+                            <div id="front-@item.id" class="front @item.fColor-front" style="overflow:auto;">
                                 <!-- Current face -->
                                 <input style="display:none;" id="current_face_@item.id" class="current_face" value="front" />
-                                <div class="container text-right" style="margin:5px;">
+                                <div class="container text-right card_header" style="margin:5px;">
                                     <span class="color-opt">
                                         <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.id, 'default')">
                                         </span>
@@ -232,7 +260,7 @@
                                             <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span class="btn btn-default btn-xs"><span style="position:static;" class="glyphicon glyphicon-remove"></span> Remove favourite</span> <img style="height:30px;" src="~/Images/Icon/fav_true.png" /></span>
                                         }
                                     </span>
-                                    <span style="position:static"><img style="height:20px;" src="~/Images/Icon/pin.png" /></span>
+                                    <span class="pin_sticky" style="position:static"><img style="height:20px;" src="~/Images/Icon/pin.png" /></span>
                                 </div>
 
                                 <h2 class="text-primary" style="margin-top:7px;">@item.word.WordDetail.WContext</h2>
@@ -431,3 +459,4 @@
         });
     </script>
 }
+

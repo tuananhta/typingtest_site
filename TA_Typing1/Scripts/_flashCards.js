@@ -151,3 +151,25 @@ function rotateAll() {
     }   
 }
 
+function changeCardSize(nOfcards) {
+    var width = $(window).width();
+    var height;
+    var margin;
+    width = (width / nOfcards) * 0.83;
+    margin = width * 0.03;
+    height = width * 0.55;
+
+    $('.card-grid').css({ "width": width, "height": height});
+    $('.flip').css({ "width": width, "height": height, "margin": margin, "perspective": width * 2 });
+    $('.front').css({ "width": width, "height": height });
+    $('.back').css({ "width": width, "height": height });
+    $('.front').find("h2").css({ "font-size": height / 5, "margin": height / 20, "margin-top": height / 15 });
+    $('.front').find("h4").css({ "font-size": height / 10, "margin": height / 30, "margin-top": height / 20 });
+    $('.front').find("h3").css({ "font-size": height / 8, "margin": height / 40, "margin-top": height / 25 });
+
+    $('.front').find(".btn-flash").css({ "padding": height / 13, "border-width": height / 100 });
+    $('.front').find(".pin_sticky").find('img').css({ "height": height / 12 });
+    $('.front').find(".card_header").css({ "margin": height / 40 });
+    
+    
+}
