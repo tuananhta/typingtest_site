@@ -36,22 +36,10 @@ function submitColorOptions() {
     $('.form-color-option').submit();
 }
 
-// show favourite button
-function showFavouriteOption() {
-    $('.color-opt').hide();
-    $('.favourite-opt').fadeIn('fast');
-
-    $('#header_layout').hide();
-    $('#header1-flash-cards').hide();
-    $('#header2-flash-cards').show();
-}
-
 // add, remomve favourite
 function addFavourite(event, id) {
     event.stopPropagation();
 
-    $('#front-' + id).find(".true_favourite").hide();
-    $('#front-' + id).find(".false_favourite").hide();
     $('#front-' + id).find(".saving_status").show();
     $('#front-' + id).find(".fFavourite-input").val(false);
     $.ajax({
@@ -64,6 +52,7 @@ function addFavourite(event, id) {
         success: function (data) {
             $('#front-' + id).find(".saving_status").hide();
             $('#front-' + id).find(".true_favourite").fadeIn();
+            $('#front-' + id).find(".false_favourite").hide();
         },
     });
 }
@@ -71,8 +60,6 @@ function addFavourite(event, id) {
 function removeFavourite(event, id) {
     event.stopPropagation();
     
-    $('#front-' + id).find(".true_favourite").hide();
-    $('#front-' + id).find(".false_favourite").hide();
     $('#front-' + id).find(".saving_status").show();
     $('#front-' + id).find(".fFavourite-input").val(false);
 
@@ -86,55 +73,12 @@ function removeFavourite(event, id) {
         success: function (data) {
             $('#front-' + id).find(".saving_status").hide();
             $('#front-' + id).find(".false_favourite").fadeIn();
+            $('#front-' + id).find(".true_favourite").hide();
         },
     });
 
 
     //submitChangeFavourite(id);
-}
-
-function submitChangeFavourite(id) {
-    $("#success_info").empty().show();
-
-    $.ajax({
-        url: "/flashcards/EditFavourite",
-        type: "POST",
-        data: $('#front-' + id).find(".change_favourite_form").serialize(),
-        beforeSend: function () {
-            $("#success_info").empty().html('<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"><span class="sr-only"> Saving ... </span></div></div>');
-            $("#success_info").delay(1000).fadeOut('slow');
-        },
-        success: function (data) {
-            $("#success_info").empty().html('<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span class="sr-only">Saved!</span></div></div><div style="color:whitesmoke; font-size:18px; font-weight:600;">Saved!</div><br>');
-            $("#success_info").delay(1000).fadeOut('slow');
-        },
-    });
-}
-
-// show search tab
-function showSearchCardTab() {
-    $('#search-card-tab').fadeIn('slow');
-    $('#show-search-card-btn').hide();
-    $('#hide-search-card-btn').fadeIn('fast');
-}
-
-function hideSearchCard() {
-    $('#search-card-tab').fadeOut(300);
-    $('#hide-search-card-btn').hide();
-    $('#show-search-card-btn').fadeIn('fast');
-}
-
-// show option
-function showOptionsTab() {
-    $('#show-option-card-btn').hide();
-    $('#hide-option-card-btn').fadeIn('fast');
-    $('#advance_option_card').fadeIn('fast');
-}
-
-function hideOptionsTab() {
-    $('#hide-option-card-btn').hide();
-    $('#show-option-card-btn').fadeIn('fast');
-    $('#advance_option_card').fadeOut('fast');
 }
 
 // function random position
@@ -172,6 +116,19 @@ function updateColor(event, id, fColor) {
 
     $('#front-' + id).addClass("front flash-" + fColor + "-front");
     $('#back-' + id).addClass("back flash-" + fColor + "-back");
+
+    $('#front-' + id).find(".saving_status").show();
+    $.ajax({
+        url: "/flashcards/EditColor",
+        type: "POST",
+        data: $('#front-' + id).find(".change_color_form").serialize(),
+        beforeSend: function () {
+            $('#front-' + id).find(".saving_status").show();
+        },
+        success: function (data) {
+            $('#front-' + id).find(".saving_status").hide();
+        },
+    });
 }
 
 var rotateTime = 1;
@@ -206,7 +163,7 @@ function changeCardSize(nOfcards) {
     $('.card-grid').css({ "width": width, "height": height });
     $('.flip').css({ "width": width, "height": height, "margin": margin, "perspective": width * 2 });
     $('.front').css({ "width": width, "height": height });
-    $('.front').find("img").css({ "height": height / 6 });
+    $('.front').find("img").css({ "height": height / 6.5 });
     $('.front').find(".paint_btn").css({ "font-size": height / 6 });
     $('.front').find(".hash_tag_btn").css({ "font-size": height / 6 });
 
@@ -221,9 +178,10 @@ function changeCardSize(nOfcards) {
         $('.back').find("tr").css({ "margin": 0, "padding": 0, "line-height": "1.1em" });
     }
 
-    $('.front').find("h2").css({ "font-size": height / 5, "margin": height / 20, "margin-top": height / 100 });
+    $('.front').find("h2").css({ "font-size": height / 5, "margin": height / 20, "margin-top": height / 20 });
     $('.front').find("h4").css({ "font-size": height / 10, "margin": height / 30, "margin-top": height / 100 });
     $('.front').find("h3").css({ "font-size": height / 8, "margin": height / 40, "margin-top": height / 100 });
+    $('.front').find("saving_status").css({ "font-size": height / 10 });
 
     $('.front').find(".btn-flash").css({ "padding": height / 13, "border-width": height / 100 });
     $('.front').find(".pin_sticky").find('img').css({ "height": height / 12 });

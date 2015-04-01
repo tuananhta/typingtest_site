@@ -1,29 +1,11 @@
 ﻿@model IEnumerable<TA_Typing1.Models.FlashCard>
 
 @{
-    ViewBag.Title = "flashCards";
+    ViewBag.Title = "Flash cards";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container text-center">
     <h2>Flash Cards</h2>
-</div>
-<div class="container navbar navbar-default navbar-fixed-top header-fixed" id="header1-flash-cards" style="display:none;">
-    <div class="col-xs-12 text-center">
-        <span id="paint-card-btm" class="btn btn-default disabled" style="font-size:20px;margin-right:70px; padding-right:40px; padding-left:40px;">Paint cards</span>
-        <span id="submit-color-option">
-            <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
-            <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
-        </span>
-    </div>
-</div>
-<div class="container navbar navbar-default navbar-fixed-top header-fixed" id="header2-flash-cards" style="display:none;">
-    <div class="col-xs-12 text-center">
-        <span id="favourite-card-btm" class="btn btn-default disabled" style="font-size:20px;margin-right:70px; padding-right:40px; padding-left:40px;">Choose favourite cards</span>
-        <span id="submit-favourite-option">
-            <span class="btn btn-default refresh-btn margin-btn" onclick="submitColorOptions()">Save</span>
-            <span class="btn btn-danger margin-btn" onclick="location.reload()">Cancel</span>
-        </span>
-    </div>
 </div>
 <br />
 <hr style="margin:0; padding:0;" />
@@ -111,11 +93,7 @@
                 <span class="glyphicon glyphicon-filter col-xs-1"></span>
                 <span class="col-xs-7 text-left" style="padding-left:3px;"> Sort by date, weeks</span>
             </div>
-            <div style="margin-left:0px; border-radius:0; border-top:none;" id="favourite-card-btm" class="col-xs-12 btn btn-default margin-btn container" onclick="showFavouriteOption()">
-                <span class="glyphicon glyphicon-heart col-xs-1"></span>
-                <span class="col-xs-7 text-left" style="padding-left:3px;"> Choose favourite cards</span>
-            </div>
-            <div class="col-xs-12 container" style="height:158px; padding-top:20px; border:solid 1px #dddddd; border-top:none;">
+            <div class="col-xs-12 container" style="height:200px; padding-top:41px; border:solid 1px #dddddd; border-top:none;">
                 <form class="col-xs-12 container" role="form">
                     <table class="col-xs-12 text-center">
                         <tr>
@@ -151,35 +129,35 @@
             <h3 style="color:whitesmoke">@ViewBag.fav_title</h3>
             <h3 style="color:whitesmoke">@ViewBag.boardInfo</h3>
             <div class="container">
-                <div class="col-xs-3 container">
-                    <div class="col-xs-12 container dropdown-toggle btn btn-default" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                <div class="col-sm-2 container">
+                    <div class="col-xs-12 container dropdown-toggle btn btn-default btn-sm" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
                         <span class="glyphicon glyphicon glyphicon-wrench"></span>
-                        <span style="padding-left:1px;"> Settings </span>
-                        <span class="glyphicon glyphicon-menu-down right pull-right"></span>
+                        <span style="padding-left:1px;"> Settings</span>
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </div>
                     <ul class="col-xs-12 dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#backgroundModal" data-toggle="modal" class="small"><span class="glyphicon glyphicon-picture"></span><small> Change background</small></a></li>
-                        <li role="presentation" onclick="{ $('#card_resize').fadeIn('slow'); }"><a role="menuitem" tabindex="-1" class="small"><span class="glyphicon glyphicon-resize-full"></span><small> Resize cards</small></a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" id="paint-card-btm" onclick="showColorOption()" class="small"><span class="glyphicon glyphicon-tint col-xs-1"></span><small> Paint your cards</small></a></li>
-                        <li role="presentation">
-                            <a role="menuitem" tabindex="-1" onclick="{ $(this).siblings().find('button').click(); }" class="small"><span class="glyphicon glyphicon-open-file"></span><small> Create PDF</small></a>
-                            <form method="post" action="@Url.Action("pdf","flashcards")" target="_blank" style="display:none">
-                                @Html.AntiForgeryToken()
-                                <button style="display:none;" type="submit" onclick="{ $('#steal_data').html($('#searchForm').html()); }"></button>
-                                <div id="steal_data" style="display:none"></div>
-                            </form>
-                        </li>
+                        <li role="presentation" style="cursor:pointer" onclick="{ $('#card_resize').fadeIn('slow'); }"><a role="menuitem" tabindex="-1" class="small"><span class="glyphicon glyphicon-resize-full"></span><small> Resize cards</small></a></li>
                     </ul>
                 </div>
-                <div class="col-xs-3 container btn btn-default" onclick="rotateAll()">
-                    <span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-refresh"></span> Rotate cards</span>
+                <div class="col-sm-2 container btn btn-default btn-sm card_option_btn">
+                    <span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-cog"></span> Card Options</span>
                 </div>
-                <div class="col-xs-3 container btn btn-default" onclick="randomPosition()">
-                    <span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-random"></span> Shuffle cards</span>
+                <div class="col-sm-2 container btn btn-default btn-sm" onclick="rotateAll()">
+                    <span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-refresh"></span> Rotate</span>
                 </div>
-                <div class="col-xs-3 container btn btn-default" onclick="{ searchForm.submit(); }">
-                    <span class="col-xs-12"><span class="glyphicon glyphicon-backward"></span> Original position</span>
+                <div class="col-sm-2 container btn btn-default btn-sm" onclick="randomPosition()">
+                    <span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-random"></span> Shuffle</span>
                 </div>
+                <div class="col-sm-2 container btn btn-default btn-sm" onclick="{ searchForm.submit(); }">
+                    <span class="col-xs-12"><span class="glyphicon glyphicon-backward"></span> Original</span>
+                </div>
+                <span class="col-sm-2 container btn btn-default btn-sm" onclick="{ $(this).siblings().find('button').click(); }"><span class="glyphicon glyphicon-open-file"></span><small> Create PDF</small></span>
+                <form method="post" action="@Url.Action("pdf","flashcards")" target="_blank" style="display:none">
+                    @Html.AntiForgeryToken()
+                    <button style="display:none;" type="submit" onclick="{ $('#steal_data').html($('#searchForm').html()); }"></button>
+                    <div id="steal_data" style="display:none"></div>
+                </form>
             </div>
             <br />
             <!-- Success info -->
@@ -230,21 +208,20 @@
                                 <input style="display:none;" id="current_face_@item.id" class="current_face" value="front" />
                                 <div class="inputGroup" hidden="hidden">
                                     <form class="change_color_form">
-                                        <input class="fColor-input" name="cards[@modelCount].fColor" value="@item.fColor" />
-                                        <input name="CreatedTime" value="@item.createdTime" />
+                                        @Html.AntiForgeryToken()
+                                        <input class="fColor-input" name="fColor" value="@item.fColor" />
                                         <input name="id" value="@item.id" />
                                     </form>
                                     <form class="change_favourite_form">
                                         @Html.AntiForgeryToken()
                                         <input class="fFavourite-input" name="fFavourite" value="@item.fFavourite.ToString()" />
-                                        <input name="CreatedTime" value="@item.createdTime" />
                                         <input name="id" value="@item.id" />
                                     </form>
                                 </div>
                                 <!-- header card -->
                                 <div class="col-xs-12 container text-right card_header" style="padding: 0; font-size: 0; margin: 0; position:static">
                                     <div class="col-xs-10 text-left">
-                                        <div class="btn-group btn-group-xs" role="group">
+                                        <div class="btn-group btn-group-xs group_option_card_button" role="group">
                                             <button type="button" class="btn btn-default">
                                                 <!-- Favourite -->
                                                 @if (item.fFavourite == false)
@@ -258,7 +235,7 @@
                                                     <span class="true_favourite" style="position:static; " onclick="removeFavourite(event, @item.id)"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/rem_fav.png" /></span></span>
                                                 }
                                             </button>
-                                            <button type="button" class="btn btn-default" onclick="{ alert($(this).parent().parent().parent().parent().parent().find('.color-opt').html()); $(this).parent().parent().parent().parent().parent().find('.color-opt').fadeIn().delay(3000).fadeOut('slow'); }">
+                                            <button type="button" class="btn btn-default paint_color_btn" data-show="1">
                                                 <!-- paint button -->
                                                 <span class="paint_color" style="position:static;"><span style="position:static;"><img style="height:20px;" src="~/Images/Icon/paint.png" /></span></span>
                                             </button>
@@ -270,13 +247,13 @@
                                     </div>
                                     <div class="col-xs-2 text-center">
                                         <span class="favourite-opt" style="position:static; right:10px;">
-                                            <span class="saving_status disabled" style="position:static; display:none; font-size:25px;"><span style="position:static;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></span></span>
+                                            <span class="saving_status disabled" style="position:static; display:none; font-size:20px;"><span style="position:static;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></span></span>
                                         </span>
                                     </div>
                                 </div>
                                 <!-- second header -->
                                 <div class="container">
-                                    <span class="color-opt" style="left:10px;">
+                                    <span class="color-opt" id="color-opt-@item.id" style="left:10px;">
                                         <span class="btn btn-flash btn-flash-default" onclick="updateColor(event, @item.id, 'default')">
                                         </span>
                                         <span class="btn btn-flash btn-flash-pink" onclick="updateColor(event, @item.id, 'pink')">
@@ -377,16 +354,49 @@
             else {
                 $('#show_all_radio').attr('checked', 'checked');
             }
-            // test color header 2
-            $('.color-opt').mouseover(function (event) {
-                if ($(this).is(':animated')) {
-                    $(this).stop().animate({ opacity: '100' });
-                }
-            })
+
+
             // test color header 2
             $('.color-opt').mouseleave(function (event) {
-                $(this).delay(3000).fadeOut('slow');
-                clearTimeout(countdown);
+                id = $(this).attr('id');
+
+                function hideYourDiv() {
+                    $("#" + id).fadeOut();
+                }
+
+                var theTimeout = setTimeout(hideYourDiv, 1000);
+
+                $(this).mouseover(function () {
+                    clearTimeout(theTimeout);
+                });
+            })
+
+            // paint color btn
+            $('.paint_color_btn').click(function () {
+                if ($(this).parent().parent().parent().parent().parent().find('.color-opt').is(":visible")) {
+                    $(this).parent().parent().parent().parent().parent().find('.color-opt').fadeOut('fast');
+                }
+                else {
+                    $(this).parent().parent().parent().parent().parent().find('.color-opt').fadeIn();
+                }
+            })
+
+            // card option on board button
+            $('.group_option_card_button').hide();
+
+            $('.card_option_btn').click(function () {
+                if ($('.group_option_card_button').is(":visible")) {
+                    $(this).addClass('btn-default');
+                    $(this).removeClass('btn-danger');
+                    $('.group_option_card_button').fadeOut('fast');
+                    $(this).html('<span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-cog"></span> Card Options</span>');
+                }
+                else {
+                    $('.group_option_card_button').fadeIn('fast');
+                    $(this).addClass('btn-danger');
+                    $(this).removeClass('btn-default');
+                    $(this).html('<span class="col-xs-12" id="rand-position-btn"><span class="glyphicon glyphicon-align-justify"></span> Hide Options</span>');
+                }
             })
         });
 
@@ -478,12 +488,20 @@
             </script>
         }
 
+        // change grid size
         if (Request.Cookies["grid_size"] != null)
         {
             <script>
                 $(document).ready(function () {
                     changeCardSize(@Server.HtmlEncode(Request.Cookies["grid_size"].Value));
                 })
+
+
+                // detect when the screen is change
+                $(window).resize(function () {
+                    //resize just happened, pixels changed
+                    changeCardSize(@Server.HtmlEncode(Request.Cookies["grid_size"].Value));
+                });
 
                 function cancelGrid() {
                     changeCardSize(@Server.HtmlEncode(Request.Cookies["grid_size"].Value));
@@ -497,6 +515,12 @@
                 $(document).ready(function () {
                     changeCardSize(3);
                 })
+
+                // detect when the screen is change
+                $(window).resize(function () {
+                    //resize just happened, pixels changed
+                    changeCardSize(3);
+                });
 
                 function cancelGrid() {
                     changeCardSize(3);

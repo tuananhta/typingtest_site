@@ -187,6 +187,7 @@
     <Compile Include="Models\WordDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\InputColorModelView.cs" />
     <Compile Include="ViewModels\InputFavouriteCardModelView.cs" />
     <Compile Include="ViewModels\FlashCardModelView.cs" />
     <Compile Include="ViewModels\InputWordsStatistic.cs" />

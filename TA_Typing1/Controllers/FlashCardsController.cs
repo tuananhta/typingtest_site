@@ -59,7 +59,7 @@ namespace TA_Typing1.Controllers
                     DateTime currentDate = DateTime.Today;
                     @ViewBag.boardInfo = "Today: " + currentDate.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime == currentDate.Date);
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == currentDate.Date);
                 }
             }
             else
@@ -118,27 +118,17 @@ namespace TA_Typing1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ICollection<FlashCard> cards)
+        public bool EditColor(InputColorModelView card)
         {
-            foreach (var card in cards)
+            FlashCard fcard = db.FlashCard.Find(card.id);
+            if (fcard != null)
             {
-                FlashCard cardFounded = db.FlashCard.First(w => w.id == card.id);
-
-                if (cardFounded == null)
-                {
-                    return HttpNotFound();
-                }
-                else
-                {
-                    cardFounded.fFavourite = card.fFavourite;
-                    cardFounded.fColor = card.fColor;
-                    cardFounded.createdTime = DateTime.Today;
-                    db.Entry(cardFounded).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+                fcard.fColor = card.fColor;
+                db.SaveChanges();
+                return true;
             }
 
-            return RedirectToAction("index");
+            return false;
         }
 
         // POST: FlashCard/EditFavourite/5
@@ -214,7 +204,7 @@ namespace TA_Typing1.Controllers
                     DateTime currentDate = DateTime.Today;
                     @ViewBag.boardInfo = "Today: " + currentDate.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime == currentDate.Date);
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == currentDate.Date);
                 }
             }
             else
