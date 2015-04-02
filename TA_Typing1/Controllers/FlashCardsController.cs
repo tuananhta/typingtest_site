@@ -52,7 +52,7 @@ namespace TA_Typing1.Controllers
 
                     @ViewBag.boardInfo = start_query_real.Date.ToString("dd-MM-yyyy") + " - " + end_query_real.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= start_query_real.Date && w.word.CreatedTime <= end_query_real.Date);
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date >= start_query_real.Date && w.word.CreatedTime.Date <= end_query_real.Date);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace TA_Typing1.Controllers
 
                 @ViewBag.boardInfo = date_query_real.Date.ToString("dd-MM-yyyy");
 
-                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real);
+                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real.Date);
             }
 
             @ViewBag.date_query = date_query;
@@ -197,7 +197,7 @@ namespace TA_Typing1.Controllers
 
                     @ViewBag.boardInfo = start_query_real.Date.ToString("dd-MM-yyyy") + " - " + end_query_real.Date.ToString("dd-MM-yyyy");
 
-                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime >= start_query_real.Date && w.word.CreatedTime <= end_query_real.Date);
+                    Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date >= start_query_real.Date && w.word.CreatedTime.Date <= end_query_real.Date);
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace TA_Typing1.Controllers
 
                 @ViewBag.boardInfo = date_query_real.Date.ToString("dd-MM-yyyy");
 
-                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real);
+                Cards = db.FlashCard.ToList().Where(w => w.word.User.Id == currentUser.Id).Where(w => w.word.CreatedTime.Date == date_query_real.Date);
             }
 
             @ViewBag.date_query = date_query;

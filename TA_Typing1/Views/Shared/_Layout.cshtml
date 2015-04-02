@@ -167,6 +167,9 @@
                     url: '@Url.Action("login","account")',
                     type: "POST",
                     data: $('#LoginFormModal').serialize(),
+                    beforeSend: function () {
+                        $("#loginModal").find('#sbm-login-btn').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading ...');
+                    },
                     success: function (data) {
                         if (data.success == true) {
                             window.location = data.url;
