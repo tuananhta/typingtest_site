@@ -2,10 +2,12 @@
 @{
     Layout = "";
 }
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<!--
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">      
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+-->
+<link rel="stylesheet" href="~/Content/moris.css" />
 
 <div class="bs-example bs-example-type">
 
@@ -38,19 +40,23 @@
             <small class="text-danger">Statistic</small><small class="text-danger" style="font-style:italic;"> @Model[0].createdDate.ToString("dd-MM-yyyy") - @Model[6].createdDate.ToString("dd-MM-yyyy")</small>
         </div>
     </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/_raphael.min.js"></script>
+    <script src="~/Scripts/_morris.min.js"></script>
     <script type="text/javascript">
         var drawCharts = function() {
             $("#barChart").empty();
             Morris.Bar({
                 element: 'barChart',
                 data: [
-                    {date: '@Model[0].createdDate.ToString("dd-MM")', words: @Model[0].countWords},
-                        {date: '@Model[1].createdDate.ToString("dd-MM")', words: @Model[1].countWords},
-                        {date: '@Model[2].createdDate.ToString("dd-MM")', words: @Model[2].countWords},
-                        {date: '@Model[3].createdDate.ToString("dd-MM")', words: @Model[3].countWords},
-                        {date: '@Model[4].createdDate.ToString("dd-MM")', words: @Model[4].countWords},
-                        {date: '@Model[5].createdDate.ToString("dd-MM")', words: @Model[5].countWords},
-                        {date: '@Model[6].createdDate.ToString("dd-MM")', words: @Model[6].countWords},
+                    {date: '@Model[0].createdDate.ToString("MM-dd-yyyy")', words: @Model[0].countWords},
+                        {date: '@Model[1].createdDate.ToString("MM-dd-yyyy")', words: @Model[1].countWords},
+                        {date: '@Model[2].createdDate.ToString("MM-dd-yyyy")', words: @Model[2].countWords},
+                        {date: '@Model[3].createdDate.ToString("MM-dd-yyyy")', words: @Model[3].countWords},
+                        {date: '@Model[4].createdDate.ToString("MM-dd-yyyy")', words: @Model[4].countWords},
+                        {date: '@Model[5].createdDate.ToString("MM-dd-yyyy")', words: @Model[5].countWords},
+                        {date: '@Model[6].createdDate.ToString("MM-dd-yyyy")', words: @Model[6].countWords},
                 ],
                 xkey: 'date',
                 ykeys: ['words'],
@@ -64,6 +70,18 @@
         $(window).on('resize', function() {
             drawCharts();
         });
+
+        // click statistic column
+        $(document).ready(function(){
+            $('rect').click(function(){
+                var date_request = $('div.morris-hover').find('div.morris-hover-row-label').html();
+                
+                $('#date_query').val(date_request);
+                $('#start_date').val(''); 
+                $('#end_date').val(''); 
+                $('#searchForm').submit()
+            });    
+        })
     </script>
 
 </div>

@@ -22,15 +22,6 @@ $(document).ready(function () {
 
 })
 
-function showColorOption() {
-    $('.favourite-opt').hide();
-    $('.color-opt').fadeIn('fast');
-
-    $('#header_layout').hide();
-    $('#header2-flash-cards').hide();
-    $('#header1-flash-cards').show();
-}
-
 // submit forms flash cards
 function submitColorOptions() {
     $('.form-color-option').submit();
