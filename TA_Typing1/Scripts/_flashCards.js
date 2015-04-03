@@ -41,7 +41,7 @@ function addFavourite(event, id) {
     event.stopPropagation();
 
     $('#front-' + id).find(".saving_status").show();
-    $('#front-' + id).find(".fFavourite-input").val(false);
+    $('#front-' + id).find(".fFavourite-input").val(true);
     $.ajax({
         url: "/flashcards/EditFavourite",
         type: "POST",
