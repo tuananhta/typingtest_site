@@ -20,7 +20,7 @@
                 <h3>
                     @if (ViewBag.prevWord == null)
                     {
-                        <a disabled class="btn btn-default btn-sm disabled" style="opacity:0.4;"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                        <a class="btn btn-default btn-sm" style="cursor:not-allowed; opacity:0.4;"><span class="glyphicon glyphicon-fast-backward"></span></a>
                     }
                     else
                     {
@@ -33,7 +33,7 @@
             <div class="col-xs-3">
                 @if (ViewBag.nextWord == null)
                 {
-                    <a disabled class="btn btn-default btn-sm disabled" style="opacity:0.4;"><span class="glyphicon glyphicon-fast-forward"></span></a>
+                    <a class="btn btn-default btn-sm" style="cursor:not-allowed; opacity:0.4;"><span class="glyphicon glyphicon-fast-forward"></span></a>
                 }
                 else
                 {

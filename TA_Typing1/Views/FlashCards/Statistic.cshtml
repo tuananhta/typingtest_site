@@ -81,6 +81,15 @@
                 $('#end_date').val(''); 
                 $('#searchForm').submit()
             });    
+
+            $('div.morris-hover').click(function(){
+                var date_request = $(this).find('div.morris-hover-row-label').html();
+                
+                $('#date_query').val(date_request);
+                $('#start_date').val(''); 
+                $('#end_date').val(''); 
+                $('#searchForm').submit()
+            });
         })
     </script>
 

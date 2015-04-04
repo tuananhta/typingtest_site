@@ -3,6 +3,9 @@
     height: 180px;
     margin: 15px;
 }*/
+div.morris-hover {
+    cursor:pointer;
+}
 
 #grid-containter .flip {
     display: inline-block;
