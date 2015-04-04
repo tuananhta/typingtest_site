@@ -144,7 +144,7 @@ function rotateAll() {
 }
 
 function changeCardSize(nOfcards) {
-    var width = $(window).width() - 42;
+    var width = $('#grid-body').width();
     var height;
     var margin;
     width = (width / nOfcards) * 0.83;

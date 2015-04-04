@@ -194,6 +194,12 @@
     <Compile Include="ViewModels\WordModelView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootcard\css\bootcards-android.css" />
+    <Content Include="Content\bootcard\css\bootcards-desktop.css" />
+    <Content Include="Content\bootcard\css\bootcards-ios.css" />
+    <Content Include="Content\bootcard\css\bootcards-mobile-shared.css" />
+    <Content Include="Content\bootcard\css\bootcards.css" />
+    <Content Include="Content\bootcard\fonts\icomoon.svg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap_datetimepicker.css" />
     <Content Include="Content\Flip.css" />
@@ -267,6 +273,7 @@
     <Content Include="Images\Socials\twitter.png" />
     <Content Include="Images\Socials\vietnam.png" />
     <Content Include="Images\Videos\ad1.mp4" />
+    <Content Include="Scripts\bootcard\bootcards.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -320,6 +327,9 @@
     <Content Include="Content\less\bootstrap-datetimepicker-build.less" />
     <Content Include="Content\less\_bootstrap-datetimepicker.less" />
     <Content Include="Content\images\ui-bg_flat_0_888888_40x100.png.crdownload" />
+    <Content Include="Content\bootcard\fonts\icomoon.eot" />
+    <Content Include="Content\bootcard\fonts\icomoon.ttf" />
+    <Content Include="Content\bootcard\fonts\icomoon.woff" />
     <None Include="Properties\PublishProfiles\site1.pubxml" />
     <None Include="Properties\PublishProfiles\typing.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
