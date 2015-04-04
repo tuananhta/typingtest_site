@@ -182,8 +182,8 @@
                                 </select>
                             </div>
                             <div class="col-xs-7">
-                                <span class="btn btn-default" onclick="changeCardSize($(this).siblings().find('select').val())"><span class="glyphicon glyphicon-eye-open"></span> Preview</span>
-                                <span class="btn btn-default refresh-btn" onclick="{ changeCardSize($(this).siblings().find('select').val()); saveGridSize() }">Save</span>
+                                <span class="btn btn-default" onclick="changeCardSize($(this).parent().siblings().find('select').val())"><span class="glyphicon glyphicon-eye-open"></span> Preview</span>
+                                <span class="btn btn-default refresh-btn" onclick="{ changeCardSize($(this).parent().siblings().find('select').val()); saveGridSize() }">Save</span>
                                 <span class="btn btn-danger" onclick="cancelGrid()">Cancel/Close</span>
                             </div>
                         </form>
