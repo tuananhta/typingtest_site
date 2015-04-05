@@ -127,7 +127,7 @@
     <div id="grid-containter" class="center-block container text-center" style="margin:20px;">
         <div id="grid_header" class="container" style="background-image:url(../../Images/Background/board/bh1.jpg)">
             <h3 style="color:whitesmoke">@ViewBag.fav_title</h3>
-            <h3 style="color:whitesmoke">@ViewBag.boardInfo</h3>
+            <h3 id="card_info_tag" style="color:whitesmoke">@ViewBag.boardInfo</h3>
             <div class="container">
                 <div class="col-xs-2 container">
                     <div class="col-xs-12 container dropdown-toggle btn btn-default btn-sm" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
@@ -380,6 +380,8 @@
 @section flashcardScript {
     <script>
         $(window).load(function () {
+            var card_info_detail = $('#card_info_tag').html() + ' <span class="badge">@modelCount card(s)</span>';
+            $('#card_info_tag').html(card_info_detail);
             $('#loading_tab').fadeOut('fast');
             $('#grid-container-form').delay(200).fadeIn('slow');
 
