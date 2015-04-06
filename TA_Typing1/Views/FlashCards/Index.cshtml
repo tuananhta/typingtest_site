@@ -138,6 +138,7 @@
                     <ul class="col-xs-12 dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#backgroundModal" data-toggle="modal" class="small"><span class="glyphicon glyphicon-picture"></span><small> Change background</small></a></li>
                         <li role="presentation" style="cursor:pointer" onclick="{ $('#card_resize').fadeIn('slow'); }"><a role="menuitem" tabindex="-1" class="small"><span class="glyphicon glyphicon-resize-full"></span><small> Resize cards</small></a></li>
+                        <li role="presentation" style="cursor:pointer" onclick="{ $('#plain_text').fadeIn('slow'); }"><a role="menuitem" tabindex="-1" class="small"><span class="glyphicon glyphicon-text-background"></span><small> Plain text</small></a></li>
                     </ul>
                 </div>
                 <div class="col-xs-2 container btn btn-default btn-sm card_option_btn">
@@ -189,6 +190,20 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div id="plain_text" class="container text-center panel panel-primary col-lg-10 col-lg-offset-1" style="display:none">
+                <div class="panel-heading">
+                    Words as plain text
+                </div>
+                <div class="panel-body text-justify" style="padding:5px;">
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <span> @item.word.WordDetail.WContext</span>
+                        }
+                    }
+                </div>
+                <div class="btn btn-danger col-lg-8 col-lg-offset-2" style="margin-bottom:10px;" onclick="{ $('#plain_text').fadeOut('fast') }"> Hide plain text</div>
             </div>
         </div>
         <hr style="background-image:url(../../Images/Background/chalkboard_top.png); height:10px; margin-top:0; margin-bottom:0;" />
