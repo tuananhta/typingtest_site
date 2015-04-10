@@ -1,62 +1,102 @@
 ﻿@model TA_Typing1.Models.WordDef
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "";
 }
-
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>WordDef</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.wordId, "wordId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("wordId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.wordId, "", new { @class = "text-danger" })
+<form id="edit_def_form" data-url="@Url.Action("edit", "worddefs")" onsubmit="{
+    event.preventDefault();
+    $.ajax({
+        url: $(this).data('url'),
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function (data) {
+            if (data.success == true) {
+                $('.modalFrame').modal('hide');
+                location.reload();
+            }
+        },
+    });
+}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Definition</h4>
             </div>
-        </div>
+            <div class="modal-body text-justify background3">
+                <!-- Content is here -->
+                <div class="container center-block text-center">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <h3 class="text-info">@Model.word.WordDetail.WContext</h3>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.wType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.wType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.wType, "", new { @class = "text-danger" })
+                    <input hidden="hidden" name="id" value="@Model.id" />
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal container">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Word type</h4>
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <select name="wType" id="wType" class="form-control center-block">
+                                    <option value="n">noun</option>
+                                    <option value="v">verb</option>
+                                    <option value="adj">adjective</option>
+                                    <option value="adv">adverb</option>
+                                    <option value="pro">pronoun</option>
+                                    <option value="prep">preposition</option>
+                                    <option value="conj">conjunction</option>
+                                    <option value="det">determiner</option>
+                                    <option value="excl">exclamation</option>
+                                    <option value="phrase">phrase</option>
+                                    <option>-empty-</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.wType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Definition</h4>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.wDefinition, new { htmlAttributes = new { @class = "form-control center-block" } })
+                                @Html.ValidationMessageFor(model => model.wDefinition, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center container">
+                            <div class="col-md-4 text-center">
+                                <h4>Example</h4>
+                            </div>
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.wExample, new { htmlAttributes = new { @class = "form-control center-block" } })
+                                @Html.ValidationMessageFor(model => model.wExample, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.wDefinition, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.wDefinition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.wDefinition, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.wExample, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.wExample, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.wExample, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="modal-footer">
+                <div class="form-actions no-color">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+</form>
+<script>
+    $(document).ready(function () {
+        // select the default value
+        $('#wType').val('@Model.wType');
+        $('#wType').trigger("chosen:updated");
+    })
+</script>

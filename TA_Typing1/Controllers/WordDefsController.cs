@@ -126,14 +126,25 @@ namespace TA_Typing1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,wordId,wType,wDefinition,wExample")] WordDef wordDef)
+        public ActionResult Edit([Bind(Include = "id,wType,wDefinition,wExample")] WordDef wordDef)
         {
-            if (ModelState.IsValid)
+            if (wordDef.wDefinition != null)
             {
-                db.Entry(wordDef).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                WordDef defwordFound = db.WordDefs.Find(wordDef.id);
+                if (defwordFound != null)
+                {
+                    defwordFound.wType = wordDef.wType;
+                    defwordFound.wDefinition = wordDef.wDefinition;
+                    defwordFound.wExample = wordDef.wExample;
+                    db.Entry(defwordFound).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+                else
+                    return View(wordDef);
             }
+
             ViewBag.wordId = new SelectList(db.Words, "Id", "WContext", wordDef.wordId);
             return View(wordDef);
         }
@@ -154,7 +165,8 @@ namespace TA_Typing1.Controllers
                 return HttpNotFound();
             }
 
-            if(wordDef.word.User != currentUser){
+            if (wordDef.word.User != currentUser)
+            {
                 return HttpNotFound();
             }
 

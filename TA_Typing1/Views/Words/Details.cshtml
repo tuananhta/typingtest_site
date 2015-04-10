@@ -129,7 +129,7 @@
                         </td>
                         @{ Html.RenderAction("details","worddefs",item); }
                         <td class="right text-right">
-                            <span class="btn btn-default btn-xs" style="margin-right:20px;" onclick="alert('Hello, see you later!')"><span class="glyphicon glyphicon-edit"></span> Edit</span>
+                            <span data-url="@Url.Action("edit", "worddefs", new { id = item.id })" class="btn btn-default btn-xs openModal"><span class="glyphicon glyphicon-edit"></span> Edit</span>
                             <span data-url="@Url.Action("delete", "worddefs", new { id = item.id })" class="btn btn-default btn-xs openModal"><span class="glyphicon glyphicon-trash"></span> Delete</span>
                         </td>
                     </tr>
