@@ -186,11 +186,17 @@
             $("#register-modal-form").submit(function (event) {
                 event.preventDefault();
                 $.ajax({
-                    url: "@Url.Action("register","account")",
+                    url: '@Url.Action("register","account")',
                     type: "POST",
                     data: $('#register-modal-form').serialize(),
+                    beforeSend: function () {
+                        $("#register-modal-form").find('#sbm-register-btn').html('<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading ...');
+                    },
                     success: function (data) {
-
+                        if (data.success == true) {
+                            window.location = data.url;
+                        }
+                        $("#register-modal-form").empty().append(data);
                     },
                 });
             });
