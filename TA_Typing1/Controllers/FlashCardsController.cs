@@ -233,18 +233,19 @@ namespace TA_Typing1.Controllers
                 @ViewBag.fav_title = "Favourite List";
                 @ViewBag.fav_list = true.ToString();
             }
-
             foreach (var card in Cards)
             {
                 // The list of word defs are added
                 card.word.WordDefs = db.WordDefs.ToList().Where(worddef => worddef.wordId == card.word.Id);
             }
 
+            /*
             return new PdfActionResult(Cards, (writer, document) =>
             {
                 document.SetPageSize(new Rectangle(500f, 500f, 90));
                 document.NewPage();
-            });
+            });*/
+            return View(Cards.OrderBy(c => c.word.WordDetail.WContext));
         }
 
         [HttpPost]

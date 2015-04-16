@@ -17,21 +17,15 @@
         <div class="text-muted" style="font-size:12px;">Created: @DateTime.Today.ToString("dd-MM-yyyy")</div>
     </div>
     <br />
-    <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
-        <tr>
-            <th class="text-center" style="width:30%">Word</th>
-            <th class="text-center" style="width:60%">Details</th>
-        </tr>
-    </table>
-    <br />
     @{
+        var count = 0;
         foreach (var card in Model)
         {
-            <br />
-            <hr style="border:2px solid #808080; width:100%; opacity:0.9;" />
+            count++;
             <table class="container" style="width:100%; padding:10px 10px 10px 10px;">
-                <tr style="border-top:2px solid #808080; padding:30px;">
-                    <td class="text-center" style="width:30%"><div style="font-size:13px;">@card.word.WordDetail.WContext</div><div style="font-size:9px;" class="text-muted">@if(card.word.WordDetail.WPronounce != null){<span>/@card.word.WordDetail.WPronounce/</span>}</div></td>
+                <tr style="border-top:1px solid #808080; padding:30px;">
+                    <td class="left text-left">@count.</td>
+                    <td class="text-left" style="width:30%"><div style="font-size:13px; font-weight:700">@card.word.WordDetail.WContext</div><div style="font-size:9px;" class="text-muted">@if(card.word.WordDetail.WPronounce != null){<span>/@card.word.WordDetail.WPronounce/</span>}</div></td>
                     <td class="text-center" style="width:60%">
                         @if (card.word.WordDefs.Count() > 0)
                         {
@@ -39,11 +33,11 @@
                             foreach (var def in card.word.WordDefs)
                             {
                                 count_def++;
-                                <div class="text-danger" style="font-size:12px; padding-bottom:5px;">@def.wDefinition</div>
+                                <div class="text-danger" style="font-size:12px; padding-bottom:5px;">(@def.wType) @def.wDefinition</div>
                                 <div style="font-size:10px; font-style:italic" class="text-primary">Eg: @def.wExample</div>
                                 if (count_def < card.word.WordDefs.Count())
                                 {
-                                    <hr class="text-danger" style="opacity:0.5; height:1px;" />
+                                    <hr class="text-danger" style="height:1px; padding:0; margin:2px;" />
                                 }
                             }
                         }
