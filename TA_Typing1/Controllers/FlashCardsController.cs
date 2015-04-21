@@ -173,7 +173,6 @@ namespace TA_Typing1.Controllers
             return View(inputWords);
         }
 
-        [ValidateAntiForgeryToken]
         public ActionResult PDF(string date_query = "", string start_date = "", string end_date = "", bool fav_list = false)
         {
             var currentUser = manager.FindById(User.Identity.GetUserId());

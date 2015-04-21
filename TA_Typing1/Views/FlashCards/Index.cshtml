@@ -155,7 +155,6 @@
                 </div>
                 <span class="col-xs-2 container btn btn-default btn-sm" onclick="{ $(this).siblings().find('button').click(); }"><span class="glyphicon glyphicon-open-file"></span><small> Create PDF</small></span>
                 <form method="get" action="@Url.Action("pdf","flashcards")" target="_blank" style="display:none">
-                    @Html.AntiForgeryToken()
                     <button style="display:none;" type="submit" onclick="{ $('#steal_data').html($('#searchForm').html()); }"></button>
                     <div id="steal_data" style="display:none"></div>
                 </form>
