@@ -151,7 +151,7 @@ namespace TA_Typing1.Controllers
             if (ModelState.IsValid)
             {
                 ViewBag.redirectUrl = Url.Action("index");
-                char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', '-', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+                char[] delimiterChars = { ',', '\t', '\n' };
                 string[] word = words.WordDetail.WContext.Split(delimiterChars);
 
                 Word ipWord = words;
